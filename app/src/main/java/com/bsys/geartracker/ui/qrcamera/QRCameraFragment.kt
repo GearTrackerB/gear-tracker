@@ -1,4 +1,6 @@
 package com.bsys.geartracker.ui.qrcamera
 
-class QRCameraFragment {
+import androidx.fragment.app.Fragment
+
+class QRCameraFragment: Fragment() {
 }

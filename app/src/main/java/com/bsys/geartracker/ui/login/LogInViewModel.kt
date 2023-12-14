@@ -24,6 +24,8 @@ class LogInViewModel: ViewModel() {
                 _userSeq.value = data?.seq
             } else {
                 val error = result.exceptionOrNull()
+                _userSeq.value = 404
+
                 Log.d("LogInViewModel", error.toString())
             }
         }

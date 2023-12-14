@@ -35,7 +35,9 @@ class LogInFragment: Fragment() {
 
     private fun initButton() {
         // 버튼 클릭 시 비즈니스 로직 호출
-        viewModel.user_log_in(User("id", "pass"))
+        binding.btnTest.setOnClickListener {
+            viewModel.user_log_in(User("id", "pass"))
+        }
     }
 
     private fun initObserver() {

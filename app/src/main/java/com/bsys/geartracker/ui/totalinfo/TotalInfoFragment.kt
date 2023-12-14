@@ -1,4 +1,6 @@
 package com.bsys.geartracker.ui.totalinfo
 
-class TotalInfoFragment {
+import androidx.fragment.app.Fragment
+
+class TotalInfoFragment: Fragment() {
 }

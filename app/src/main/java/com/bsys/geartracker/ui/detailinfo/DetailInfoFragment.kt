@@ -1,4 +1,6 @@
 package com.bsys.geartracker.ui.detailinfo
 
-class DetailInfoFragment {
+import androidx.fragment.app.Fragment
+
+class DetailInfoFragment: Fragment() {
 }
