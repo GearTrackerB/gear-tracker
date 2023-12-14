@@ -2,28 +2,24 @@ package com.bsys.geartracker.data.datasource
 
 import android.util.Log
 import com.bsys.geartracker.ApplicationClass
-import com.bsys.geartracker.data.model.dto.User
 import com.bsys.geartracker.data.model.response.TotalEquipResponse
-import com.bsys.geartracker.data.model.response.UserResponse
 
-
-// 서버 통신하는 API 호출하고, 반환받은 결과 처리
-class UserRemoteDatasource {
-    suspend fun log_in(user: User): Result<UserResponse> {
+class TotalInfoRemoteDatasource {
+    suspend fun get_total_info_list(start: Int, amount: Int): Result<TotalEquipResponse> {
         return try {
-            // API Interface를 호출해서 HTTP 통신을 가능하게 하는 Retrofit 사용
-            val response = ApplicationClass.userService.log_in(user)
+            val response = ApplicationClass.equipService.get_total_equip_list(start, amount)
             if(response.isSuccessful) {
                 val data = response.body()
                 if(data != null) {
+                    Log.d("listview", "total list 가져오기 성공 ${response.code()} ${response.headers()}")
                     Result.success(data)
                 } else {
                     Result.failure(Exception("data null"))
                 }
             } else {
-                Result.failure(Exception("nework fail"))
+                Result.failure(Exception("network fail"))
             }
-        } catch (e: Exception) {
+        } catch(e: Exception) {
             Result.failure(e)
         }
     }
