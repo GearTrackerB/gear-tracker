@@ -1,33 +1,26 @@
 package com.bnksystem.trainning1team.domain.user.service;
 
-import com.bnksystem.trainning1team.domain.user.entity.User;
-import com.bnksystem.trainning1team.domain.user.repository.UserRepository;
-
+import com.bnksystem.trainning1team.domain.user.TestDto;
+import com.bnksystem.trainning1team.domain.user.mapper.TestMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-//transactional read only
-//import springframe work로
 @Transactional(readOnly = true)
 public class UserService {
 
-    // 레포지토리 호출
-    private final UserRepository userRepository;
+    private final TestMapper testMapper;
 
-    @Transactional
-    public User createUser(String name) {
-        // DB SEQ 연동
-        final User user = User.builder()
-                .name(name)
-                        .build();
+    public void test(){
+        List<TestDto> res = testMapper.selectAll();
 
-        // JAP Repository의 Save 기능 사용
-        userRepository.save(user);
-
-        // User 조회
-        return userRepository.findBySeq(user.getSeq());
+        for(TestDto test1 : res){
+            System.out.println(test1.toString());
+        }
     }
 }
