@@ -10,6 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // QR Code Scanner
+        maven { url = uri("https://jitpack.io") }
     }
 }
 

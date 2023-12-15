@@ -61,4 +61,7 @@ dependencies {
     // Jetpack Navigation Kotlin
     implementation ("androidx.navigation:navigation-fragment-ktx:2.5.2")
     implementation ("androidx.navigation:navigation-ui-ktx:2.5.2")
+
+    // QR Code Scanner
+    implementation ("com.github.yuriy-budiyev:code-scanner:2.3.2")
 }
