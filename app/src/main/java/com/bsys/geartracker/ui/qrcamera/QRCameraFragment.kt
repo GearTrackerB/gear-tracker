@@ -19,6 +19,7 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class QRCameraFragment: Fragment() {
     private var _binding: FragmentQrCameraBinding? = null
@@ -38,6 +39,12 @@ class QRCameraFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 카메라 권한 확인 & QR 스캔 실행
+        check_permission()
+    }
+
+    // 카메라 권한 확인 & QR 스캔 실행 함수
+    private fun check_permission() {
         //  권한 체크
         val cameraPermissionCheck =
             ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.CAMERA)
@@ -49,7 +56,7 @@ class QRCameraFragment: Fragment() {
                 1000
             )
         } else {
-//            권한을 허용한 경우 QR 스캔
+        //  권한을 허용한 경우 QR 스캔
             scan()
         }
     }
@@ -58,10 +65,8 @@ class QRCameraFragment: Fragment() {
     private fun scan() {
         //  초기화
         val scanner_view: CodeScannerView = binding.svScannerView
-
         //  스캐너 초기화
         code_scanner = CodeScanner(requireActivity(), scanner_view)
-
         //  스캐너 셋팅
         code_scanner.apply {
             camera = CodeScanner.CAMERA_BACK
@@ -77,10 +82,6 @@ class QRCameraFragment: Fragment() {
                     Toast.makeText(requireActivity(), it.text, Toast.LENGTH_SHORT).show()
                 }
             }
-//                CoroutineScope(Dispatchers.Main) {
-//                    Toast.makeText(activity, it.text, Toast.LENGTH_SHORT).show()
-//                }
-//            }
 
             code_scanner.errorCallback = ErrorCallback {
                 activity?.runOnUiThread {

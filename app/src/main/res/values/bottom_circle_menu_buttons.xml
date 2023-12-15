@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="icons">
+        <item>@drawable/ic_launcher_foreground</item>
+        <item>@drawable/ic_launcher_foreground</item>
+        <item>@drawable/ic_launcher_foreground</item>
+        <item>@drawable/ic_launcher_foreground</item>
+    </array>
+    <array name="colors">
+        <item>@android:color/holo_red_light</item>
+        <item>@android:color/holo_red_light</item>
+        <item>@android:color/holo_red_light</item>
+        <item>@android:color/holo_red_light</item>
+    </array>
+</resources>

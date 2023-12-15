@@ -64,4 +64,5 @@ dependencies {
 
     // QR Code Scanner
     implementation ("com.github.yuriy-budiyev:code-scanner:2.3.2")
+    implementation ("com.ramotion.circlemenu:circle-menu:0.3.2")
 }
