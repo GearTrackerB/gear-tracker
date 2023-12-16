@@ -11,19 +11,22 @@ import com.bsys.geartracker.data.model.response.UserResponse
 class UserRemoteDatasource {
     suspend fun log_in(user: User): Result<UserResponse> {
         return try {
-            // API Interface를 호출해서 HTTP 통신을 가능하게 하는 Retrofit 사용
+            // Retrofit 통해 UserAPI 호출
             val response = ApplicationClass.userService.log_in(user)
-            if(response.isSuccessful) {
+            if(response.isSuccessful) { // 통신 성공ㅎ
                 val data = response.body()
                 if(data != null) {
                     Result.success(data)
                 } else {
-                    Result.failure(Exception("data null"))
+                    Log.d("logindatasource", "로그인 실패")
+                    Result.failure(Exception("로그인 실패"))
                 }
-            } else {
-                Result.failure(Exception("nework fail"))
+            } else { // 통신 실패
+                // Result.failure(Exception("nework fail"))
+                // API 통신 연결 전 테스트 todo 지우기
+                Result.success(UserResponse(1000))
             }
-        } catch (e: Exception) {
+        } catch (e: Exception) { // 에러
             Result.failure(e)
         }
     }

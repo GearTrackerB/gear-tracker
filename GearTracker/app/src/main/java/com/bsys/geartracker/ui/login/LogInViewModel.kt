@@ -12,22 +12,35 @@ import kotlinx.coroutines.launch
 class LogInViewModel: ViewModel() {
     private val userRepository: UserRepository by lazy { UserRepository() }
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     private val _userSeq = MutableLiveData(0L)
     val userSeq: LiveData<Long>
         get() = _userSeq
 
+    // 서버에 로그인 요청
     fun user_log_in(user: User) {
         viewModelScope.launch {
+            change_loading_state()
+
             val result = userRepository.log_in(user)
-            if(result.isSuccess) {
+            if(result.isSuccess) { // 로그인 성공 시, 사원 번호 저장
                 val data = result.getOrNull()
                 _userSeq.value = data?.seq
-            } else {
+            } else { // 로그인 실패
                 val error = result.exceptionOrNull()
-                _userSeq.value = 404
-
-                Log.d("LogInViewModel", error.toString())
+                _userSeq.value = -1 // 실패시 seq는 -1
+                Log.d("loginviewmodel", error.toString())
             }
+
+            change_loading_state()
         }
+    }
+
+    // 로딩 중인지 변경
+    private fun change_loading_state() {
+        _isLoading.value = !_isLoading.value!!
     }
 }

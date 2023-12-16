@@ -32,12 +32,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6311e21d-21ff-43e5-a1eb-ee6b56dd01e9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_login.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_login_top.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_credit_card_24.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_log_in.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_log_in.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/api/UserAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/api/UserAPI.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/datasource/UserRemoteDatasource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/datasource/UserRemoteDatasource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/login/LogInFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/login/LogInFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/login/LogInViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/login/LogInViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
