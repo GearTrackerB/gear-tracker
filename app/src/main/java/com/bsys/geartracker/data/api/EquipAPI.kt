@@ -6,6 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface EquipAPI {
+
+    // 장비출고현황 리스트 요청
     @GET("get/book/url")
     suspend fun get_total_equip_list(
         @Query("start") start: Int,

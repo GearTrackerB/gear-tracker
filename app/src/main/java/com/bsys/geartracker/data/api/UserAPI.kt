@@ -6,7 +6,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 
-// 최종적으로 서버 통신하는 분
+// 최종적으로 서버 통신하는 곳
 interface UserAPI {
     @GET("/user/login")
     suspend fun log_in(user: User): Response<UserResponse>

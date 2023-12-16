@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         initNavigation()
     }
 
+    // 화면 네이게이션 설정
     private fun initNavigation() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragment_container) as NavHostFragment

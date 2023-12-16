@@ -34,9 +34,9 @@ class TotalInfoFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initButton()
-        initRecyclerView()
-        initObserve()
+        init_button()
+        init_recyclerView()
+        init_observe()
     }
 
     override fun onDestroyView() {
@@ -44,19 +44,20 @@ class TotalInfoFragment: Fragment() {
         _binding = null
     }
 
+    // 버튼 설정
+    private fun init_button() {
 
-    private fun initButton() {
+        // 클릭 시 장비출납현황 리스트를 서버에 요청
         binding.tvTitle.setOnClickListener {
             viewModel.get_total_equip_list(1, 1)
-            Log.d("listview", "title 클릭")
         }
     }
 
-    private fun initRecyclerView() {
+    // 리스트 뷰 설정
+    private fun init_recyclerView() {
         binding.rcTotalEquipList.apply {
-
-            // adpater 클릭 이벤트 세팅
             adapter = totalInfoAdapter.apply {
+                // 리스트 각 아이템 클릭 시 이벤트 설정
                 setEquipClickListener(object: TotalInfoAdapter.EquipClickListener {
                     override fun onClick(view: View, position: Int, equip: Equipment) {
                         Toast.makeText(activity, equip.name, Toast.LENGTH_SHORT).show()
@@ -64,10 +65,10 @@ class TotalInfoFragment: Fragment() {
                 })
             }
 
-            // 어떤 방식으로 화면 표시?
+            // 어떤 방식으로 화면 표시할 지 설정
             layoutManager = LinearLayoutManager(requireActivity())
 
-            // 스크롤 마지막 위치 확인 20개 12 13 17
+            // 화면 마지막에 도달하면 다음 index 부터 정보 받아오게 설정
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -75,8 +76,7 @@ class TotalInfoFragment: Fragment() {
                     val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
                     // 항목 전체 개수
                     val itemTotalCount = recyclerView.adapter!!.itemCount - 1
-
-                    // 마지막으로 보이는 아이템이 = 마지막 인덱스다
+                    // 마지막으로 보이는 아이템 = 마지막 인덱스
                     if (lastVisibleItemPosition == itemTotalCount) {
                         Log.d("SCROLL", "last Position...");
                         viewModel.get_total_equip_list(20, totalInfoAdapter.itemCount+1)
@@ -86,8 +86,11 @@ class TotalInfoFragment: Fragment() {
         }
     }
 
-    private fun initObserve() {
+    // 데이터 observer 세팅
+    private fun init_observe() {
+        // 서버로부터 장비출고현황리스트 받아오면 리스트 데이터 갱신
         viewModel.equipList.observe(viewLifecycleOwner) {
+            // 기존 리스트 + 새로 얻은 리스트
             val newList = totalInfoAdapter.currentList.toMutableList().apply {
                 addAll(it)
             }

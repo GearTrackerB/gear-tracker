@@ -12,8 +12,11 @@ class TotalEquipInfoRepository {
     private val totalInfoRemoteDatasource: TotalInfoRemoteDatasource by lazy {
         TotalInfoRemoteDatasource()
     }
+
     suspend fun get_total_info_list(start: Int, amount: Int): Result<TotalEquipResponse>{
         return withContext(Dispatchers.IO) {
+
+            //todo test 데이터 삭제
             Result.failure(Exception("테스트"))
             //todo API 연결
 //            totalInfoRemoteDatasource.get_total_info_list(start, amount)
