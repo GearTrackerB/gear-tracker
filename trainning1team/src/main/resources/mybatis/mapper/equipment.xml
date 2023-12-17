@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bnksystem.trainning1team.mapper.QRMapper">
+
+    <select id="checkStatus" resultType="com.bnksystem.trainning1team.dto.QR.EquipmentStatus">
+        SELECT r.member_id as member_id, e.id as id, e.status_id as status_id
+        FROM tb_equipments as e
+        LEFT OUTER JOIN tb_entry_exit_record as r
+            ON e.id = r.eq_id
+        WHERE e.serial_no = #{serialNo}
+        ORDER BY r.reg_at DESC
+        LIMIT 1
+    </select>
+
+    <update id="setEquipmentToCheckout">
+        UPDATE tb_equipments
+        SET status_id = #{statusId}
+        WHERE id = #{id}
+    </update>
+
+    <insert id="recordEquipmentCheckout">
+        INSERT INTO tb_entry_exit_record (eq_id, status_id, member_id)
+        VALUE (#{eqId}, #{statusId}, #{memberId})
+    </insert>
+
+</mapper>
