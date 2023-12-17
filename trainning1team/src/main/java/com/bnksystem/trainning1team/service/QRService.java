@@ -34,7 +34,7 @@ public class QRService {
         EquipmentStatus status = qrMapper.checkStatus(qrRequest);
 
         if(status.getStatusId() != EquipmentStatusType.반납예정.getStatusCode()){ //반납예정 상태가 아니라면, 에러발생
-            throw new CustomException(ErrorCode.CHECKOUT_FAIL);
+            throw new CustomException(ErrorCode.CHECKIN_FAIL);
         }
 
         qrMapper.setEquipmentToCheckout(status.toChangeEquipmentStatusDto()); //장비 상태를 반납 상태로 변경
