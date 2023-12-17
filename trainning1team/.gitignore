@@ -37,3 +37,5 @@ out/
 .vscode/
 
 src/main/resources/application.properties
+
+log.config.path_IS_UNDEFINED/
