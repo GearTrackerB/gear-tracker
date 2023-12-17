@@ -6,10 +6,12 @@
 <mapper namespace="com.bnksystem.trainning1team.mapper.QRMapper">
 
     <select id="checkStatus" resultType="com.bnksystem.trainning1team.dto.QR.EquipmentStatus">
-        SELECT r.member_id as member_id, e.id as id, e.status_id as status_id
+        SELECT r.member_id as member_id, e.id as id, e.status_id as status_id, i.complete_yn as complete_yn
         FROM tb_equipments as e
         LEFT OUTER JOIN tb_entry_exit_record as r
             ON e.id = r.eq_id
+        LEFT OUTER JOIN tb_inspection as i
+            ON e.id = i.eq_id
         WHERE e.serial_no = #{serialNo}
         ORDER BY r.reg_at DESC
         LIMIT 1
@@ -24,6 +26,17 @@
     <insert id="recordEquipmentCheckout">
         INSERT INTO tb_entry_exit_record (eq_id, status_id, member_id)
         VALUE (#{eqId}, #{statusId}, #{memberId})
+    </insert>
+
+    <update id="inspectEquipment">
+        UPDATE tb_inspection
+        SET complete_yn = 'Y'
+        WHERE eq_id = #{id}
+    </update>
+
+    <insert id="inspectRecord">
+        INSERT INTO tb_inspection_record (eq_id, inspector_id)
+        VALUE (#{id}, #{memberId})
     </insert>
 
 </mapper>
