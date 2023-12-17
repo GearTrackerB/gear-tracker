@@ -3,8 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bnksystem.trainning1team.domain.user.mapper.TestMapper">
-    <select id="selectAll" resultType="com.bnksystem.trainning1team.domain.user.TestDto">
+<mapper namespace="com.bnksystem.trainning1team.mapper.TestMapper">
+    <select id="selectAll" resultType="com.bnksystem.trainning1team.dto.TestDto">
         SELECT *
         FROM test
     </select>
