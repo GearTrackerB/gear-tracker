@@ -1,4 +1,4 @@
-package com.bnksystem.trainning1team.domain.user;
+package com.bnksystem.trainning1team.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

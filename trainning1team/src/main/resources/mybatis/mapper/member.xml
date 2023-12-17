@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bnksystem.trainning1team.mapper.MemberMapper">
+
+    <select id="memberLogin" resultType="com.bnksystem.trainning1team.dto.Member.LoginResponse">
+        SELECT emp_no
+        FROM tb_members
+        WHERE login_id = #{loginId} AND login_pw = #{loginPw}
+    </select>
+
+</mapper>
