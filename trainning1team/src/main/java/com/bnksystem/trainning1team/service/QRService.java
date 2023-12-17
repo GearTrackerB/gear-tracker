@@ -40,4 +40,16 @@ public class QRService {
         qrMapper.setEquipmentToCheckout(status.toChangeEquipmentStatusDto()); //장비 상태를 반납 상태로 변경
         qrMapper.recordEquipmentCheckout(status.toRecordDto()); //반납 상태 기록
     }
+
+    @Transactional
+    public void inspect(QRRequest qrRequest) {
+        EquipmentStatus status = qrMapper.checkStatus(qrRequest);
+
+        if(status.getCompleteYn() == 'Y'){
+            throw new CustomException(ErrorCode.ALREADY_INSPECTED);
+        }
+
+        qrMapper.inspectEquipment(status);
+        qrMapper.inspectRecord(status);
+    }
 }

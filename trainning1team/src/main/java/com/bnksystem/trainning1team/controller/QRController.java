@@ -5,6 +5,7 @@ import com.bnksystem.trainning1team.dto.Response;
 import com.bnksystem.trainning1team.service.QRService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,5 +38,13 @@ public class QRController {
         qrService.checkin(qrRequest);
 
         return new Response(200, "반납 완료");
+    }
+
+    @PostMapping("/manager/equipment")
+    @ResponseBody
+    public Response<?> inspect(@RequestBody QRRequest qrRequest){
+        qrService.inspect(qrRequest);
+
+        return new Response(200, "재고 조사 완료");
     }
 }

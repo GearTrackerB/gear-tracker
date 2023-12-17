@@ -14,4 +14,8 @@ public interface QRMapper {
     void setEquipmentToCheckout(ChangeEquipmentStatusDto changeEquipmentStatusDto);
 
     void recordEquipmentCheckout(RecordDto recordDto);
+
+    void inspectEquipment(EquipmentStatus status);
+
+    void inspectRecord(EquipmentStatus status);
 }

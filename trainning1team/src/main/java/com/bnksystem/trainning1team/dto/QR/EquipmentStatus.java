@@ -13,6 +13,7 @@ public class EquipmentStatus {
     private int memberId;
     private int id; //장비id
     private int statusId;
+    private char completeYn;
 
     public ChangeEquipmentStatusDto toChangeEquipmentStatusDto() {
         if (statusId == EquipmentStatusType.반납예정.getStatusCode()){
