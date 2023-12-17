@@ -2,6 +2,7 @@ package com.bsys.geartracker
 
 import android.app.Application
 import com.bsys.geartracker.data.api.EquipAPI
+import com.bsys.geartracker.data.api.QRAPI
 import com.bsys.geartracker.data.api.UserAPI
 import com.bsys.geartracker.utils.BASE_URL
 import com.google.gson.Gson
@@ -31,6 +32,10 @@ class ApplicationClass: Application(){
 
         val equipService: EquipAPI by lazy {
             retrofit.create(EquipAPI::class.java)
+        }
+
+        val qrService: QRAPI by lazy {
+            retrofit.create(QRAPI::class.java)
         }
     }
     override fun onCreate() {
