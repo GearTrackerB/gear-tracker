@@ -9,9 +9,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.bsys.geartracker.R
 import com.bsys.geartracker.databinding.FragmentQrCameraBinding
 import com.bsys.geartracker.ui.MainActivity
+import com.bsys.geartracker.ui.login.LogInViewModel
+import com.bsys.geartracker.utils.EQUIP_DETAIL
+import com.bsys.geartracker.utils.EQUIP_INVENTORY
+import com.bsys.geartracker.utils.EQUIP_INVETORY_INFO
+import com.bsys.geartracker.utils.EQUIP_SEND
+import com.bsys.geartracker.utils.EQUIP_TAKE
+import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
@@ -24,6 +36,8 @@ import kotlinx.coroutines.launch
 class QRCameraFragment: Fragment() {
     private var _binding: FragmentQrCameraBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: QRViewModel by viewModels()
 
     lateinit var code_scanner: CodeScanner
 
@@ -39,9 +53,54 @@ class QRCameraFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 버튼 설정
+        init_btn()
+
         // 카메라 권한 확인 & QR 스캔 실행
         check_permission()
+
     }
+
+    private fun init_btn() {
+        binding.apply{
+            tvEquipTotalInfo.setOnClickListener {
+                // 장비 현황 조회에 어떤 모드로 들어갈 지 설정
+                val bundle: Bundle = bundleOf("info_type" to EQUIP_TOTAL_INFO)
+                // 장비 출납 현황 조회로 이동
+                findNavController().navigate(R.id.action_QRCameraFragment_to_totalInfoFragment, bundle)
+            }
+            tvInventoryInfo.setOnClickListener {
+                // 장비 현황 조회에 어떤 모드로 들어갈 지 설정
+                val bundle: Bundle = bundleOf("info_type" to EQUIP_INVETORY_INFO)
+                // 재물 조사 현황 조회로 이동
+                findNavController().navigate(R.id.action_QRCameraFragment_to_totalInfoFragment, bundle)
+            }
+        }
+    }
+
+    //  액티비티 재실행 되면 실행됨
+    override fun onResume() {
+        super.onResume()
+        //  초기화 확인하고 실행
+        if (::code_scanner.isInitialized){
+            code_scanner.startPreview()
+        }
+    }
+
+    //    액티비티 정지되면 실행됨
+    override fun onPause() {
+        super.onPause()
+        //    초기화 확인하고 실행
+        if (::code_scanner.isInitialized){
+            code_scanner.releaseResources()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
     // 카메라 권한 확인 & QR 스캔 실행 함수
     private fun check_permission() {
@@ -56,8 +115,25 @@ class QRCameraFragment: Fragment() {
                 1000
             )
         } else {
-        //  권한을 허용한 경우 QR 스캔
+            //  권한을 허용한 경우 QR 스캔
             scan()
+        }
+    }
+
+    //  권한요청 처리 결과
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1000){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(requireActivity(), "카메라 권한 부여됨", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(requireActivity(), "카메라 권한 거부됨", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -99,43 +175,14 @@ class QRCameraFragment: Fragment() {
         }
     }
 
-    //  권한요청 처리 결과
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1000){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(requireActivity(), "카메라 권한 부여됨", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                Toast.makeText(requireActivity(), "카메라 권한 거부됨", Toast.LENGTH_SHORT).show()
-            }
+    // QR 촬영 후 출고, 반납, 재물조사, 장비 확인 요청
+    private fun request_qr(qrType: Int, userSeq: Long, serialNum: String) {
+        when(qrType) {
+            EQUIP_SEND -> viewModel.equip_send_request()
+            EQUIP_TAKE -> viewModel.equip_take_request()
+            EQUIP_INVENTORY -> viewModel.equip_inventory_check_request()
+            EQUIP_DETAIL -> viewModel.get_equip_detail_info()
         }
     }
 
-    //     액티비티 재실행 되면 실행됨
-    override fun onResume() {
-        super.onResume()
-        //  초기화 확인하고 실행
-        if (::code_scanner.isInitialized){
-            code_scanner.startPreview()
-        }
-    }
-
-    //    액티비티 정지되면 실행됨
-    override fun onPause() {
-        super.onPause()
-        //    초기화 확인하고 실행
-        if (::code_scanner.isInitialized){
-            code_scanner.releaseResources()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/logInFragment">
+    app:startDestination="@id/QRCameraFragment">
     <fragment
         android:id="@+id/logInFragment"
         android:name="com.bsys.geartracker.ui.login.LogInFragment"
@@ -27,6 +27,10 @@
         <action
             android:id="@+id/action_totalInfoFragment_to_detailInfoFragment"
             app:destination="@id/detailInfoFragment" />
+        <argument
+            android:name="info_type"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/detailInfoFragment"

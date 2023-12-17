@@ -19,7 +19,7 @@ class LogInFragment: Fragment() {
     private var _binding: FragmentLogInBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: LogInViewModel by activityViewModels()
+    private val viewModel: LogInViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

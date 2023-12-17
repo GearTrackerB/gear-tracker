@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bsys.geartracker.adapter.TotalInfoAdapter
 import com.bsys.geartracker.data.model.dto.Equipment
 import com.bsys.geartracker.databinding.FragmentTotalInfoBinding
+import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
 
 class TotalInfoFragment: Fragment() {
     private var _binding: FragmentTotalInfoBinding? = null
@@ -21,6 +22,8 @@ class TotalInfoFragment: Fragment() {
     private val viewModel: TotalInfoViewModel by viewModels()
 
     private val totalInfoAdapter: TotalInfoAdapter by lazy {TotalInfoAdapter()}
+
+    private var mode: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +37,7 @@ class TotalInfoFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        init_mode()
         init_button()
         init_recyclerView()
         init_observe()
@@ -44,9 +48,38 @@ class TotalInfoFragment: Fragment() {
         _binding = null
     }
 
+    // 출납현황, 재물조사 중 모드에 따른 설정
+    private fun init_mode() {
+        // Mode Flag 변경
+        mode = arguments?.getInt("info_type") ?: EQUIP_TOTAL_INFO
+        // UI 변경
+        set_ui_for_mode(mode)
+    }
+
+    private fun set_ui_for_mode(mode: Int) {
+        if(mode == EQUIP_TOTAL_INFO) { // 출고현황조회 세팅
+            make_ui_total()
+        } else { // 재물조사조회 세팅
+            make_ui_inventory()
+        }
+    }
+
+    // 출고현황조회 세팅 - Title, 항목, 색상
+    private fun make_ui_total() {
+        binding.apply {
+            tvTitle.text = "장비출납현황"
+        }
+    }
+
+    // 재물조사조회 세팅 - Title, 항목, 색상
+    private fun make_ui_inventory() {
+        binding.apply {
+            tvTitle.text = "재물조사현황"
+        }
+    }
+
     // 버튼 설정
     private fun init_button() {
-
         // 클릭 시 장비출납현황 리스트를 서버에 요청
         binding.tvTitle.setOnClickListener {
             viewModel.get_total_equip_list(1, 1)

@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <com.ramotion.circlemenu.CircleMenuView
-        android:id="@+id/circle_menu"
-        app:layout_constraintTop_toBottomOf="@id/sv_scanner_view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="160dp"
-        app:button_colors="@array/colors"
-        app:button_icons="@array/icons"
-        tools:ignore="MissingClass" />
-
     <!--  QR Code Scanner      -->
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/sv_scanner_view"
@@ -26,6 +14,94 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/circle_menu"
         tools:ignore="MissingClass" />
+
+    <com.ramotion.circlemenu.CircleMenuView
+        android:id="@+id/circle_menu"
+        app:layout_constraintBottom_toTopOf="@id/c_menu1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        app:button_colors="@array/colors"
+        app:button_icons="@array/icons"
+        tools:ignore="MissingClass" />
+
+    <LinearLayout
+        android:id="@+id/c_menu1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/c_menu2">
+
+        <TextView
+            android:id="@+id/tv_equip_total_info"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="장비출납현황"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/tv_inventory_info"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginLeft="50dp"
+            android:text="재물조사현황"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/c_menu2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:text="출고"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/tv_accept"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:text="반납"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/tc_inventory"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:text="재물"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:text="정보"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
