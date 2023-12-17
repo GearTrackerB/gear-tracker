@@ -1,4 +1,4 @@
-package com.bsys.geartracker.ui.totalinfo
+package com.bsys.geartracker.ui.equiplist
 
 import android.os.Bundle
 import android.util.Log
@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bsys.geartracker.adapter.TotalInfoAdapter
 import com.bsys.geartracker.data.model.dto.Equipment
-import com.bsys.geartracker.databinding.FragmentTotalInfoBinding
+import com.bsys.geartracker.databinding.FragmentEquipListBinding
 import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
 
-class TotalInfoFragment: Fragment() {
-    private var _binding: FragmentTotalInfoBinding? = null
+class EqupListFragment: Fragment() {
+    private var _binding: FragmentEquipListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TotalInfoViewModel by viewModels()
+    private val viewModel: EquipInfoViewModel by viewModels()
 
     private val totalInfoAdapter: TotalInfoAdapter by lazy {TotalInfoAdapter()}
 
@@ -30,7 +30,7 @@ class TotalInfoFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTotalInfoBinding.inflate(inflater, container, false)
+        _binding = FragmentEquipListBinding.inflate(inflater, container, false)
         return binding.root
     }
 

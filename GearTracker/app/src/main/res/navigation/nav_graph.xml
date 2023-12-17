@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/totalInfoFragment"
-        android:name="com.bsys.geartracker.ui.totalinfo.TotalInfoFragment"
+        android:name="com.bsys.geartracker.ui.equiplist.EqupListFragment"
         android:label="TotalInfoFragment" >
         <action
             android:id="@+id/action_totalInfoFragment_to_detailInfoFragment"

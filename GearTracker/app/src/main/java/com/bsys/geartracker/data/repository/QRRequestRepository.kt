@@ -1,8 +1,6 @@
 package com.bsys.geartracker.data.repository
 
 import com.bsys.geartracker.data.datasource.QRRemoteDatasource
-import com.bsys.geartracker.data.datasource.TotalInfoRemoteDatasource
-import com.bsys.geartracker.data.model.response.TotalEquipResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
