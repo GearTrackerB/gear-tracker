@@ -40,6 +40,10 @@ public class QRController {
         return new Response(200, "반납 완료");
     }
 
+    /*
+    * QR 재고 조사 요청을 받습니다.
+    * 장비를 조회해, 재고 조사 로직을 수행합니다.
+    * */
     @PostMapping("/manager/equipment")
     @ResponseBody
     public Response<?> inspect(@RequestBody QRRequest qrRequest){
