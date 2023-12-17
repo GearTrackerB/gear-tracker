@@ -28,4 +28,16 @@ public class QRService {
         qrMapper.setEquipmentToCheckout(status.toChangeEquipmentStatusDto()); //장비 상태를 출고예정 상태로 변경
         qrMapper.recordEquipmentCheckout(status.toRecordDto()); //출고 상태 기록
     }
+
+    @Transactional
+    public void checkin(QRRequest qrRequest) {
+        EquipmentStatus status = qrMapper.checkStatus(qrRequest);
+
+        if(status.getStatusId() != EquipmentStatusType.반납예정.getStatusCode()){ //반납예정 상태가 아니라면, 에러발생
+            throw new CustomException(ErrorCode.CHECKOUT_FAIL);
+        }
+
+        qrMapper.setEquipmentToCheckout(status.toChangeEquipmentStatusDto()); //장비 상태를 반납 상태로 변경
+        qrMapper.recordEquipmentCheckout(status.toRecordDto()); //반납 상태 기록
+    }
 }

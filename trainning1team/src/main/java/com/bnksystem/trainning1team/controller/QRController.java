@@ -26,4 +26,16 @@ public class QRController {
 
         return new Response(200, "출고 완료");
     }
+
+    /*
+    * QR 반납 요청을 받습니다.
+    * 장비의 상태를 확인해, 반납예정 상태를 반납으로 변경합니다.
+    * */
+    @PutMapping("/manager/equipment/checkin")
+    @ResponseBody
+    public Response<?> checkin(@RequestBody QRRequest qrRequest){
+        qrService.checkin(qrRequest);
+
+        return new Response(200, "반납 완료");
+    }
 }

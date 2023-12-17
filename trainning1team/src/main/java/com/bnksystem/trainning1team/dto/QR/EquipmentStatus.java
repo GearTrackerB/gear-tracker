@@ -15,10 +15,18 @@ public class EquipmentStatus {
     private int statusId;
 
     public ChangeEquipmentStatusDto toChangeEquipmentStatusDto() {
-        return new ChangeEquipmentStatusDto(id, EquipmentStatusType.출고.getStatusCode());
+        if (statusId == EquipmentStatusType.반납예정.getStatusCode()){
+            return new ChangeEquipmentStatusDto(id, EquipmentStatusType.반납.getStatusCode());
+        }else{
+            return new ChangeEquipmentStatusDto(id, EquipmentStatusType.출고.getStatusCode());
+        }
     }
 
     public RecordDto toRecordDto() {
-        return new RecordDto(id, EquipmentStatusType.출고.getStatusCode(), memberId);
+        if (statusId == EquipmentStatusType.반납예정.getStatusCode()){
+            return new RecordDto(id, EquipmentStatusType.반납.getStatusCode(), memberId);
+        }else{
+            return new RecordDto(id, EquipmentStatusType.출고.getStatusCode(), memberId);
+        }
     }
 }
