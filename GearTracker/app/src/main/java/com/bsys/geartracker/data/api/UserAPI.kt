@@ -12,4 +12,7 @@ import retrofit2.http.POST
 interface UserAPI {
     @POST("/manager/login")
     suspend fun log_in(@Body user: User): Response<UserResponse>
+
+    @GET("/test")
+    suspend fun test(): Response<Unit>
 }

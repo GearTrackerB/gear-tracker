@@ -43,4 +43,10 @@ class LogInViewModel: ViewModel() {
     private fun change_loading_state() {
         _isLoading.value = !_isLoading.value!!
     }
+
+    fun test() {
+        viewModelScope.launch {
+            userRepository.test()
+        }
+    }
 }

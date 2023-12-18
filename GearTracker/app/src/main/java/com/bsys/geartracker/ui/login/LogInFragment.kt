@@ -47,6 +47,10 @@ class LogInFragment: Fragment() {
                 show_toast("ID와 PW를 입력하세요.")
             }
         }
+
+        binding.tvId.setOnClickListener {
+            viewModel.test()
+        }
     }
 
     // ID, PW 입력 확인

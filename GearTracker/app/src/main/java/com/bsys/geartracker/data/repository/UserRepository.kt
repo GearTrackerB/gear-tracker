@@ -16,4 +16,10 @@ class UserRepository {
             userRemoteDatasource.log_in(user)
         }
     }
+
+    suspend fun test(){
+        return withContext(Dispatchers.IO) {
+            userRemoteDatasource.test()
+        }
+    }
 }
