@@ -39,4 +39,8 @@
         VALUE (#{id}, #{memberId})
     </insert>
 
+    <select id="getTotalEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.EquipResponse">
+
+    </select>
+
 </mapper>
