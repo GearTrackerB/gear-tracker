@@ -10,6 +10,6 @@ import retrofit2.http.POST
 
 // 최종적으로 서버 통신하는 곳
 interface UserAPI {
-    @POST("/user/login")
+    @POST("/manager/login")
     suspend fun log_in(@Body user: User): Response<UserResponse>
 }

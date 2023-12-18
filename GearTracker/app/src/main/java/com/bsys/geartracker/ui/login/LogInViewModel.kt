@@ -16,9 +16,9 @@ class LogInViewModel: ViewModel() {
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    private val _userSeq = MutableLiveData(0L)
-    val userSeq: LiveData<Long>
-        get() = _userSeq
+    private val _empNo = MutableLiveData("0")
+    val empNo: LiveData<String>
+        get() = _empNo
 
     // 서버에 로그인 요청
     fun user_log_in(user: User) {
@@ -28,10 +28,10 @@ class LogInViewModel: ViewModel() {
             val result = userRepository.log_in(user)
             if(result.isSuccess) { // 로그인 성공 시, 사원 번호 저장
                 val data = result.getOrNull()
-                _userSeq.value = data?.seq
+                _empNo.value = data?.empNo
             } else { // 로그인 실패
                 val error = result.exceptionOrNull()
-                _userSeq.value = -1 // 실패시 seq는 -1
+                _empNo.value = "-1" // 실패시 empNo -1
                 Log.d("loginviewmodel", error.toString())
             }
 

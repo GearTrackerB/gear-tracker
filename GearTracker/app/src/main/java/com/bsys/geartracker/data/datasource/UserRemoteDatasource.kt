@@ -13,18 +13,18 @@ class UserRemoteDatasource {
         return try {
             // Retrofit 통해 UserAPI 호출
             val response = ApplicationClass.userService.log_in(user)
-            if(response.isSuccessful) { // 통신 성공ㅎ
+            if(response.isSuccessful) { // 통신 성공
                 val data = response.body()
                 if(data != null) {
+                    Log.d("logindatasource", "로그인 성공 ${data}")
                     Result.success(data)
                 } else {
                     Log.d("logindatasource", "로그인 실패")
                     Result.failure(Exception("로그인 실패"))
                 }
             } else { // 통신 실패
-                // Result.failure(Exception("nework fail"))
-                // API 통신 연결 전 테스트 todo 지우기
-                Result.success(UserResponse(1000))
+                 Log.d("logindatasource", "네트워크 실패 ${response.body()} code ${response.code()} 메시지 ${response.message()}")
+                 Result.failure(Exception("network fail"))
             }
         } catch (e: Exception) { // 에러
             Result.failure(e)

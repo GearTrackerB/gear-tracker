@@ -37,15 +37,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6311e21d-21ff-43e5-a1eb-ee6b56dd01e9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/model/response/InventoryEquipResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/api/EquipAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/api/EquipAPI.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/datasource/TotalInfoRemoteDatasource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/datasource/EquipInfoRemoteDatasource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/repository/QRRequestRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/repository/QRRequestRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/repository/TotalEquipInfoRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/repository/EquipInfoRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/totalinfo/TotalInfoFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/equiplist/EqupListFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/totalinfo/TotalInfoViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/equiplist/EquipInfoViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_total_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_equip_list.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/api/UserAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/api/UserAPI.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/datasource/UserRemoteDatasource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/datasource/UserRemoteDatasource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/model/dto/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/model/dto/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/model/response/UserResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/model/response/UserResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/login/LogInFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/login/LogInFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/login/LogInViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/login/LogInViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +54,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\IdealML\.android\avd\Pixel_2_API_33.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[R3CW201E74Z]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -96,7 +94,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "C:/GitIo/01Projects/gear-tracker/GearTracker/app/src/main/res/drawable",
+    "last_opened_file_path": "C:/GitSet/gear-tracker/GearTracker",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
@@ -119,7 +117,6 @@
       <option name="ALL_USERS" value="false" />
       <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
       <option name="CLEAR_APP_STORAGE" value="false" />
-      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
