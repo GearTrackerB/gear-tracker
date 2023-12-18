@@ -14,5 +14,5 @@ interface UserAPI {
     suspend fun log_in(@Body user: User): Response<UserResponse>
 
     @GET("/test")
-    suspend fun test(): Response<Unit>
+    suspend fun test(): Response<String>
 }

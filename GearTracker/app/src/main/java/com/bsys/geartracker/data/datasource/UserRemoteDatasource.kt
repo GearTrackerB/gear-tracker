@@ -38,7 +38,7 @@ class UserRemoteDatasource {
             if(response.isSuccessful) { // 통신 성공
                 val data = response.body()
                 if(data != null) {
-                    Log.d("logindatasource", "test data $data")
+                    Log.d("logindatasource", "test data 성공 $data")
                     Result.success(data)
                 } else {
                     Log.d("logindatasource", "test 실패")
