@@ -5,8 +5,21 @@
 
 <mapper namespace="com.bnksystem.trainning1team.mapper.EquipMapper">
 
-    <select id="getTotalEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.EquipResponse">
-
+    <select id="getTotalEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.EquipRentalStatusResponse">
+        SELECT eq.serial_no, eq.eq_nm, es.status_nm, mb.emp_no
+        FROM tb_entry_exit_record er
+        INNER JOIN tb_eq_status es ON er.status_id = es.id
+        INNER JOIN tb_equipments eq ON eq.id = er.eq_id
+        INNER JOIN tb_members mb ON er.member_id = mb.id
+        WHERE (eq.serial_no, er.reg_at) IN (
+        SELECT eq.serial_no, MAX(er.reg_at) AS max_reg_at
+        FROM tb_entry_exit_record er
+        INNER JOIN tb_eq_status es ON er.status_id = es.id
+        INNER JOIN tb_equipments eq ON eq.id = er.eq_id
+        INNER JOIN tb_members mb ON er.member_id = mb.id
+        GROUP BY eq.serial_no
+        )
+        ORDER BY eq.serial_no asc, er.reg_at DESC;
     </select>
 
 </mapper>
