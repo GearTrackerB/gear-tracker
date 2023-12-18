@@ -6,12 +6,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class Trainning1teamApplication extends SpringBootServletInitializer {
+public class Trainning1teamApplication {
+//public class Trainning1teamApplication extends SpringBootServletInitializer {
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Trainning1teamApplication.class);
-	}
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//		return application.sources(Trainning1teamApplication.class);
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Trainning1teamApplication.class, args);
