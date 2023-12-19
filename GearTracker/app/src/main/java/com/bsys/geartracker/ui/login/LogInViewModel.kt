@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.data.model.dto.User
 import com.bsys.geartracker.data.repository.UserRepository
 import kotlinx.coroutines.launch
@@ -29,6 +30,7 @@ class LogInViewModel: ViewModel() {
             if(result.isSuccess) { // 로그인 성공 시, 사원 번호 저장
                 val data = result.getOrNull()
                 _empNo.value = data?.empNo
+                ApplicationClass.mainPref.edit().putString("empNo", data?.empNo)
             } else { // 로그인 실패
                 val error = result.exceptionOrNull()
                 _empNo.value = "-1" // 실패시 empNo -1

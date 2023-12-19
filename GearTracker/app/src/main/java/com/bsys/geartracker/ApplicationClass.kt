@@ -1,6 +1,7 @@
 package com.bsys.geartracker
 
 import android.app.Application
+import android.content.SharedPreferences
 import com.bsys.geartracker.data.api.EquipAPI
 import com.bsys.geartracker.data.api.QRAPI
 import com.bsys.geartracker.data.api.UserAPI
@@ -14,6 +15,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 class ApplicationClass: Application(){
 
     companion object {
+
+        lateinit var mainPref: SharedPreferences
+
         private val retrofit: Retrofit by lazy {
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -41,5 +45,6 @@ class ApplicationClass: Application(){
     override fun onCreate() {
         super.onCreate()
 
+        mainPref = getSharedPreferences("userPref", MODE_PRIVATE)
     }
 }
