@@ -5,7 +5,7 @@
 
 <mapper namespace="com.bnksystem.trainning1team.mapper.EquipMapper">
 
-    <select id="getTotalEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.EquipRentalStatusResponse">
+    <select id="getTotalEquipList2" resultType="com.bnksystem.trainning1team.dto.Equip.EquipRentalStatusResponse">
         SELECT eq.serial_no, eq.eq_nm, es.status_nm, mb.emp_no
         FROM tb_entry_exit_record er
         INNER JOIN tb_eq_status es ON er.status_id = es.id
@@ -22,4 +22,13 @@
         ORDER BY eq.serial_no asc, er.reg_at DESC;
     </select>
 
+    <select id="getEquipments" resultType="com.bnksystem.trainning1team.dto.Equip.RentalStatusResponse">
+        SELECT e.serial_no, e.eq_nm, es.status_nm, m.emp_no, eer.reg_at
+        FROM tb_equipments e
+        INNER JOIN tb_entry_exit_record eer ON e.id = eer.eq_id
+        INNER JOIN tb_eq_status es ON e.status_id = es.id
+        INNER JOIN tb_members m ON eer.member_id = m.id
+        ORDER BY eer.reg_at DESC
+        LIMIT #{size} OFFSET #{index}
+    </select>
 </mapper>
