@@ -5,8 +5,9 @@
 
 <mapper namespace="com.bnksystem.trainning1team.mapper.EquipMapper">
 
-    <select id="getTotalEquipList2" resultType="com.bnksystem.trainning1team.dto.Equip.EquipRentalStatusResponse">
-        SELECT eq.serial_no, eq.eq_nm, es.status_nm, mb.emp_no
+    <!-- 장비 출납 현황 조회 / index 이후의 eq.id 이후 size 만큼 / 장비별 최신 출납 기록 반환 -->
+    <select id="getRentalEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.RentalStatusResponse">
+        SELECT eq.id AS id, eq.serial_no AS serialNo, eq.eq_nm AS equipmentName, es.status_nm AS statusName, mb.emp_no AS employeeNo, er.reg_at AS regAt
         FROM tb_entry_exit_record er
         INNER JOIN tb_eq_status es ON er.status_id = es.id
         INNER JOIN tb_equipments eq ON eq.id = er.eq_id
@@ -19,16 +20,7 @@
         INNER JOIN tb_members mb ON er.member_id = mb.id
         GROUP BY eq.serial_no
         )
-        ORDER BY eq.serial_no asc, er.reg_at DESC;
-    </select>
-
-    <select id="getEquipments" resultType="com.bnksystem.trainning1team.dto.Equip.RentalStatusResponse">
-        SELECT e.serial_no, e.eq_nm, es.status_nm, m.emp_no, eer.reg_at
-        FROM tb_equipments e
-        INNER JOIN tb_entry_exit_record eer ON e.id = eer.eq_id
-        INNER JOIN tb_eq_status es ON e.status_id = es.id
-        INNER JOIN tb_members m ON eer.member_id = m.id
-        ORDER BY eer.reg_at DESC
-        LIMIT #{size} OFFSET #{index}
+        ORDER BY eq.id asc, er.reg_at DESC
+        LIMIT #{index}, #{size}
     </select>
 </mapper>

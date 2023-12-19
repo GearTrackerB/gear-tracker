@@ -1,13 +1,11 @@
 package com.bnksystem.trainning1team.service;
 
-import com.bnksystem.trainning1team.dto.Equip.EquipRentalStatusResponse;
 import com.bnksystem.trainning1team.dto.Equip.EquipsListResponse;
 import com.bnksystem.trainning1team.dto.Equip.RentalStatusResponse;
 import com.bnksystem.trainning1team.mapper.EquipMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -16,22 +14,18 @@ public class EquipService {
 
     private final EquipMapper equipMapper;
 
-    public List<EquipRentalStatusResponse> getTotalEquipList() {
+    // 장비 출납 현황 리스트 반환
+    public EquipsListResponse getRentalEquipList(int index, int size) {
+        List<RentalStatusResponse> rentalStatusList = equipMapper.getRentalEquipList(index, size);
 
-        return equipMapper.getTotalEquipList();
-    }
-
-    public EquipsListResponse getEquipments(int index, int size) {
-        List<RentalStatusResponse> rentalStatusList = equipMapper.getEquipments(index, size);
-
+        // 반환결과 null 이면 -1, 아니면 마지막 id를 lastIdx에 입력
         EquipsListResponse response = new EquipsListResponse();
-
         if (rentalStatusList.isEmpty()) {
             response.setLastIdx(-1L);
         } else {
             response.setLastIdx(rentalStatusList.get(rentalStatusList.size() - 1).getId());
         }
-
+        // 조회 List 입력
         response.setEquipList(rentalStatusList);
         return response;
     }
