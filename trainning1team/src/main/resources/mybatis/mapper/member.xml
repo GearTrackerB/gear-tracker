@@ -16,4 +16,10 @@
         VALUES (#{empNo},#{loginId}, SHA2(#{loginPw}, 256), #{roleNm})
     </insert>
 
+    <select id="selectMemberInfo" resultType="com.bnksystem.trainning1team.dto.Member.MemberInfoDto">
+        SELECT id, emp_no, role_nm
+        FROM tb_members
+        WHERE emp_no = #{empNo}
+    </select>
+
 </mapper>
