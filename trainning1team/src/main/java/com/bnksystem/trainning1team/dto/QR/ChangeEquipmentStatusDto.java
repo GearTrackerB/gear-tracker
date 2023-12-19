@@ -7,7 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ChangeEquipmentStatusDto {
 
-    private int id;
     private int statusId;
+    private int updId;
+    private int eqId;
 
 }
