@@ -8,7 +8,12 @@
     <select id="memberLogin" resultType="com.bnksystem.trainning1team.dto.Member.LoginResponse">
         SELECT emp_no
         FROM tb_members
-        WHERE login_id = #{loginId} AND login_pw = #{loginPw}
+        WHERE login_id = #{loginId} AND login_pw = SHA2(#{loginPw}, 256)
     </select>
+
+    <insert id="insertMember">
+        INSERT INTO tb_members (emp_no, login_id, login_pw, role_nm)
+        VALUES (#{empNo},#{loginId}, SHA2(#{loginPw}, 256), #{roleNm})
+    </insert>
 
 </mapper>
