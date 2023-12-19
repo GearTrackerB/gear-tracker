@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bsys.geartracker.R
 import com.bsys.geartracker.adapter.TotalInfoAdapter
 import com.bsys.geartracker.data.model.dto.Equipment
 import com.bsys.geartracker.data.model.response.RentalStatusResponse
@@ -94,8 +97,10 @@ class EqupListFragment: Fragment() {
                 // 리스트 각 아이템 클릭 시 이벤트 설정
                 setEquipClickListener(object: TotalInfoAdapter.EquipClickListener {
                     override fun onClick(view: View, position: Int, equip: RentalStatusResponse) {
-                        Toast.makeText(activity, equip.serialNo, Toast.LENGTH_SHORT).show()
-                    }
+                        // 장비 현황 조회에 어떤 모드로 들어갈 지 설정
+                        val bundle: Bundle = bundleOf("serialNo" to equip.serialNo)
+                        // 장비 출납 현황 조회로 이동
+                        findNavController().navigate(R.id.action_totalInfoFragment_to_detailInfoFragment, bundle)                    }
                 })
             }
 

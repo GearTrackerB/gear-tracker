@@ -35,7 +35,7 @@ public class EquipService {
 
     public EquipDetailResponse getEquipDetail(String serialNO) {
         EquipDetailResponse equipDetail = equipMapper.selectEquipDetail(serialNO);
-        if(equipDetail == null && equipDetail.getSerialNo() != null) {
+        if(equipDetail == null) {
             throw new CustomException(ErrorCode.BAD_REQUEST);
         } else {
             return equipDetail;
