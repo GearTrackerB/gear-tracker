@@ -9,24 +9,21 @@ class QRRequestRepository {
         QRRemoteDatasource()
     }
 
-    suspend fun equip_send_request(): Result<Unit>{
+    suspend fun equip_send_request(serialNo: String, empNo: String): Result<Unit>{
         return withContext(Dispatchers.IO) {
-            //todo API 연결
-            qrRemoteDatasource.equip_send_request()
+            qrRemoteDatasource.equip_send_request(serialNo, empNo)
         }
     }
 
-    suspend fun equip_take_request(): Result<Unit>{
+    suspend fun equip_take_request(serialNo: String, empNo: String): Result<Unit>{
         return withContext(Dispatchers.IO) {
-            //todo API 연결
-            qrRemoteDatasource.equip_take_request()
+            qrRemoteDatasource.equip_take_request(serialNo, empNo)
         }
     }
 
-    suspend fun equip_inventory_request(): Result<Unit>{
+    suspend fun equip_inventory_request(serialNo: String, empNo: String): Result<Unit>{
         return withContext(Dispatchers.IO) {
-            //todo API 연결
-            qrRemoteDatasource.equip_inventory_request()
+            qrRemoteDatasource.equip_inventory_request(serialNo, empNo)
         }
     }
 }

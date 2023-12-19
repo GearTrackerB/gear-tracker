@@ -18,55 +18,43 @@ class QRViewModel: ViewModel() {
 
 
     // 출고 처리
-    fun equip_send_request() {
+    fun equip_send_request(serialNo: String, empNo: String) {
         viewModelScope.launch {
-            val result = qrRequestReadable.equip_send_request()
+            val result = qrRequestReadable.equip_send_request(serialNo, empNo)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
                 Log.d("equip_send_request", "error ${error}")
-
-                // API 연결 없이 테스트 위한 자료 todo 지우기
-                _qrResult.value = 200
-
-                // _qrResult.value = 400 todo 연결 실패 시 처리
+                 _qrResult.value = 400
             }
         }
     }
 
     // 반납 처리
-    fun equip_take_request() {
+    fun equip_take_request(serialNo: String, empNo: String) {
         viewModelScope.launch {
-            val result = qrRequestReadable.equip_take_request()
+            val result = qrRequestReadable.equip_take_request(serialNo, empNo)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
                 Log.d("equip_take_request", "error ${error}")
-
-                // API 연결 없이 테스트 위한 자료 todo 지우기
-                _qrResult.value = 200
-
-                // _qrResult.value = 400 todo 연결 실패 시 처리
+                _qrResult.value = 400
             }
         }
     }
 
     // 재물 조사 처리
-    fun equip_inventory_check_request() {
+    fun equip_inventory_check_request(serialNo: String, empNo: String) {
         viewModelScope.launch {
-            val result = qrRequestReadable.equip_inventory_request()
+            val result = qrRequestReadable.equip_inventory_request(serialNo, empNo)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
                 Log.d("equip_inventory_request", "error ${error}")
-
-                // API 연결 없이 테스트 위한 자료 todo 지우기
-                _qrResult.value = 200
-
-                // _qrResult.value = 400 todo 연결 실패 시 처리
+                _qrResult.value = 400
             }
         }
     }

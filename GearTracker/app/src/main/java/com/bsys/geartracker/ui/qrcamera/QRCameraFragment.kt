@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.R
 import com.bsys.geartracker.databinding.FragmentQrCameraBinding
 import com.bsys.geartracker.ui.MainActivity
@@ -41,6 +42,8 @@ class QRCameraFragment: Fragment() {
 
     lateinit var code_scanner: CodeScanner
 
+    private var qrType: Int = EQUIP_SEND
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,6 +58,9 @@ class QRCameraFragment: Fragment() {
 
         // 버튼 설정
         init_btn()
+
+        // 옵저버 설정
+        init_observer()
 
         // 카메라 권한 확인 & QR 스캔 실행
         check_permission()
@@ -74,6 +80,42 @@ class QRCameraFragment: Fragment() {
                 val bundle: Bundle = bundleOf("info_type" to EQUIP_INVETORY_INFO)
                 // 재물 조사 현황 조회로 이동
                 findNavController().navigate(R.id.action_QRCameraFragment_to_totalInfoFragment, bundle)
+            }
+        }
+
+        binding.apply {
+            tvSend.setOnClickListener {
+                qrType = EQUIP_SEND
+            }
+
+            tvAccept.setOnClickListener {
+                qrType = EQUIP_TAKE
+            }
+
+            tvInventory.setOnClickListener {
+                qrType = EQUIP_INVENTORY
+            }
+
+            tvInfo.setOnClickListener {
+                qrType = EQUIP_DETAIL
+            }
+        }
+    }
+
+    private fun init_observer() {
+        viewModel.qrResult.observe(viewLifecycleOwner) {
+            lateinit var typeMsg: String
+            when(qrType) {
+                EQUIP_SEND -> typeMsg = "출고"
+                EQUIP_TAKE -> typeMsg = "반납"
+                EQUIP_INVENTORY -> typeMsg = "재물 조사"
+                else -> typeMsg = "출고, 반납, 재물 조사 아님"
+            }
+
+            if(it == 200) {
+                Toast.makeText(requireActivity(), "$typeMsg 요청 성공", Toast.LENGTH_SHORT).show()
+            } else if(it == 400) {
+                Toast.makeText(requireActivity(), "$typeMsg 요청 실패", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -157,6 +199,8 @@ class QRCameraFragment: Fragment() {
                 activity?.runOnUiThread {
                     Toast.makeText(requireActivity(), it.text, Toast.LENGTH_SHORT).show()
                 }
+
+                request_qr(qrType, ApplicationClass.mainPref.getString("empNo", "없음")!!, it.text)
             }
 
             code_scanner.errorCallback = ErrorCallback {
@@ -176,11 +220,11 @@ class QRCameraFragment: Fragment() {
     }
 
     // QR 촬영 후 출고, 반납, 재물조사, 장비 확인 요청
-    private fun request_qr(qrType: Int, userSeq: Long, serialNum: String) {
+    private fun request_qr(qrType: Int, empNo: String, serialNo: String) {
         when(qrType) {
-            EQUIP_SEND -> viewModel.equip_send_request()
-            EQUIP_TAKE -> viewModel.equip_take_request()
-            EQUIP_INVENTORY -> viewModel.equip_inventory_check_request()
+            EQUIP_SEND -> viewModel.equip_send_request(serialNo, empNo)
+            EQUIP_TAKE -> viewModel.equip_take_request(serialNo, empNo)
+            EQUIP_INVENTORY -> viewModel.equip_inventory_check_request(serialNo, empNo)
             EQUIP_DETAIL -> viewModel.get_equip_detail_info()
         }
     }

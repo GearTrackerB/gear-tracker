@@ -25,7 +25,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_credit_card_24"
-                    app:layout_constraintEnd_toStartOf="@id/tv_title"
+                    android:layout_marginLeft="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -36,6 +37,7 @@
                     android:layout_margin="4dp"
                     android:gravity="center"
                     android:text="Title Recommand"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -53,24 +55,25 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="5dp">
+            android:layout_margin="4dp">
 
             <LinearLayout
                 android:id="@+id/c_col"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="40dp"
                 android:layout_margin="4dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:background="#1203A9F4">
+                android:background="@drawable/bg_item_border">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="필터를 할까 말까"/>
+                    android:text="필터를 할까 말까"
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
