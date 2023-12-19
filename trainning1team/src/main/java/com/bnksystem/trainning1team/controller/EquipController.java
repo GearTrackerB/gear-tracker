@@ -1,14 +1,17 @@
 package com.bnksystem.trainning1team.controller;
 
 
+import com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDto;
+import com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDtoResponse;
 import com.bnksystem.trainning1team.dto.Equip.EquipResponse;
 import com.bnksystem.trainning1team.dto.Response;
 import com.bnksystem.trainning1team.service.EquipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -25,11 +28,21 @@ public class EquipController {
     }
 
     /*
-    * main 페이지로 이동
+    * main 페이지로 이동.
     * */
     @GetMapping("/admin/main-page")
-    public String getAdminMainPage(){
+    public String getAdminMainPage(HttpServletRequest request){
 
         return "main";
+    }
+
+    @PostMapping("/admin/getEquipmentList")
+    @ResponseBody
+    public Response<?> getEquipmentList(@RequestBody HashMap<String, Object> parameters){
+        int page = (int) parameters.get("PAGE");
+        int offset = (page - 1) * 5;
+
+        List<AdminEquipmentDtoResponse> list = equipService.getAdminEquipmentList();
+        return new Response(200, "SUCCESS", list);
     }
 }

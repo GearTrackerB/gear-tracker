@@ -82,13 +82,10 @@ function search(page) {
     currentPage = parseInt(page);
     let params = {
         PAGE: parseInt(page),
-        COMP_CD: $("#comp_cd").val(),
-        EMP_NO: $("#search_emp_no").val(),
-        EMP_NM: $("#search_emp_nm").val()
     }
 
     $.ajax({
-        url: "/boardMember/getMemberList",
+        url: "/admin/getEquipmentList",
         type: "post",
         data: JSON.stringify(params),
         dataType: "json",
@@ -96,10 +93,11 @@ function search(page) {
         success: function(data) {
             console.log("response = " + JSON.stringify(data));
 
-            if (data.resultCode === "0000") {
-                let result = data.result;
-                let list = result.list;
-                let sessAuthCd = $("#sess_auth_cd").val();
+                let result = data;
+                console.log("result = "+result);
+                let list = result.data;
+                console.log("list" + JSON.stringify(list));
+                //let sessAuthCd = $("#sess_auth_cd").val();
 
                 var strHtml = "";
                 if (list.length > 0) {
@@ -108,20 +106,17 @@ function search(page) {
                         let item = list[i];
 
                         strHtml += '<tr class="tac cursorP">';
-                        strHtml += '    <td class="m_table">' + (startNo--) + '</td>';
-                        if (item.FILE_PATH !== "") {
-                            strHtml += '    <td><img src="' + item.FILE_PATH + '" class="listImg wp110 hp136"/></td>';
-                        } else {
-                            strHtml += '    <td>noimage</td>';
-                        }
-                        strHtml += '    <td class="dataRow" data-value="'+ item.ID +'">' + item.COMP_NM + '</td>';
-                        strHtml += '    <td class="dataRow" data-value="'+ item.ID +'">' + item.EMP_NO + '</td>';
-                        strHtml += '    <td class="dataRow" data-value="'+ item.ID +'">' + item.EMP_NM + '</td>';
-                        strHtml += '    <td class="dataRow" data-value="'+ item.ID +'">' + item.POSITION_NM + '</td>';
-                        if (sessAuthCd === "ROL001" || sessAuthCd === "ROL002") {
-                            strHtml += '    <td><input type="text" id="order_no' + item.ID + '" value="' + item.ORDER_NO + '" class="form-control tac" maxlength="2" /></td>';
-                            strHtml += '    <td><button type="button" class="btn btn-modify-col btn-modify btn-secondary" data-key="' + item.ID + '">수정</button></td>';
-                        }
+                        strHtml += '    <td class="m_table">' + item.serialNo + '</td>';
+                        strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.eqType + '</td>';
+                        strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.eqNm + '</td>';
+                        strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.eqModel + '</td>';
+                        strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.eqStatus + '</td>';
+                        strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.empNo + '</td>';
+                        strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.regAt + '</td>';
+                        // if (sessAuthCd === "ROL001" || sessAuthCd === "ROL002") {
+                        //     strHtml += '    <td><input type="text" id="order_no' + item.ID + '" value="' + item.ORDER_NO + '" class="form-control tac" maxlength="2" /></td>';
+                        //     strHtml += '    <td><button type="button" class="btn btn-modify-col btn-modify btn-secondary" data-key="' + item.serialNo + '">수정</button></td>';
+                        // }
                         strHtml += '</tr>';
                     }
                 } else {
@@ -176,9 +171,6 @@ function search(page) {
                         })
                     }
                 })
-            } else {
-                alert(data.resultMessage);
-            }
         },
         error: function (request, status, error) {
             console.log("code : " + request.status + ", message : " + request.responseText + ", error : " + error);

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bnksystem.trainning1team.mapper.AdminMapper">
+    <!--
+       장비 리스트 조회(
+                   식별코드, 제품종류, 제품명, 제조사, 상태, 모델명
+                   장비 배정자, 장비 조사 날짜,
+       )
+       1. tb_entry_exit_record => 장비 배정자
+       2. tb_inspection_record => 최근 재물 조사 날짜
+   -->
+    <select id="selectEquipmentListAll" resultType="com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDto">
+        SELECT e.serial_no, e.type_id, e.eq_nm, e.eq_maker, e.status_id, e.eq_model, (
+            SELECT m.emp_no
+            FROM tb_entry_exit_record r
+            JOIN tb_members m
+                on r.member_id = m.id
+            WHERE r.eq_id = e.id
+            ORDER BY r.reg_at DESC
+            LIMIT 1) as emp_no,(
+	        SELECT i.reg_at
+	        FROM tb_inspection_record i
+	        WHERE i.eq_id = e.id
+	        ORDER BY i.reg_at DESC
+	        LIMIT 1 ) as reg_at
+        FROM tb_equipments e;
+    </select>
+</mapper>
