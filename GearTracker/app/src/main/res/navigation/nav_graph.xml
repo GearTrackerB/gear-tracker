@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/logInFragment">
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.bsys.geartracker.ui.login.LogInFragment"
+        android:label="LogInFragment" >
+        <action
+            android:id="@+id/action_logInFragment_to_QRCameraFragment"
+            app:destination="@id/QRCameraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/QRCameraFragment"
+        android:name="com.bsys.geartracker.ui.qrcamera.QRCameraFragment"
+        android:label="QRCameraFragment" >
+        <action
+            android:id="@+id/action_QRCameraFragment_to_totalInfoFragment"
+            app:destination="@id/totalInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/totalInfoFragment"
+        android:name="com.bsys.geartracker.ui.equiplist.EqupListFragment"
+        android:label="TotalInfoFragment" >
+        <action
+            android:id="@+id/action_totalInfoFragment_to_detailInfoFragment"
+            app:destination="@id/detailInfoFragment" />
+        <argument
+            android:name="info_type"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailInfoFragment"
+        android:name="com.bsys.geartracker.ui.detailinfo.DetailInfoFragment"
+        android:label="DetailInfoFragment" />
+</navigation>
