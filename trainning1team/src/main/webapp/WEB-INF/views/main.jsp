@@ -56,35 +56,6 @@
             </div>
         <%-- 엑셀 영역 끝 --%>
 
-        <div class="d-flex search_group">
-            <c:choose>
-                <c:when test="${sessionScope.empInfo.AUTH_CD eq 'ROL004'}">
-                    <input type="hidden" id="comp_cd" value="${sessionScope.empInfo.COMP_CD}" />
-                    <input id="search_emp_no" type="hidden" value="${sessionScope.empInfo.EMP_NO}" />
-                </c:when>
-                <c:otherwise>
-                    <div class="d-flex left_group">
-                        <c:choose>
-                            <c:when test="${sessionScope.empInfo.AUTH_CD eq 'ROL001'}">
-                                <select id="comp_cd" class="form-control form-select">
-                                    <option value="">계열사 선택</option>
-                                    <c:forEach var="item" items="${compList}">
-                                        <option value="${item.COMM_CD}">${item.CODE_NM}</option>
-                                    </c:forEach>
-                                </select>
-                            </c:when>
-                            <c:otherwise>
-                                <input type="hidden" id="comp_cd" value="${sessionScope.empInfo.COMP_CD}" />
-                            </c:otherwise>
-                        </c:choose>
-                        <input class="ml-2 form-control searchInput" id="search_emp_no" type="text" placeholder="사번 검색" />
-                        <input class="ml-2 form-control searchInput" id="search_emp_nm" type="text" placeholder="성명 검색" />
-                        <button type="button" class="btn btn-submit btn-search ml-2 btn-secondary">검색</button>
-                    </div>
-                </c:otherwise>
-            </c:choose>
-        </div>
-
         <div class="d-flex justify-content-center">
             <div class="table-responsive">
                 <table class="table table-hover" id="myTable">
@@ -98,9 +69,8 @@
                         <th class="w20">상태</th>
                         <th class="w15">배정자</th>
                         <th class="w15">최근 재물 조사 일</th>
-
-                        <th class="w6" class="m_table">순서</th>
-                        <th class="w9" class="m_table">관리</th>
+<%--                        <th class="w6" class="m_table">순서</th>--%>
+<%--                        <th class="w9" class="m_table">관리</th>--%>
                     </tr>
                     </thead>
                     <%--테이블 헤더 끝--%>
@@ -115,6 +85,6 @@
         <div id="paging"></div>
     </div>
 </div>
-<script src="/static/js/boardMemberList.js"></script>
+<script src="/static/js/equipmentList.js"></script>
 </body>
 </html>
