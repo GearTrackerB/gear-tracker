@@ -4,7 +4,6 @@ import com.bsys.geartracker.data.model.dto.Equipment
 import com.google.gson.annotations.SerializedName
 
 data class TotalEquipResponse(
-    val start: Int,
-    @SerializedName("items")
-    val equipList: List<Equipment>
+    @SerializedName("lastIdx") val lastIdx: Long,
+    @SerializedName("equipList") val equipList: List<RentalStatusResponse>
 )

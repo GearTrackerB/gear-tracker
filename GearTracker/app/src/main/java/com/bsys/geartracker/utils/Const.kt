@@ -12,3 +12,6 @@ const val EQUIP_INVENTORY = 3
 const val EQUIP_DETAIL = 4
 const val EQUIP_TOTAL_INFO = 5
 const val EQUIP_INVETORY_INFO = 6
+
+// 장비 조회 아이템 Size
+const val LIST_SIZE = 20

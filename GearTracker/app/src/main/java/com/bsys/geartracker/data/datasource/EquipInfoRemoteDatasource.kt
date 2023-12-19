@@ -3,25 +3,24 @@ package com.bsys.geartracker.data.datasource
 import android.util.Log
 import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.data.model.dto.Equipment
-import com.bsys.geartracker.data.model.response.InventoryEquipResponse
 import com.bsys.geartracker.data.model.response.TotalEquipResponse
 
 class EquipInfoRemoteDatasource {
 
     // 장비출고현황 조회 API 호출
-    suspend fun get_total_info_list(start: Int, amount: Int): Result<TotalEquipResponse> {
+    suspend fun get_total_info_list(index: Long, size: Int): Result<TotalEquipResponse> {
         return try {
-            val response = ApplicationClass.equipService.get_total_equip_list(start, amount)
+            val response = ApplicationClass.equipService.get_total_equip_list(index, size)
             if(response.isSuccessful) {
-                val data = response.body()
+                val data = response.body()!!.data
                 if(data != null) {
-                    Log.d("totallist", "total list 가져오기 성공 ${response.code()} ${response.headers()}")
+                    Log.d("equiplist", "equiplist 가져오기 성공 값 : ${response.body()}, 코드 : ${response.code()}")
                     Result.success(data)
                 } else {
-                    Result.failure(Exception("data null"))
+                    Result.failure(Exception("equiplist data null"))
                 }
             } else {
-                Result.failure(Exception("network fail"))
+                Result.failure(Exception("equiplist network fail"))
             }
         } catch(e: Exception) {
             Result.failure(e)
@@ -29,7 +28,7 @@ class EquipInfoRemoteDatasource {
     }
 
     // 재물조사현황 조회 API 호출
-    suspend fun get_inventry_list(start: Int, amount: Int): Result<InventoryEquipResponse> {
+    suspend fun get_inventry_list(start: Int, amount: Int): Result<TotalEquipResponse> {
         return try {
             val response = ApplicationClass.equipService.get_Inventory_equip_list(start, amount)
             if(response.isSuccessful) {

@@ -6,20 +6,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bsys.geartracker.data.model.dto.Equipment
+import com.bsys.geartracker.data.model.response.RentalStatusResponse
 import com.bsys.geartracker.databinding.ItemTotalEquipListBinding
 
-class TotalInfoAdapter: ListAdapter<Equipment, TotalInfoAdapter.EquipItemViewHolder>(diffUtil){
+class TotalInfoAdapter: ListAdapter<RentalStatusResponse, TotalInfoAdapter.EquipItemViewHolder>(diffUtil){
 
     // Viewholder : 리사이클러 뷰의 미리 만들어져 있는, 뷰를 담을 수 있는 홀더
     inner class EquipItemViewHolder(private val binding: ItemTotalEquipListBinding): RecyclerView.ViewHolder(binding.root) {
         // 장비 데이터를 하나 가져와 넣는다.
         // onBindViewHolder로 부터 아이템을 하나 가져와 Layout과 연결
-        fun bind(equip: Equipment) {
-            binding.tvEquipName.setOnClickListener {
-                equipClickListener.onClick(it, layoutPosition, equip)
+        fun bind(equip: RentalStatusResponse) {
+            binding.apply {
+                cItem.setOnClickListener {
+                    equipClickListener.onClick(it, layoutPosition, equip)
+                }
+                tvEquipSerial.text = equip.serialNo
+                tvEquipName.text = equip.equipmentName
+                tvEquipEmploy.text = equip.employeeNo
+                tvEquipStatus.text = equip.statusName
             }
-            binding.tvEquipSerial.text = equip.serial
         }
     }
 
@@ -43,7 +48,7 @@ class TotalInfoAdapter: ListAdapter<Equipment, TotalInfoAdapter.EquipItemViewHol
 
     // Item 클릭 이벤트에 사용
     interface EquipClickListener {
-        fun onClick(view: View, position: Int, item: Equipment)
+        fun onClick(view: View, position: Int, item: RentalStatusResponse)
     }
 
     private lateinit var equipClickListener: EquipClickListener
@@ -55,17 +60,17 @@ class TotalInfoAdapter: ListAdapter<Equipment, TotalInfoAdapter.EquipItemViewHol
 
     //difutil로 다른 값만 갱신
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<Equipment>() {
+        val diffUtil = object : DiffUtil.ItemCallback<RentalStatusResponse>() {
             // 새로운, 이전의 아이템이 실제로 같은가?
-            override fun areItemsTheSame(oldItem: Equipment, newItem: Equipment): Boolean {
+            override fun areItemsTheSame(oldItem: RentalStatusResponse, newItem: RentalStatusResponse): Boolean {
                 // 객체 비교
                 return oldItem == newItem
             }
 
             // 아이템의 내부가 같은가?
-            override fun areContentsTheSame(oldItem: Equipment, newItem: Equipment): Boolean {
+            override fun areContentsTheSame(oldItem: RentalStatusResponse, newItem: RentalStatusResponse): Boolean {
                 // 어떤 걸 기준으로?
-                return oldItem.serial == newItem.serial
+                return oldItem.serialNo == newItem.serialNo
             }
 
         }

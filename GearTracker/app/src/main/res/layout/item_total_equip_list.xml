@@ -3,29 +3,132 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="3dp"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <TextView
-            android:id="@+id/tv_equip_name"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:text="장비명"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="4dp"/>
-
-        <TextView
-            android:id="@+id/tv_equip_serial"
+        <LinearLayout
+            android:id="@+id/c_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="시리얼번호"
-            app:layout_constraintStart_toEndOf="@id/tv_equip_name"
+            android:padding="5dp"
+            android:background="@drawable/bg_login_top"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textColor="@color/black"
-            android:maxLines="2"/>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_equip_serial_title"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="고유번호"
+                    android:textSize="16dp"
+                    android:textColor="#121212"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/tv_equip_serial"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:hint="시리얼번호"
+                    android:textColor="#000000"
+                    android:textSize="16dp"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_equip_name_title"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="장비이름"
+                    android:textSize="16dp"
+                    android:textColor="#121212"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/tv_equip_name"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:hint="장비명"
+                    android:textColor="#000000"
+                    android:textSize="16dp"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_equip_employ_title"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="배정자"
+                    android:textSize="16dp"
+                    android:textColor="#121212"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/tv_equip_employ"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:hint="장비배정자"
+                    android:textColor="#000000"
+                    android:textSize="16dp"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_equip_status_title"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="장비상태"
+                    android:textSize="16dp"
+                    android:textColor="#121212"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/tv_equip_status"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:hint="출납/재물조사 여부"
+                    android:textColor="#000000"
+                    android:textSize="16dp"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

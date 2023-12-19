@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bsys.geartracker.data.model.dto.Equipment
 import com.bsys.geartracker.data.repository.QRRequestRepository
 import kotlinx.coroutines.launch
 

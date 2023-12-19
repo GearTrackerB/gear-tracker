@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bsys.geartracker.adapter.TotalInfoAdapter
 import com.bsys.geartracker.data.model.dto.Equipment
+import com.bsys.geartracker.data.model.response.RentalStatusResponse
 import com.bsys.geartracker.databinding.FragmentEquipListBinding
 import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
 
@@ -82,7 +83,7 @@ class EqupListFragment: Fragment() {
     private fun init_button() {
         // 클릭 시 장비출납현황 리스트를 서버에 요청
         binding.tvTitle.setOnClickListener {
-            viewModel.get_total_equip_list(1, 1)
+            viewModel.get_total_equip_list()
         }
     }
 
@@ -92,8 +93,8 @@ class EqupListFragment: Fragment() {
             adapter = totalInfoAdapter.apply {
                 // 리스트 각 아이템 클릭 시 이벤트 설정
                 setEquipClickListener(object: TotalInfoAdapter.EquipClickListener {
-                    override fun onClick(view: View, position: Int, equip: Equipment) {
-                        Toast.makeText(activity, equip.name, Toast.LENGTH_SHORT).show()
+                    override fun onClick(view: View, position: Int, equip: RentalStatusResponse) {
+                        Toast.makeText(activity, equip.serialNo, Toast.LENGTH_SHORT).show()
                     }
                 })
             }
@@ -105,6 +106,7 @@ class EqupListFragment: Fragment() {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
+
                     // 마지막 스크롤된 항목 위치 - 화면에 보이는 마지막 아이템 position
                     val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
                     // 항목 전체 개수
@@ -112,11 +114,14 @@ class EqupListFragment: Fragment() {
                     // 마지막으로 보이는 아이템 = 마지막 인덱스
                     if (lastVisibleItemPosition == itemTotalCount) {
                         Log.d("SCROLL", "last Position...");
-                        viewModel.get_total_equip_list(20, totalInfoAdapter.itemCount+1)
+                        viewModel.get_total_equip_list()
                     }
                 }
             })
         }
+
+        // 초기 데이터 호출
+        viewModel.get_total_equip_list()
     }
 
     // 데이터 observer 세팅
@@ -124,10 +129,12 @@ class EqupListFragment: Fragment() {
         // 서버로부터 장비출고현황리스트 받아오면 리스트 데이터 갱신
         viewModel.equipList.observe(viewLifecycleOwner) {
             // 기존 리스트 + 새로 얻은 리스트
-            val newList = totalInfoAdapter.currentList.toMutableList().apply {
-                addAll(it)
+            if(it != null) {
+                val newList = totalInfoAdapter.currentList.toMutableList().apply {
+                    addAll(it)
+                }
+                totalInfoAdapter.submitList(newList)
             }
-            totalInfoAdapter.submitList(newList)
         }
     }
 }
