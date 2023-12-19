@@ -1,5 +1,6 @@
 package com.bnksystem.trainning1team.service;
 
+import com.bnksystem.trainning1team.dto.Member.JoinRequest;
 import com.bnksystem.trainning1team.dto.Member.LoginRequest;
 import com.bnksystem.trainning1team.dto.Member.LoginResponse;
 import com.bnksystem.trainning1team.handler.CustomException;
@@ -21,5 +22,9 @@ public class MemberService {
         }
 
         return response;
+    }
+
+    public void join(JoinRequest joinRequest) {
+        memberMapper.insertMember(joinRequest);
     }
 }

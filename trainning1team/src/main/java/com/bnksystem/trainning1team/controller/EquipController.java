@@ -23,4 +23,13 @@ public class EquipController {
         List<EquipResponse> list = equipService.getTotalEquipList();
         return new Response(200, "조회 성공", list);
     }
+
+    /*
+    * main 페이지로 이동
+    * */
+    @GetMapping("/admin/main-page")
+    public String getAdminMainPage(){
+
+        return "main";
+    }
 }
