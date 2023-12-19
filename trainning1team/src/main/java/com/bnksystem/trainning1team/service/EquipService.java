@@ -1,7 +1,10 @@
 package com.bnksystem.trainning1team.service;
 
+import com.bnksystem.trainning1team.dto.Equip.EquipDetailResponse;
 import com.bnksystem.trainning1team.dto.Equip.EquipsListResponse;
 import com.bnksystem.trainning1team.dto.Equip.RentalStatusResponse;
+import com.bnksystem.trainning1team.handler.CustomException;
+import com.bnksystem.trainning1team.handler.error.ErrorCode;
 import com.bnksystem.trainning1team.mapper.EquipMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,5 +31,14 @@ public class EquipService {
         // 조회 List 입력
         response.setEquipList(rentalStatusList);
         return response;
+    }
+
+    public EquipDetailResponse getEquipDetail(String serialNO) {
+        EquipDetailResponse equipDetail = equipMapper.selectEquipDetail(serialNO);
+        if(equipDetail == null && equipDetail.getSerialNo() != null) {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        } else {
+            return equipDetail;
+        }
     }
 }

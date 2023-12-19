@@ -23,4 +23,21 @@
         ORDER BY eq.id asc, er.reg_at DESC
         LIMIT #{index}, #{size}
     </select>
+
+    <!-- 장비 정보 상세 조회 / serialNo으로 검색 후 / 장비 정보 반환 -->
+    <select id="selectEquipDetail" resultType="com.bnksystem.trainning1team.dto.Equip.EquipDetailResponse">
+        SELECT
+        e.serial_no AS serialNO,
+        e.eq_nm AS eqNM,
+        t.type_nm AS typeNM,
+        e.eq_model AS eqModel,
+        e.eq_maker AS eqMaker,
+        e.detail,
+        e.manual_img_url AS manualImgUrl,
+        s.status_nm AS statusNM
+        FROM tb_equipments e
+        INNER JOIN tb_eq_types t ON e.type_id = t.id
+        INNER JOIN tb_eq_status s ON e.status_id = s.id
+        WHERE e.serial_no = #{serialNo};
+    </select>
 </mapper>

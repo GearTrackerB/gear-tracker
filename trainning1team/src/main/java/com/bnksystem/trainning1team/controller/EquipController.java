@@ -1,6 +1,7 @@
 package com.bnksystem.trainning1team.controller;
 
 
+import com.bnksystem.trainning1team.dto.Equip.EquipDetailResponse;
 import com.bnksystem.trainning1team.dto.Equip.EquipsListResponse;
 import com.bnksystem.trainning1team.dto.Response;
 import com.bnksystem.trainning1team.service.EquipService;
@@ -22,5 +23,14 @@ public class EquipController {
             @RequestParam(defaultValue = "10") int size) {
         EquipsListResponse equipListResponse = equipService.getRentalEquipList(index, size);
         return new Response<>(200, "장비 출납 현황 조회 성공", equipListResponse);
+    }
+
+    // 장비상세조회(serial로 해당 장비의 정보가 담긴 객체 반환)
+    @GetMapping("/manager/equipment")
+    @ResponseBody
+    public Response<EquipDetailResponse> getEquipDetail(
+            @RequestParam(defaultValue = "none") String serialNo) {
+        EquipDetailResponse equipDetail = equipService.getEquipDetail(serialNo);
+        return new Response<>(200, "장비 상세 조회 성공", equipDetail);
     }
 }
