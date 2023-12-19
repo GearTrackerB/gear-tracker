@@ -3,6 +3,7 @@ package com.bsys.geartracker.data.datasource
 import android.util.Log
 import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.data.model.dto.Equipment
+import com.bsys.geartracker.data.model.response.EquipDetailResponse
 import com.bsys.geartracker.data.model.response.TotalEquipResponse
 
 class EquipInfoRemoteDatasource {
@@ -48,13 +49,13 @@ class EquipInfoRemoteDatasource {
     }
 
     // 장비 정보 조회
-    suspend fun get_equip_detail(): Result<Equipment> {
+    suspend fun get_equip_detail(serialNo: String): Result<EquipDetailResponse> {
         return try {
-            val response = ApplicationClass.equipService.get_equip_detail()
+            val response = ApplicationClass.equipService.get_equip_detail(serialNo)
             if(response.isSuccessful) {
-                val data = response.body()
+                val data = response.body()!!.data
                 if(data != null) {
-                    Log.d("equipdetail", "equip detail 가져오기 성공 ${response.code()} ${response.headers()}")
+                    Log.d("equipdetail", "equip detail 가져오기 성공 ${response.body()}")
                     Result.success(data)
                 } else {
                     Result.failure(Exception("data null"))

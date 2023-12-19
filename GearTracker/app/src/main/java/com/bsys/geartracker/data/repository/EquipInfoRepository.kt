@@ -2,6 +2,7 @@ package com.bsys.geartracker.data.repository
 
 import com.bsys.geartracker.data.datasource.EquipInfoRemoteDatasource
 import com.bsys.geartracker.data.model.dto.Equipment
+import com.bsys.geartracker.data.model.response.EquipDetailResponse
 import com.bsys.geartracker.data.model.response.TotalEquipResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,11 +30,10 @@ class EquipInfoRepository {
         }
     }
 
-    suspend fun get_equip_detail(): Result<Equipment>{
+    suspend fun get_equip_detail(serialNo: String): Result<EquipDetailResponse>{
         return withContext(Dispatchers.IO) {
 
-            //todo API 연결
-            equipInfoRemoteDatasource.get_equip_detail()
+            equipInfoRemoteDatasource.get_equip_detail(serialNo)
         }
     }
 }

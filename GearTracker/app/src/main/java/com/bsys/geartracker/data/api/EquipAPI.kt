@@ -2,6 +2,7 @@ package com.bsys.geartracker.data.api
 
 import com.bsys.geartracker.data.model.dto.Equipment
 import com.bsys.geartracker.data.model.response.ApiResponse
+import com.bsys.geartracker.data.model.response.EquipDetailResponse
 import com.bsys.geartracker.data.model.response.TotalEquipResponse
 import com.bsys.geartracker.utils.LIST_SIZE
 import retrofit2.Response
@@ -18,14 +19,14 @@ interface EquipAPI {
     ): Response<ApiResponse<TotalEquipResponse>>
 
     // 재물조사현황 리스트 요청
-    @GET("get/equip/url")
+    @GET("manager/equipment")
     suspend fun get_Inventory_equip_list(
         @Query("start") start: Int,
         @Query("amount") amount: Int = 10
     ): Response<TotalEquipResponse>
 
     // 장비정보조회 요청
-    @GET("get/equip/url")
-    suspend fun get_equip_detail(
-    ): Response<Equipment>
+    @GET("manager/equipment")
+    suspend fun get_equip_detail(@Query("serialNo") serialNo: String
+    ): Response<ApiResponse<EquipDetailResponse>>
 }
