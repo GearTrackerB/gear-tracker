@@ -2,9 +2,12 @@ package com.bnksystem.trainning1team.service;
 
 import com.bnksystem.trainning1team.dto.Equip.*;
 import com.bnksystem.trainning1team.dto.Member.MemberInfoDto;
+import com.bnksystem.trainning1team.dto.QR.EquipmentStatus;
+import com.bnksystem.trainning1team.dto.QR.RecordDto;
 import com.bnksystem.trainning1team.mapper.AdminMapper;
 import com.bnksystem.trainning1team.mapper.EquipMapper;
 import com.bnksystem.trainning1team.mapper.MemberMapper;
+import com.bnksystem.trainning1team.mapper.QRMapper;
 import com.bnksystem.trainning1team.type.EquipmentStatusType;
 import com.bnksystem.trainning1team.type.EquipmentType;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ public class EquipService {
     private final EquipMapper equipMapper;
     private final AdminMapper adminMapper;
     private final MemberMapper memberMapper;
+    private final QRMapper qrMapper;
 
     public List<EquipResponse> getTotalEquipList() {
         return equipMapper.getTotalEquipList();
@@ -54,6 +58,7 @@ public class EquipService {
         return EquipmentTypeResponse.toEquipmentTypeResponse();
     }
 
+    @Transactional
     public void updateEquipment(String serialNo, ModifyRequest modifyRequest) {
         modifyRequest.setOriginSerialNo(serialNo);
         modifyRequest.setStatusId(
@@ -61,7 +66,14 @@ public class EquipService {
                 );
         modifyRequest.setTypeId(EquipmentType.valueOf(modifyRequest.getEqType()).getStatusCode());
 
+        //상태 변경
         adminMapper.updateEquipment(modifyRequest);
+
+        //장비 출납 기록부에 변경사항 반영
+        EquipmentStatus status = qrMapper.selectEquipmentStatus(serialNo);
+        RecordDto recordDto = new RecordDto(status.getEqId(), modifyRequest.getStatusId(),status.getMemberId());
+
+        qrMapper.insertEntryExitRecordQR(recordDto);
     }
 
     public void deleteEquipment(String serialNo) {
