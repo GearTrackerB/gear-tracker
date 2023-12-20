@@ -6,6 +6,7 @@ import com.bsys.geartracker.data.model.response.TotalEquipResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 
 // todo Server API 완성되면 Dto 수정
@@ -20,7 +21,7 @@ interface QRAPI {
     suspend fun equip_take_request(@Body qrRequest: QRRequest): Response<ApiResponse<Unit>>
 
     // 장비 재물 조사 처리
-    @PUT("manager/equipment")
+    @POST("manager/equipment")
     suspend fun equip_invetory_request(@Body qrRequest: QRRequest): Response<ApiResponse<Unit>>
 
 

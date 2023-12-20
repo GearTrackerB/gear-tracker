@@ -50,9 +50,10 @@ class EquipInfoViewModel: ViewModel() {
     }
 
     // 서버에 재물조사현황 요청
-    fun get_equip_inventory_list(start: Int, amount: Int) {
+    fun get_equip_inventory_list() {
         viewModelScope.launch {
-            val result = equipInfoRepository.get_inventory_info_list(start, amount)
+            Log.d("equiplist", "재물조사현황호출")
+            val result = equipInfoRepository.get_inventory_info_list(lastEquipIdx, LIST_SIZE)
             if(result.isSuccess) { // 서버 통신 성공
                 val data = result.getOrNull()
                 lastEquipIdx = data?.lastIdx ?: -1L

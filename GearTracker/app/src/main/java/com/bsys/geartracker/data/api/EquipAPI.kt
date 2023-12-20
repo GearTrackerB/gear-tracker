@@ -19,11 +19,11 @@ interface EquipAPI {
     ): Response<ApiResponse<TotalEquipResponse>>
 
     // 재물조사현황 리스트 요청
-    @GET("manager/equipment")
+    @GET("manager/inventory")
     suspend fun get_Inventory_equip_list(
-        @Query("start") start: Int,
-        @Query("amount") amount: Int = 10
-    ): Response<TotalEquipResponse>
+        @Query("index") index: Long,
+        @Query("size") size: Int = LIST_SIZE
+    ): Response<ApiResponse<TotalEquipResponse>>
 
     // 장비정보조회 요청
     @GET("manager/equipment/detail")

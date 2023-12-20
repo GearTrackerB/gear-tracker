@@ -120,14 +120,17 @@ class EqupListFragment: Fragment() {
                     // 마지막으로 보이는 아이템 = 마지막 인덱스
                     if (lastVisibleItemPosition == itemTotalCount) {
                         Log.d("SCROLL", "last Position...");
-                        viewModel.get_total_equip_list()
+                        // 초기 데이터 호출
+                        if(mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list()
+                        else viewModel.get_equip_inventory_list()
                     }
                 }
             })
         }
 
         // 초기 데이터 호출
-        viewModel.get_total_equip_list()
+        if(mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list()
+        else viewModel.get_equip_inventory_list()
     }
 
     // 데이터 observer 세팅

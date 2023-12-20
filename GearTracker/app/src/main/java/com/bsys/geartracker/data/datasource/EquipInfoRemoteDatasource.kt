@@ -29,11 +29,11 @@ class EquipInfoRemoteDatasource {
     }
 
     // 재물조사현황 조회 API 호출
-    suspend fun get_inventry_list(start: Int, amount: Int): Result<TotalEquipResponse> {
+    suspend fun get_inventry_list(index: Long, size: Int): Result<TotalEquipResponse> {
         return try {
-            val response = ApplicationClass.equipService.get_Inventory_equip_list(start, amount)
+            val response = ApplicationClass.equipService.get_Inventory_equip_list(index, size)
             if(response.isSuccessful) {
-                val data = response.body()
+                val data = response.body()!!.data
                 if(data != null) {
                     Log.d("inventorylist", "inventory list 가져오기 성공 ${response.code()} ${response.headers()}")
                     Result.success(data)

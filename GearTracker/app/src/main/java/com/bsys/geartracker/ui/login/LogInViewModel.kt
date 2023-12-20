@@ -27,6 +27,7 @@ class LogInViewModel: ViewModel() {
             change_loading_state()
 
             val result = userRepository.log_in(user)
+            Log.d("loginviewmodel", user.toString())
             if(result.isSuccess) { // 로그인 성공 시, 사원 번호 저장
                 val data = result.getOrNull()
                 _empNo.value = data?.empNo

@@ -20,13 +20,10 @@ class EquipInfoRepository {
         }
     }
 
-    suspend fun get_inventory_info_list(lastIdx: Int, amount: Int): Result<TotalEquipResponse>{
+    suspend fun get_inventory_info_list(lastIdx: Long, size: Int): Result<TotalEquipResponse>{
         return withContext(Dispatchers.IO) {
 
-            //todo test 데이터 삭제
-            Result.failure(Exception("테스트"))
-            //todo API 연결
-//            equipInfoRemoteDatasource.get_inventry_list(lastIdx, amount)
+            equipInfoRemoteDatasource.get_inventry_list(lastIdx, size)
         }
     }
 
