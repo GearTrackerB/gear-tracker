@@ -5,38 +5,48 @@
 
 <mapper namespace="com.bnksystem.trainning1team.mapper.QRMapper">
 
-    <select id="checkStatus" resultType="com.bnksystem.trainning1team.dto.QR.EquipmentStatus">
-        SELECT r.member_id as member_id, e.id as id, e.status_id as status_id, i.complete_yn as complete_yn
+    <select id="selectEquipmentStatus" resultType="com.bnksystem.trainning1team.dto.QR.EquipmentStatus">
+        SELECT r.member_id , e.id as eq_id, e.status_id, i.complete_yn, i.id as insp_id
         FROM tb_equipments as e
         LEFT OUTER JOIN tb_entry_exit_record as r
             ON e.id = r.eq_id
         LEFT OUTER JOIN tb_inspection as i
             ON e.id = i.eq_id
-        WHERE e.serial_no = #{serialNo}
+        WHERE
+            e.serial_no = #{serialNo}
         ORDER BY r.reg_at DESC
         LIMIT 1
     </select>
 
-    <update id="setEquipmentToCheckout">
+    <update id="updateEquipmentStatus">
         UPDATE tb_equipments
-        SET status_id = #{statusId}
-        WHERE id = #{id}
+        SET
+            status_id = #{statusId},
+            upd_id = #{updId},
+            upd_at = CURRENT_TIMESTAMP
+        WHERE id = #{eqId}
     </update>
 
-    <insert id="recordEquipmentCheckout">
+    <insert id="insertEntryExitRecordQR">
         INSERT INTO tb_entry_exit_record (eq_id, status_id, member_id)
         VALUE (#{eqId}, #{statusId}, #{memberId})
     </insert>
 
-    <update id="inspectEquipment">
+    <!-- 재고 조사 테이블에서 점검 상태를 'Y'로 변경  -->
+    <update id="updateInspectionComplete">
         UPDATE tb_inspection
         SET complete_yn = 'Y'
-        WHERE eq_id = #{id}
+        WHERE id = #{inspId}
     </update>
 
-    <insert id="inspectRecord">
-        INSERT INTO tb_inspection_record (eq_id, inspector_id)
-        VALUE (#{id}, #{memberId})
+    <!--  재고 조사 기록  -->
+    <insert id="insertInspectRecord">
+        INSERT INTO tb_inspection_record (eq_id, inspector_id, inspected_at)
+        VALUE (#{eqId}, #{inspectorId}, #{inspectedAt})
     </insert>
+
+    <select id="getTotalEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.EquipResponse">
+
+    </select>
 
 </mapper>

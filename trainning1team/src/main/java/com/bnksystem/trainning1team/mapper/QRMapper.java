@@ -1,5 +1,6 @@
 package com.bnksystem.trainning1team.mapper;
 
+import com.bnksystem.trainning1team.dto.Equip.InspectorRecordDto;
 import com.bnksystem.trainning1team.dto.QR.ChangeEquipmentStatusDto;
 import com.bnksystem.trainning1team.dto.QR.EquipmentStatus;
 import com.bnksystem.trainning1team.dto.QR.QRRequest;
@@ -9,13 +10,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface QRMapper {
 
-    EquipmentStatus checkStatus(QRRequest qrRequest);
+    EquipmentStatus selectEquipmentStatus(QRRequest qrRequest);
 
-    void setEquipmentToCheckout(ChangeEquipmentStatusDto changeEquipmentStatusDto);
+    void updateEquipmentStatus(ChangeEquipmentStatusDto changeEquipmentStatusDto);
 
-    void recordEquipmentCheckout(RecordDto recordDto);
+    void insertEntryExitRecordQR(RecordDto recordDto);
 
-    void inspectEquipment(EquipmentStatus status);
+    void updateInspectionComplete(EquipmentStatus status);
 
-    void inspectRecord(EquipmentStatus status);
+    void insertInspectRecord(InspectorRecordDto status);
 }

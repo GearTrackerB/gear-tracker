@@ -1,11 +1,13 @@
 package com.bnksystem.trainning1team.controller;
 
+import com.bnksystem.trainning1team.dto.Member.JoinRequest;
 import com.bnksystem.trainning1team.dto.Member.LoginRequest;
 import com.bnksystem.trainning1team.dto.Member.LoginResponse;
 import com.bnksystem.trainning1team.dto.Response;
 import com.bnksystem.trainning1team.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,5 +28,23 @@ public class MemberController {
 
         LoginResponse loginResponse = memberService.memberLogin(loginRequest);
         return new Response(200, "로그인 성공", loginResponse);
+    }
+
+    @GetMapping("/admin/login-page")
+    public String adminLoginPage(){
+        return "login";
+    }
+
+    @PostMapping("/admin/join")
+    @ResponseBody
+    public Response<?> adminJoin(@RequestBody JoinRequest joinRequest){
+        memberService.join(joinRequest);
+        return new Response(200, "회원가입 성공");
+    }
+
+    @PostMapping("/admin/login")
+    @ResponseBody
+    public Response<?> adminLogin(@RequestBody LoginRequest loginRequest){
+        return new Response(200, "관리자 로그인 성공");
     }
 }

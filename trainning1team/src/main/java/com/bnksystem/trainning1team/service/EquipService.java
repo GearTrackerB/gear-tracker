@@ -1,14 +1,19 @@
 package com.bnksystem.trainning1team.service;
 
+
 import com.bnksystem.trainning1team.dto.Equip.EquipDetailResponse;
 import com.bnksystem.trainning1team.dto.Equip.EquipsListResponse;
 import com.bnksystem.trainning1team.dto.Equip.RentalStatusResponse;
 import com.bnksystem.trainning1team.handler.CustomException;
 import com.bnksystem.trainning1team.handler.error.ErrorCode;
+import com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDto;
+import com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDtoResponse;
+import com.bnksystem.trainning1team.mapper.AdminMapper;
 import com.bnksystem.trainning1team.mapper.EquipMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +21,7 @@ import java.util.List;
 public class EquipService {
 
     private final EquipMapper equipMapper;
+    private final AdminMapper adminMapper;
 
     // 장비 출납 현황 리스트 반환
     public EquipsListResponse getRentalEquipList(int index, int size) {
@@ -40,5 +46,17 @@ public class EquipService {
         } else {
             return equipDetail;
         }
+    }
+
+    public List<AdminEquipmentDtoResponse> getAdminEquipmentList() {
+        List<AdminEquipmentDto> list = adminMapper.selectEquipmentListAll();
+
+        List<AdminEquipmentDtoResponse> adminEquipmentDtoResponseList = new ArrayList<>();
+
+        for(AdminEquipmentDto data : list){
+            adminEquipmentDtoResponseList.add(new AdminEquipmentDtoResponse(data));
+        }
+
+        return adminEquipmentDtoResponseList;
     }
 }

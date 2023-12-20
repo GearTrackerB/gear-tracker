@@ -8,6 +8,21 @@ public enum EquipmentStatusType {
     @Getter
     private final int statusCode;
 
+    static public String getStatusName(int statusCode){
+        if(statusCode == 1){
+            return "출고예정";
+        }
+        else if(statusCode == 2){
+            return "출고";
+        }
+        else if(statusCode == 3){
+            return "반납예정";
+        }
+        else{
+            return "반납";
+        }
+    }
+
     EquipmentStatusType(int statusCode){
         this.statusCode = statusCode;
     }
