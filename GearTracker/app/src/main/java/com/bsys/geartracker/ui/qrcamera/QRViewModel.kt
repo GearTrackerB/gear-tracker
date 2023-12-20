@@ -65,8 +65,4 @@ class QRViewModel: ViewModel() {
         }
     }
 
-    // 장비 상세 정보 -> equip viewmodel 쪽
-    fun get_equip_detail_info() {
-
-    }
 }

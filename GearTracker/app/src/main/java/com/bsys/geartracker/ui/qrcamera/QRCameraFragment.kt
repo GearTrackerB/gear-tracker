@@ -19,6 +19,7 @@ import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.R
 import com.bsys.geartracker.databinding.FragmentQrCameraBinding
 import com.bsys.geartracker.ui.MainActivity
+import com.bsys.geartracker.ui.equiplist.EquipInfoViewModel
 import com.bsys.geartracker.ui.login.LogInViewModel
 import com.bsys.geartracker.utils.EQUIP_DETAIL
 import com.bsys.geartracker.utils.EQUIP_INVENTORY
@@ -41,6 +42,7 @@ class QRCameraFragment: Fragment() {
 
     private val viewModel: QRViewModel by viewModels()
     private val loginViewModel: LogInViewModel by activityViewModels()
+    private val equipViewModel: EquipInfoViewModel by viewModels()
 
     lateinit var code_scanner: CodeScanner
 
@@ -227,7 +229,16 @@ class QRCameraFragment: Fragment() {
             EQUIP_SEND -> viewModel.equip_send_request(serialNo, empNo)
             EQUIP_TAKE -> viewModel.equip_take_request(serialNo, empNo)
             EQUIP_INVENTORY -> viewModel.equip_inventory_check_request(serialNo, empNo)
-            EQUIP_DETAIL -> viewModel.get_equip_detail_info()
+            EQUIP_DETAIL -> move_to_detail_info_fragment(serialNo)
+        }
+    }
+
+    private fun move_to_detail_info_fragment(serialNo: String) {
+        val bundle: Bundle = bundleOf("serialNo" to serialNo)
+
+        // 장비 출납 현황 조회로 이동
+        activity?.runOnUiThread {
+            findNavController().navigate(R.id.action_QRCameraFragment_to_detailInfoFragment, bundle)
         }
     }
 

@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_QRCameraFragment_to_totalInfoFragment"
             app:destination="@id/totalInfoFragment" />
+        <action
+            android:id="@+id/action_QRCameraFragment_to_detailInfoFragment"
+            app:destination="@id/detailInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/totalInfoFragment"
