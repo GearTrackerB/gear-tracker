@@ -32,7 +32,7 @@
         t.type_nm AS typeNM,
         e.eq_model AS eqModel,
         e.eq_maker AS eqMaker,
-        e.detail,
+        e.detail As detail,
         e.manual_img_url AS manualImgUrl,
         s.status_nm AS statusNM
         FROM tb_equipments e

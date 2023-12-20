@@ -31,7 +31,7 @@ public class EquipController {
     }
 
     // 장비상세조회(serial로 해당 장비의 정보가 담긴 객체 반환)
-    @GetMapping("/manager/equipment")
+    @GetMapping("/manager/equipment/detail")
     @ResponseBody
     public Response<EquipDetailResponse> getEquipDetail(
             @RequestParam(defaultValue = "none") String serialNo) {

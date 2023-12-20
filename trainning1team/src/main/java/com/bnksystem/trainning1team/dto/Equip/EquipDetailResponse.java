@@ -16,7 +16,6 @@ public class EquipDetailResponse {
     private String statusNM;
 }
 
-
 /*
 - 장비 시리얼 번호
 - 장비명

@@ -44,9 +44,6 @@
         INSERT INTO tb_inspection_record (eq_id, inspector_id, inspected_at)
         VALUE (#{eqId}, #{inspectorId}, #{inspectedAt})
     </insert>
-
-    <select id="getTotalEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.EquipResponse">
-
-    </select>
+    
 
 </mapper>
