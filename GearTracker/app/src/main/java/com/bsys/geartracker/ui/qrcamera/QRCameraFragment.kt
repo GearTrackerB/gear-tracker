@@ -3,8 +3,8 @@ package com.bsys.geartracker.ui.qrcamera
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +32,8 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
+import com.ramotion.circlemenu.CircleMenuView
+
 
 class QRCameraFragment: Fragment() {
     private var _binding: FragmentQrCameraBinding? = null
@@ -59,6 +61,9 @@ class QRCameraFragment: Fragment() {
 
         // 버튼 설정
         init_btn()
+
+        // 원형 메뉴 설정
+        init_circle_menu()
 
         // 옵저버 설정
         init_observer()
@@ -105,6 +110,24 @@ class QRCameraFragment: Fragment() {
                 qrType = EQUIP_DETAIL
             }
         }
+
+    }
+
+    private fun init_circle_menu() {
+        binding.circleMenu.setEventListener(object : CircleMenuView.EventListener() {
+            override fun onButtonClickAnimationStart(view: CircleMenuView, buttonIndex: Int) {
+                super.onButtonClickAnimationStart(view, buttonIndex)
+
+                var txt: String = ""
+                when(buttonIndex) {
+                    0 -> {qrType = EQUIP_SEND; txt = "출고"}
+                    1 -> {qrType = EQUIP_TAKE; txt = "반납"}
+                    2 -> {qrType = EQUIP_INVENTORY; txt = "재물조사"}
+                    3 -> {qrType = EQUIP_DETAIL; txt = "장비정보조회"}
+                }
+                Toast.makeText(requireActivity(), "$txt 모드", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun init_observer() {
