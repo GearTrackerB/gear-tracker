@@ -1,11 +1,10 @@
 package com.bnksystem.trainning1team.mapper;
 
-import com.bnksystem.trainning1team.dto.Member.JoinRequest;
-import com.bnksystem.trainning1team.dto.Member.LoginRequest;
-import com.bnksystem.trainning1team.dto.Member.LoginResponse;
-import com.bnksystem.trainning1team.dto.Member.MemberInfoDto;
+import com.bnksystem.trainning1team.dto.Member.*;
 import com.bnksystem.trainning1team.dto.QR.QRRequest;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface MemberMapper {
@@ -13,5 +12,7 @@ public interface MemberMapper {
 
     void insertMember(JoinRequest joinRequest);
 
-    MemberInfoDto selectMemberInfo(QRRequest qrRequest);
+    MemberInfoDto selectMemberInfo(String empNo);
+
+    List<MemberEmpNoResponse> selectEmpNoList();
 }
