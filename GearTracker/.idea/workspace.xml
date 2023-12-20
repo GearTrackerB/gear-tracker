@@ -42,17 +42,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6311e21d-21ff-43e5-a1eb-ee6b56dd01e9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/img_bnk_logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/api/QRAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/api/QRAPI.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/datasource/QRRemoteDatasource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/datasource/QRRemoteDatasource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/repository/QRRequestRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/data/repository/QRRequestRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/qrcamera/QRCameraFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/qrcamera/QRCameraFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/qrcamera/QRViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bsys/geartracker/ui/qrcamera/QRViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_equip_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_equip_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_qr_camera.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_qr_camera.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_total_equip_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_total_equip_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_log_in.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_log_in.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +95,9 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "C:/GitSet/gear-tracker/GearTracker",
+    "git-widget-placeholder": "FB/feat/rest-api-link",
+    "last_directory_selection": "C:/GitIo/01Projects/gear-tracker/GearTracker/app/src/main/res/drawable",
+    "last_opened_file_path": "C:/GitIo/01Projects/gear-tracker/GearTracker/app/src/main/res/drawable",
     "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
     "show.migrate.to.gradle.popup": "false"
   }

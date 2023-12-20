@@ -7,7 +7,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_toolbar"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="56dp"
         android:background="@drawable/bg_login_top"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,9 +18,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_credit_card_24"/>
+            android:padding="8dp"
+            android:src="@drawable/img_bnk_logo"/>
 
     </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tv_login_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_login_box"
+        android:text="Gear Tracker"
+        android:textSize="36dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="56dp"/>
 
     <ImageView
         android:id="@+id/iv_login_box"
@@ -46,6 +59,8 @@
         android:id="@+id/et_id"
         android:layout_width="150dp"
         android:layout_height="48dp"
+        android:maxLines="1"
+        android:maxLength="15"
         app:layout_constraintBottom_toBottomOf="@id/tv_id"
         app:layout_constraintStart_toEndOf="@id/tv_id"
         app:layout_constraintEnd_toEndOf="@id/iv_login_box"/>
@@ -64,6 +79,7 @@
         android:id="@+id/et_pw"
         android:layout_width="150dp"
         android:layout_height="48dp"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="@id/tv_pw"
         app:layout_constraintStart_toStartOf="@id/et_id" />
 
@@ -71,6 +87,8 @@
         android:id="@+id/btn_test"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:maxLength="15"
         app:layout_constraintStart_toStartOf="@id/iv_login_box"
         app:layout_constraintEnd_toEndOf="@id/iv_login_box"
         app:layout_constraintTop_toBottomOf="@id/tv_pw"
