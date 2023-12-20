@@ -69,4 +69,18 @@
             upd_at = CURRENT_TIMESTAMP
         WHERE serial_no = #{serialNo}
     </update>
+
+    <insert id="insertEquipment" useGeneratedKeys="true" keyProperty="eqId">
+        INSERT INTO tb_equipments
+            (serial_no, eq_nm, type_id, eq_model,
+             eq_maker, status_id, use_yn, reg_id)
+        VALUE (#{serialNo}, #{eqNm}, #{typeId}, #{eqModel},
+                #{eqMaker}, #{statusId}, 'Y', 1)
+    </insert>
+
+    <insert id="insertEntryExitRecordToStatusOne">
+        INSERT INTO tb_entry_exit_record
+            (eq_id, status_id, member_id, reg_at)
+        VALUE (#{eqId}, #{statusId}, #{empId}, CURRENT_TIMESTAMP)
+    </insert>
 </mapper>

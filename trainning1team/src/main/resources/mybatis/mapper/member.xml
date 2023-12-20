@@ -22,4 +22,9 @@
         WHERE emp_no = #{empNo}
     </select>
 
+    <select id="selectEmpNoList" resultType="com.bnksystem.trainning1team.dto.Member.MemberEmpNoResponse">
+        SELECT emp_no
+        FROM tb_members
+    </select>
+
 </mapper>

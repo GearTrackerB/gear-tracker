@@ -29,7 +29,7 @@ public class QRService {
             throw new CustomException(ErrorCode.CHECKOUT_FAIL);
         }
 
-        MemberInfoDto admin = memberMapper.selectMemberInfo(qrRequest);
+        MemberInfoDto admin = memberMapper.selectMemberInfo(qrRequest.getEmpNo());
 
         qrMapper.updateEquipmentStatus(status.toChangeEquipmentStatusDto(admin)); //장비 상태를 출고예정 상태로 변경
         qrMapper.insertEntryExitRecordQR(status.toRecordDto()); //출고 상태 기록
@@ -43,7 +43,7 @@ public class QRService {
             throw new CustomException(ErrorCode.CHECKIN_FAIL);
         }
 
-        MemberInfoDto admin = memberMapper.selectMemberInfo(qrRequest);
+        MemberInfoDto admin = memberMapper.selectMemberInfo(qrRequest.getEmpNo());
 
         qrMapper.updateEquipmentStatus(status.toChangeEquipmentStatusDto(admin)); //장비 상태를 반납 상태로 변경
         qrMapper.insertEntryExitRecordQR(status.toRecordDto()); //반납 상태 기록
@@ -59,7 +59,8 @@ public class QRService {
 
         qrMapper.updateInspectionComplete(status);
 
-        MemberInfoDto admin = memberMapper.selectMemberInfo(qrRequest);
+//        MemberInfoDto admin = memberMapper.selectMemberInfo(qrRequest);
+        MemberInfoDto admin = memberMapper.selectMemberInfo(qrRequest.getEmpNo());
         qrMapper.insertInspectRecord(new InspectorRecordDto(status.getEqId(), admin.getId()));
     }
 }

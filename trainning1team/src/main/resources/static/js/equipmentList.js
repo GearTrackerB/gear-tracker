@@ -23,7 +23,7 @@ $(document).ready(function(){
     })
 
     $(".btn-regist").click(function(){
-        location.href = "/boardMember/regist";
+        location.href = "/admin/regist";
     })
 
     $(".btn-download").click(function(){
