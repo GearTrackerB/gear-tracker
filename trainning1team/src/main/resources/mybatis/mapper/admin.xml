@@ -26,6 +26,47 @@
 	        WHERE i.eq_id = e.id
 	        ORDER BY i.reg_at DESC
 	        LIMIT 1 ) as reg_at
-        FROM tb_equipments e;
+        FROM tb_equipments e
+        WHERE use_yn = 'Y';
     </select>
+
+    <select id="selectEquipMentInfo" resultType="com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDto">
+        SELECT e.serial_no, e.type_id, e.eq_nm, e.eq_maker, e.status_id, e.eq_model, (
+            SELECT m.emp_no
+            FROM tb_entry_exit_record r
+                     JOIN tb_members m
+                          on r.member_id = m.id
+            WHERE r.eq_id = e.id
+            ORDER BY r.reg_at DESC
+            LIMIT 1) as emp_no,(
+	        SELECT i.reg_at
+	        FROM tb_inspection_record i
+	        WHERE i.eq_id = e.id
+	        ORDER BY i.reg_at DESC
+	        LIMIT 1 ) as reg_at
+        FROM tb_equipments e
+        WHERE e.serial_no = #{serialNo};
+    </select>
+
+    <update id="updateEquipment">
+        UPDATE tb_equipments
+        SET
+            serial_no = #{serialNo},
+            type_id = #{typeId},
+            eq_nm = #{eqNm},
+            eq_model = #{eqModel},
+            status_id = #{statusId},
+            upd_id = 1,
+            upd_at = CURRENT_TIMESTAMP
+        WHERE serial_no = #{originSerialNo}
+    </update>
+
+    <update id="deleteEquipment">
+        UPDATE tb_equipments
+        SET
+            use_yn = 'N',
+            upd_id = 1,
+            upd_at = CURRENT_TIMESTAMP
+        WHERE serial_no = #{serialNo}
+    </update>
 </mapper>

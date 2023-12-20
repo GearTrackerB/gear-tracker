@@ -75,7 +75,7 @@ $(document).ready(function(){
 })
 
 function goView(id) {
-    location.href = "/boardMember/modify/" + id;
+    location.href = "/admin/modify/" + id;
 }
 
 function search(page) {
@@ -113,10 +113,6 @@ function search(page) {
                         strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.eqStatus + '</td>';
                         strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.empNo + '</td>';
                         strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.regAt + '</td>';
-                        // if (sessAuthCd === "ROL001" || sessAuthCd === "ROL002") {
-                        //     strHtml += '    <td><input type="text" id="order_no' + item.ID + '" value="' + item.ORDER_NO + '" class="form-control tac" maxlength="2" /></td>';
-                        //     strHtml += '    <td><button type="button" class="btn btn-modify-col btn-modify btn-secondary" data-key="' + item.serialNo + '">수정</button></td>';
-                        // }
                         strHtml += '</tr>';
                     }
                 } else {
