@@ -30,7 +30,6 @@ class LogInViewModel: ViewModel() {
             if(result.isSuccess) { // 로그인 성공 시, 사원 번호 저장
                 val data = result.getOrNull()
                 _empNo.value = data?.empNo
-                ApplicationClass.mainPref.edit().putString("empNo", data?.empNo)
             } else { // 로그인 실패
                 val error = result.exceptionOrNull()
                 _empNo.value = "-1" // 실패시 empNo -1

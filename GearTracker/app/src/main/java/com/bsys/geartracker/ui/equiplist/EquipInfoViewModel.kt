@@ -35,24 +35,17 @@ class EquipInfoViewModel: ViewModel() {
     // 서버에 장비출고현황 요청
     fun get_total_equip_list() {
         viewModelScope.launch {
-//            Log.d("equiplist", "장비출고현황호출")
-//            val result = equipInfoRepository.get_total_info_list(lastEquipIdx, LIST_SIZE)
-//            if(result.isSuccess) { // 서버 통신 성공 시 마지막 idx, 장비 리스트 입력
-//                val data = result.getOrNull()
-//                lastEquipIdx = data?.lastIdx ?: -1L
-//                _equipList.value = data?.equipList
-//                Log.d("equiplist", "data $data")
-//            } else { // 서버 통신 실패
-//                val error = result.exceptionOrNull()
-//                Log.d("equiplist", "error ${error}")
-//            }
-            _equipList.value = listOf(
-                RentalStatusResponse(10L,"a1", "장비명이죠1", "출", "너"),
-                RentalStatusResponse(11L,"a2", "장비명이죠2", "출", "너"),
-                RentalStatusResponse(12L,"a3", "장비명이죠3", "출", "너"),
-                RentalStatusResponse(13L,"a4", "장비명이죠4", "출", "너"),
-                RentalStatusResponse(14L,"a5", "장비명이죠5", "출", "너")
-            )
+            Log.d("equiplist", "장비출고현황호출")
+            val result = equipInfoRepository.get_total_info_list(lastEquipIdx, LIST_SIZE)
+            if(result.isSuccess) { // 서버 통신 성공 시 마지막 idx, 장비 리스트 입력
+                val data = result.getOrNull()
+                lastEquipIdx = data?.lastIdx ?: -1L
+                _equipList.value = data?.equipList
+                Log.d("equiplist", "data $data")
+            } else { // 서버 통신 실패
+                val error = result.exceptionOrNull()
+                Log.d("equiplist", "error ${error}")
+            }
         }
     }
 
@@ -84,12 +77,6 @@ class EquipInfoViewModel: ViewModel() {
                 val error = result.exceptionOrNull()
                 Log.d("equipdetail", "equipdetail error ${error}")
 
-                // API 연결 없이 테스트 위한 자료 todo 지우기
-                _equipInfo.value = EquipDetailResponse(
-                    "serial", "장비명1", "노트북", "모델명1", "제조사1",
-                    "null", "null", "출"
-                )
-                Log.d("equipdetail", "equipinfo에 값 입력 ${equipInfo.value.toString()}")
             }
         }
     }

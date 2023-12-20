@@ -3,6 +3,7 @@ package com.bsys.geartracker.ui.qrcamera
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,7 @@ class QRCameraFragment: Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: QRViewModel by viewModels()
+    private val loginViewModel: LogInViewModel by activityViewModels()
 
     lateinit var code_scanner: CodeScanner
 
@@ -200,7 +202,7 @@ class QRCameraFragment: Fragment() {
                     Toast.makeText(requireActivity(), it.text, Toast.LENGTH_SHORT).show()
                 }
 
-                request_qr(qrType, ApplicationClass.mainPref.getString("empNo", "없음")!!, it.text)
+                request_qr(qrType, loginViewModel.empNo.value ?: "사번 null", it.text)
             }
 
             code_scanner.errorCallback = ErrorCallback {

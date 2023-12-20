@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bsys.geartracker.data.model.dto.QRRequest
+import com.bsys.geartracker.data.model.dto.User
 import com.bsys.geartracker.data.repository.QRRequestRepository
 import kotlinx.coroutines.launch
 
@@ -20,7 +22,9 @@ class QRViewModel: ViewModel() {
     // 출고 처리
     fun equip_send_request(serialNo: String, empNo: String) {
         viewModelScope.launch {
-            val result = qrRequestReadable.equip_send_request(serialNo, empNo)
+            val request: QRRequest = QRRequest(serialNo, empNo)
+            Log.d("equip_send_request", request.toString())
+            val result = qrRequestReadable.equip_send_request(request)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패

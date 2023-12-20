@@ -2,19 +2,21 @@ package com.bsys.geartracker.data.datasource
 
 import android.util.Log
 import com.bsys.geartracker.ApplicationClass
+import com.bsys.geartracker.data.model.dto.QRRequest
 import com.bsys.geartracker.data.model.response.ApiResponse
 import com.bsys.geartracker.data.model.response.TotalEquipResponse
 
 class QRRemoteDatasource {
 
     // 장비 출고 요청 API 호출
-    suspend fun equip_send_request(serialNo: String, empNo: String): Result<Unit> {
+    suspend fun equip_send_request(qrRequest: QRRequest): Result<Unit> {
         return try {
-            val response = ApplicationClass.qrService.equip_send_request(serialNo, empNo)
+            val response = ApplicationClass.qrService.equip_send_request(qrRequest)
             if(response.isSuccessful) {
                 Log.d("qrrequest", "equip_send_request 성공 ${response.code()}")
                 Result.success(Unit)
             } else {
+                Log.d("qrrequest", "equip_send_request network fail ${response.code()} ${response.body()} ${response.message()}")
                 Result.failure(Exception("network fail"))
             }
         } catch(e: Exception) {

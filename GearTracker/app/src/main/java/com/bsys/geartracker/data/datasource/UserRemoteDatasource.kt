@@ -14,7 +14,7 @@ class UserRemoteDatasource {
             // Retrofit 통해 UserAPI 호출
             val response = ApplicationClass.userService.log_in(user)
             if(response.isSuccessful) { // 통신 성공
-                val data = response.body()
+                val data = response.body()?.data
                 if(data != null) {
                     Log.d("logindatasource", "로그인 성공 ${data}")
                     Result.success(data)

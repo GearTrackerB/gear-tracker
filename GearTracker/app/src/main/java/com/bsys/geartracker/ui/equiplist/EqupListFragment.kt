@@ -99,6 +99,7 @@ class EqupListFragment: Fragment() {
                     override fun onClick(view: View, position: Int, equip: RentalStatusResponse) {
                         // 장비 현황 조회에 어떤 모드로 들어갈 지 설정
                         val bundle: Bundle = bundleOf("serialNo" to equip.serialNo)
+
                         // 장비 출납 현황 조회로 이동
                         findNavController().navigate(R.id.action_totalInfoFragment_to_detailInfoFragment, bundle)                    }
                 })

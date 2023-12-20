@@ -1,8 +1,10 @@
 package com.bsys.geartracker.data.api
 
+import com.bsys.geartracker.data.model.dto.QRRequest
 import com.bsys.geartracker.data.model.response.ApiResponse
 import com.bsys.geartracker.data.model.response.TotalEquipResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
 
@@ -11,7 +13,7 @@ interface QRAPI {
 
     // 장비 출고 처리
     @PUT("manager/equipment/checkout")
-    suspend fun equip_send_request(serialNo: String, empNo: String): Response<ApiResponse<Unit>>
+    suspend fun equip_send_request(@Body qrRequest: QRRequest): Response<ApiResponse<Unit>>
 
     // 장비 반납 처리
     @PUT("manager/equipment/checkin")

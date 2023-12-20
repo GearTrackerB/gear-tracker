@@ -26,7 +26,7 @@ interface EquipAPI {
     ): Response<TotalEquipResponse>
 
     // 장비정보조회 요청
-    @GET("manager/equipment")
+    @GET("manager/equipment/detail")
     suspend fun get_equip_detail(@Query("serialNo") serialNo: String
     ): Response<ApiResponse<EquipDetailResponse>>
 }
