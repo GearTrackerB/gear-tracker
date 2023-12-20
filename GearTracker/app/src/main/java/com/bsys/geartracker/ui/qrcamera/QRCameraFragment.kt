@@ -1,12 +1,14 @@
 package com.bsys.geartracker.ui.qrcamera
 
-import android.content.Context
+import android.app.Activity
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,10 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.R
 import com.bsys.geartracker.databinding.FragmentQrCameraBinding
-import com.bsys.geartracker.ui.MainActivity
 import com.bsys.geartracker.ui.equiplist.EquipInfoViewModel
 import com.bsys.geartracker.ui.login.LogInViewModel
 import com.bsys.geartracker.utils.EQUIP_DETAIL
@@ -32,9 +32,6 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class QRCameraFragment: Fragment() {
     private var _binding: FragmentQrCameraBinding? = null
@@ -68,6 +65,10 @@ class QRCameraFragment: Fragment() {
 
         // 카메라 권한 확인 & QR 스캔 실행
         check_permission()
+
+        // 스테이터스바 설정
+        setStatusNavigationBarColor(requireActivity(), R.color.black)
+
 
     }
 
@@ -240,6 +241,14 @@ class QRCameraFragment: Fragment() {
         activity?.runOnUiThread {
             findNavController().navigate(R.id.action_QRCameraFragment_to_detailInfoFragment, bundle)
         }
+    }
+
+
+    // 네비게이션과 상태바 검은색으로 변경
+    private fun setStatusNavigationBarColor(activity: Activity, colorResId: Int) {
+        val window: Window? = activity.window
+        window?.statusBarColor = ContextCompat.getColor(activity, colorResId)
+        window?.navigationBarColor = Color.parseColor("#000000")  // 변경하려는 색상
     }
 
 }
