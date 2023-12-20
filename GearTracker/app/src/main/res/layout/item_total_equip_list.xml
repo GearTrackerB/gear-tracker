@@ -40,6 +40,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:hint="시리얼번호"
+                    android:background="@drawable/bg_item_border"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:gravity="center" />
@@ -94,6 +95,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:hint="장비배정자"
+                    android:background="@drawable/bg_login_top"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:gravity="center" />

@@ -16,15 +16,15 @@ class QRRequestRepository {
         }
     }
 
-    suspend fun equip_take_request(serialNo: String, empNo: String): Result<Unit>{
+    suspend fun equip_take_request(qrRequest: QRRequest): Result<Unit>{
         return withContext(Dispatchers.IO) {
-            qrRemoteDatasource.equip_take_request(serialNo, empNo)
+            qrRemoteDatasource.equip_take_request(qrRequest)
         }
     }
 
-    suspend fun equip_inventory_request(serialNo: String, empNo: String): Result<Unit>{
+    suspend fun equip_inventory_request(qrRequest: QRRequest): Result<Unit>{
         return withContext(Dispatchers.IO) {
-            qrRemoteDatasource.equip_inventory_request(serialNo, empNo)
+            qrRemoteDatasource.equip_inventory_request(qrRequest)
         }
     }
 }

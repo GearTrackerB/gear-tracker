@@ -25,9 +25,9 @@ class QRRemoteDatasource {
     }
 
     // 장비 반납 요청 API 호출
-    suspend fun equip_take_request(serialNo: String, empNo: String): Result<Unit> {
+    suspend fun equip_take_request(qrRequest: QRRequest): Result<Unit> {
         return try {
-            val response = ApplicationClass.qrService.equip_take_request(serialNo, empNo)
+            val response = ApplicationClass.qrService.equip_take_request(qrRequest)
             if(response.isSuccessful) {
                 Log.d("qrrequest", "equip_take_request 성공 ${response.code()}")
                 Result.success(Unit)
@@ -40,9 +40,9 @@ class QRRemoteDatasource {
     }
 
     // 재물 조사 처리 API 호출
-    suspend fun equip_inventory_request(serialNo: String, empNo: String): Result<Unit> {
+    suspend fun equip_inventory_request(qrRequest: QRRequest): Result<Unit> {
         return try {
-            val response = ApplicationClass.qrService.equip_invetory_request(serialNo, empNo)
+            val response = ApplicationClass.qrService.equip_invetory_request(qrRequest)
             if(response.isSuccessful) {
                 Log.d("qrrequest", "equip_invetory_request 성공 ${response.code()}")
                 Result.success(Unit)

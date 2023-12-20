@@ -38,7 +38,8 @@ class QRViewModel: ViewModel() {
     // 반납 처리
     fun equip_take_request(serialNo: String, empNo: String) {
         viewModelScope.launch {
-            val result = qrRequestReadable.equip_take_request(serialNo, empNo)
+            val request: QRRequest = QRRequest(serialNo, empNo)
+            val result = qrRequestReadable.equip_take_request(request)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패
@@ -52,7 +53,8 @@ class QRViewModel: ViewModel() {
     // 재물 조사 처리
     fun equip_inventory_check_request(serialNo: String, empNo: String) {
         viewModelScope.launch {
-            val result = qrRequestReadable.equip_inventory_request(serialNo, empNo)
+            val request: QRRequest = QRRequest(serialNo, empNo)
+            val result = qrRequestReadable.equip_inventory_request(request)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패

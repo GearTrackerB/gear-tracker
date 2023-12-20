@@ -3,6 +3,7 @@ package com.bsys.geartracker.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.graphics.Color
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,11 @@ class TotalInfoAdapter: ListAdapter<RentalStatusResponse, TotalInfoAdapter.Equip
                 tvEquipName.text = equip.equipmentName
                 tvEquipEmploy.text = equip.employeeNo
                 tvEquipStatus.text = equip.statusName
+                if(equip.statusName == "출고예정")
+                        tvEquipStatus.setTextColor(Color.RED)
+                else if(equip.statusName == "반납예정")
+                        tvEquipStatus.setTextColor(Color.BLUE)
+
             }
         }
     }
