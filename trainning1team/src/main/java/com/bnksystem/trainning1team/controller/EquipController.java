@@ -39,6 +39,17 @@ public class EquipController {
         return new Response<>(200, "장비 상세 조회 성공", equipDetail);
     }
 
+    // 재물조사현황조회
+    @GetMapping("/manager/inventory")
+    @ResponseBody
+    public Response<EquipsListResponse> getInventoryEquipList(
+            @RequestParam(defaultValue = "0") int index,
+            @RequestParam(defaultValue = "10") int size) {
+        EquipsListResponse equipsListResponse = equipService.getInventoryEquipList(index, size);
+        return new Response<>(200, "재물 조사 현황 조회 성공", equipsListResponse);
+    }
+
+
     /*
     * main 페이지로 이동.
     * */

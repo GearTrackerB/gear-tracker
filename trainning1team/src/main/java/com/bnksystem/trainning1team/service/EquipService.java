@@ -25,7 +25,7 @@ public class EquipService {
 
     // 장비 출납 현황 리스트 반환
     public EquipsListResponse getRentalEquipList(int index, int size) {
-        List<RentalStatusResponse> rentalStatusList = equipMapper.getRentalEquipList(index, size);
+        List<RentalStatusResponse> rentalStatusList = equipMapper.selectRentalEquipList(index, size);
 
         // 반환결과 null 이면 -1, 아니면 마지막 id를 lastIdx에 입력
         EquipsListResponse response = new EquipsListResponse();
@@ -39,6 +39,26 @@ public class EquipService {
         return response;
     }
 
+    // 현재 재물조사 대상 장비 리스트 반환
+    public EquipsListResponse getInventoryEquipList(int index, int size) {
+        List<RentalStatusResponse> rentalStatusList = equipMapper.selectInventoryEquipList(index, size);
+
+        // 반환결과 null 이면 -1, 아니면 마지막 id를 lastIdx에 입력
+        EquipsListResponse response = new EquipsListResponse();
+        if (rentalStatusList.isEmpty()) {
+            response.setLastIdx(-1L);
+        } else {
+            response.setLastIdx(rentalStatusList.get(rentalStatusList.size() - 1).getId());
+        }
+        // 조회 List 입력
+        response.setEquipList(rentalStatusList);
+        return response;
+    }
+
+
+
+
+    // 장비 정보 상세 조회
     public EquipDetailResponse getEquipDetail(String serialNO) {
         EquipDetailResponse equipDetail = equipMapper.selectEquipDetail(serialNO);
         if(equipDetail == null) {
