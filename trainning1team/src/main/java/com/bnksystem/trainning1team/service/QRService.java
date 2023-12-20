@@ -22,7 +22,7 @@ public class QRService {
 
     @Transactional
     public void checkout(QRRequest qrRequest) {
-        EquipmentStatus status = qrMapper.selectEquipmentStatus(qrRequest); //장비 조회
+        EquipmentStatus status = qrMapper.selectEquipmentStatus(qrRequest.getSerialNo()); //장비 조회
 
         if(status.getStatusId() != EquipmentStatusType.출고예정.getStatusCode()){ //출고예정 상태가 아니라면, 에러발생
             //tb_equipments 테이블의 상태로 장비 상태 관리중(tb_entry_exit_record 테이블의 장비 상태와는 무관)
@@ -37,7 +37,7 @@ public class QRService {
 
     @Transactional
     public void checkin(QRRequest qrRequest) {
-        EquipmentStatus status = qrMapper.selectEquipmentStatus(qrRequest);
+        EquipmentStatus status = qrMapper.selectEquipmentStatus(qrRequest.getSerialNo());
 
         if(status.getStatusId() != EquipmentStatusType.반납예정.getStatusCode()){ //반납예정 상태가 아니라면, 에러발생
             throw new CustomException(ErrorCode.CHECKIN_FAIL);
@@ -51,7 +51,7 @@ public class QRService {
 
     @Transactional
     public void inspect(QRRequest qrRequest) {
-        EquipmentStatus status = qrMapper.selectEquipmentStatus(qrRequest);
+        EquipmentStatus status = qrMapper.selectEquipmentStatus(qrRequest.getSerialNo());
 
         if(status.getCompleteYn() == 'Y'){ //이미 재고 조사를 했다면, 에러 발생
             throw new CustomException(ErrorCode.ALREADY_INSPECTED);
