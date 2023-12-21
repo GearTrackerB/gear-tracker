@@ -34,4 +34,15 @@ public class EquipmentStatus {
             return new RecordDto(eqId, EquipmentStatusType.출고.getStatusCode(), memberId);
         }
     }
+
+    @Override
+    public String toString() {
+        return "EquipmentStatus{" +
+                "memberId=" + memberId +
+                ", eqId=" + eqId +
+                ", statusId=" + statusId +
+                ", completeYn=" + completeYn +
+                ", inspId=" + inspId +
+                '}';
+    }
 }

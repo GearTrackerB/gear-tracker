@@ -52,8 +52,8 @@ public class QRService {
     @Transactional
     public void inspect(QRRequest qrRequest) {
         EquipmentStatus status = qrMapper.selectEquipmentStatus(qrRequest);
-
-        if(status.getCompleteYn() == 'Y'){ //이미 재고 조사를 했다면, 에러 발생
+        System.out.println(status.toString());
+        if(status.getCompleteYn() != 'N'){ //이미 재고 조사를 했다면, 에러 발생
             throw new CustomException(ErrorCode.ALREADY_INSPECTED);
         }
 
