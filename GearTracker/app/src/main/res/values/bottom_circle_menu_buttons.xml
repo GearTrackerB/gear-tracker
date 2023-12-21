@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="icons">
-        <item>@drawable/img_bnk_logo</item>
-        <item>@drawable/img_bnk_logo</item>
-        <item>@drawable/img_bnk_logo</item>
-        <item>@drawable/img_bnk_logo</item>
+        <item>@drawable/ic_send</item>
+        <item>@drawable/ic_take</item>
+        <item>@drawable/ic_inventory</item>
+        <item>@drawable/ic_info</item>
     </array>
     <array name="colors">
         <item>@color/white</item>

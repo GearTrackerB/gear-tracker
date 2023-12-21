@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.children
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -93,41 +95,29 @@ class QRCameraFragment: Fragment() {
             }
         }
 
-        binding.apply {
-            tvSend.setOnClickListener {
-                qrType = EQUIP_SEND
-            }
-
-            tvAccept.setOnClickListener {
-                qrType = EQUIP_TAKE
-            }
-
-            tvInventory.setOnClickListener {
-                qrType = EQUIP_INVENTORY
-            }
-
-            tvInfo.setOnClickListener {
-                qrType = EQUIP_DETAIL
-            }
-        }
-
     }
 
     private fun init_circle_menu() {
-        binding.circleMenu.setEventListener(object : CircleMenuView.EventListener() {
-            override fun onButtonClickAnimationStart(view: CircleMenuView, buttonIndex: Int) {
-                super.onButtonClickAnimationStart(view, buttonIndex)
+        binding.apply{
+            circleMenu.setEventListener(object : CircleMenuView.EventListener() {
+                override fun onButtonClickAnimationStart(view: CircleMenuView, buttonIndex: Int) {
+                    super.onButtonClickAnimationStart(view, buttonIndex)
 
-                var txt: String = ""
-                when(buttonIndex) {
-                    0 -> {qrType = EQUIP_SEND; txt = "출고"}
-                    1 -> {qrType = EQUIP_TAKE; txt = "반납"}
-                    2 -> {qrType = EQUIP_INVENTORY; txt = "재물조사"}
-                    3 -> {qrType = EQUIP_DETAIL; txt = "장비정보조회"}
+                    var txt: String = ""
+                    when(buttonIndex) {
+                        0 -> {qrType = EQUIP_SEND; txt = "출고 모드"; change_mode_text(txt)}
+                        1 -> {qrType = EQUIP_TAKE; txt = "반납 모드"; change_mode_text(txt)}
+                        2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt)}
+                        3 -> {qrType = EQUIP_DETAIL; txt = "장비 정보 조회 모드"; change_mode_text(txt)}
+                    }
                 }
-                Toast.makeText(requireActivity(), "$txt 모드", Toast.LENGTH_SHORT).show()
-            }
-        })
+            })
+
+        }
+    }
+
+    private fun change_mode_text(txt: String) {
+        binding.tvMode.text = txt
     }
 
     private fun init_observer() {
