@@ -61,11 +61,17 @@ function validate(){
         return false;
     }
 
+    if ($.trim($("#empModel").val()).length <= 0) {
+        alert("모델명을 입력해주세요.");
+        $("#empNo").focus();
+        return false;
+    }
+
     if ($.trim($("#empNo").val()).length <= 0) {
         alert("배정자를 선택해주세요.");
         $("#empNo").focus();
         return false;
     }
-
+    
     return true;
 }
