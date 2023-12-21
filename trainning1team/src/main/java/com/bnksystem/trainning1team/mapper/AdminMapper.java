@@ -5,6 +5,7 @@ import com.bnksystem.trainning1team.dto.Equip.ModifyRequest;
 import com.bnksystem.trainning1team.dto.Equip.RegistRequest;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -20,4 +21,6 @@ public interface AdminMapper {
     void insertEquipment(RegistRequest registRequest);
 
     void insertEntryExitRecordToStatusOne(RegistRequest registRequest);
+
+    List<HashMap<String, Object>> selectEquipmentList();
 }

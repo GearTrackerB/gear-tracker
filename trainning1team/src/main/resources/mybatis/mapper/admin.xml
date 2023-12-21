@@ -83,4 +83,34 @@
             (eq_id, status_id, member_id, reg_at)
         VALUE (#{eqId}, #{statusId}, #{empId}, CURRENT_TIMESTAMP)
     </insert>
+
+    <select id="selectEquipmentList" resultType="java.util.HashMap">
+        SELECT e.serial_no, e.eq_nm, e.eq_model,
+               (
+                   SELECT m.emp_no
+                   FROM tb_entry_exit_record r
+                            JOIN tb_members m
+                                 on r.member_id = m.id
+                   WHERE r.eq_id = e.id
+                   ORDER BY r.reg_at DESC
+                   LIMIT 1) as emp_no,
+        	(
+	        	SELECT i.reg_at
+		        FROM tb_inspection_record i
+		        WHERE i.eq_id = e.id
+	    	    ORDER BY i.reg_at DESC
+	        	LIMIT 1 ) as reg_at,
+	        (
+	        	SELECT t.type_nm
+	        	FROM tb_eq_types t
+	        	WHERE t.id = e.type_id
+	        ) as eq_type,
+	        (
+	        	SELECT s.status_nm
+	        	FROM tb_eq_status s
+	        	WHERE s.id = e.status_id
+	        ) as eq_status
+        FROM tb_equipments e
+        WHERE use_yn = 'Y'
+    </select>
 </mapper>

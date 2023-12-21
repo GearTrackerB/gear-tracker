@@ -6,13 +6,18 @@ import com.bnksystem.trainning1team.dto.Member.MemberEmpNoResponse;
 import com.bnksystem.trainning1team.dto.Response;
 import com.bnksystem.trainning1team.service.EquipService;
 import com.bnksystem.trainning1team.service.MemberService;
+import com.bnksystem.trainning1team.util.ExcelType;
+import com.bnksystem.trainning1team.util.ExcelUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.map.LinkedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -120,5 +125,69 @@ public class EquipController {
     public Response<?> createEquipment(@RequestBody RegistRequest registRequest){
         equipService.registEquipment(registRequest);
         return new Response<>(200, "SUCCESS");
+    }
+
+    /*
+    * 장비 엑셀 업로드 요청을 받습니다.
+    * */
+    @PostMapping("/admin/registEquipmentExcel")
+    @ResponseBody
+    public Response<?> setEquipmentInfoFromExcel(
+            @RequestParam("uploadFile") MultipartFile uploadFile) throws IOException {
+
+        if (!uploadFile.isEmpty()) {
+            String[] headers = { //식별코드, 제품종류, 제품명, 모델명, 제조사, 배정자
+                    "serialNo", "eqType", "eqNm", "eqModel", "eqMaker", "empNo"
+            };
+            List<LinkedMap<String, Object>> datas = ExcelUtils.getInstance(ExcelType.XLSX).parse(headers, uploadFile.getInputStream(), 1);
+
+            int successCnt = 0;
+            int failCnt = 0;
+
+            for (LinkedMap<String, Object> data : datas) {
+                HashMap<String, Object> parameters = new HashMap<>();
+                for (String key : headers) {
+                    parameters.put(key, data.get(key));
+                }
+
+                int success = 0;
+
+                //success = service.createBoardMemberInfo(parameters);
+
+                if (success > 0) {
+                    successCnt++;
+                } else {
+                    failCnt++;
+                }
+            }
+
+            HashMap<String, Object> resultMap = new HashMap<>();
+            resultMap.put("successCnt", successCnt);
+            resultMap.put("failCnt", failCnt);
+
+            return new Response<>(200, "SUCCESS", resultMap);
+        }else{
+            return new Response<>(400, "파일이 없습니다");
+        }
+    }
+
+    /*
+    * 엑셀 다운로드 요청을 받습니다.
+    * */
+    @RequestMapping("/admin/download")
+    public String excelReqFaultList(HttpServletResponse response) throws Exception {
+
+        String[] header = new String[]{"식별코드", "제품 종류", "제품명", "모델명", "상태", "배정자", "최근 재물조사 일"};
+        Integer[] contentSize = new Integer[]{6000, 4000, 4000, 4000, 4000, 4000, 4000};
+
+        //String[] content = new String[] {"serialNo", "eqType", "eqNm", "eqModel", "eqStatus", "empNo", "regAt"};
+        String[] content = new String[] {"serial_no", "eq_type", "eq_nm", "eq_model", "eq_status", "emp_no", "reg_at"};
+        String fileName = "IT_Equipment_Status";
+
+        List<HashMap<String, Object>> processList = equipService.getEquipmentExcelList();
+
+        ExcelUtils.getInstance(ExcelType.XLSX).getExcel(header, contentSize, content, fileName, processList, response);
+        //한글 헤더리스트, 컨텐츠 사이즈(컬럼 사이즈), 컨텐츠(영어 헤더), 파일 이름, 데이터(리스트 해시맵), response
+        return "main";
     }
 }
