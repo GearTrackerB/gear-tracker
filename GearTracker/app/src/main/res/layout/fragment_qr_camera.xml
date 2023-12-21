@@ -22,7 +22,6 @@
                 android:id="@+id/tv_result"
                 android:text="D1343D35  장비 : 출고처리 완료"
                 android:textSize="12dp"
-                android:visibility="invisible"
                 android:textColor="#ffffff"
                 android:layout_width="0dp"
                 android:layout_weight="1"

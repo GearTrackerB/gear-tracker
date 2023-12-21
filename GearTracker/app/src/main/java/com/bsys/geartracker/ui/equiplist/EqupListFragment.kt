@@ -1,6 +1,7 @@
 package com.bsys.geartracker.ui.equiplist
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,7 @@ class EqupListFragment: Fragment() {
         init_button()
         init_recyclerView()
         init_observe()
+
     }
 
     override fun onDestroyView() {
