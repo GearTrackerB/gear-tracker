@@ -79,6 +79,19 @@ class QRCameraFragment: Fragment() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        resetResponseCode()
+        qrType = loginViewModel.nowMode.value ?: EQUIP_SEND
+        var txt = ""
+        when(qrType-1) {
+            0 -> {qrType = EQUIP_SEND; txt = "출고 모드"; change_mode_text(txt)}
+            1 -> {qrType = EQUIP_TAKE; txt = "반납 모드"; change_mode_text(txt)}
+            2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt)}
+            3 -> {qrType = EQUIP_DETAIL; txt = "장비 정보 조회 모드"; change_mode_text(txt)}
+        }
+    }
+
     private fun init_btn() {
         binding.apply{
             tvEquipTotalInfo.setOnClickListener {
@@ -105,10 +118,14 @@ class QRCameraFragment: Fragment() {
 
                     var txt: String = ""
                     when(buttonIndex) {
-                        0 -> {qrType = EQUIP_SEND; txt = "출고 모드"; change_mode_text(txt)}
-                        1 -> {qrType = EQUIP_TAKE; txt = "반납 모드"; change_mode_text(txt)}
-                        2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt)}
-                        3 -> {qrType = EQUIP_DETAIL; txt = "장비 정보 조회 모드"; change_mode_text(txt)}
+                        0 -> {qrType = EQUIP_SEND; txt = "출고 모드"; change_mode_text(txt)
+                                loginViewModel.setNowMode(qrType)}
+                        1 -> {qrType = EQUIP_TAKE; txt = "반납 모드"; change_mode_text(txt)
+                            loginViewModel.setNowMode(qrType)}
+                        2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt)
+                            loginViewModel.setNowMode(qrType)}
+                        3 -> {qrType = EQUIP_DETAIL; txt = "장비 정보 조회 모드"; change_mode_text(txt)
+                            loginViewModel.setNowMode(qrType)}
                     }
                 }
             })
@@ -132,10 +149,16 @@ class QRCameraFragment: Fragment() {
 
             if(it == 200) {
                 Toast.makeText(requireActivity(), "$typeMsg 요청 성공", Toast.LENGTH_SHORT).show()
+                resetResponseCode()
             } else if(it == 400) {
                 Toast.makeText(requireActivity(), "$typeMsg 요청 실패", Toast.LENGTH_SHORT).show()
+                resetResponseCode()
             }
         }
+    }
+
+    private fun resetResponseCode() {
+        viewModel.resetQrResult()
     }
 
     //  액티비티 재실행 되면 실행됨

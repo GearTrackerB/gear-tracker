@@ -17,6 +17,9 @@ class QRViewModel: ViewModel() {
     private val _qrResult: MutableLiveData<Int> = MutableLiveData(0)
     val qrResult: LiveData<Int>
         get() = _qrResult
+    fun resetQrResult() {
+        _qrResult.value = 0
+    }
 
 
     // 출고 처리

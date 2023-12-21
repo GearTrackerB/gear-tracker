@@ -21,6 +21,13 @@ class LogInViewModel: ViewModel() {
     val empNo: LiveData<String>
         get() = _empNo
 
+    private val _nowMode = MutableLiveData(0)
+    val nowMode: LiveData<Int>
+        get() = _nowMode
+    fun setNowMode(mode: Int) {
+        _nowMode.value = mode
+    }
+
     // 서버에 로그인 요청
     fun user_log_in(user: User) {
         viewModelScope.launch {
