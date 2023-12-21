@@ -22,7 +22,7 @@ $(document).ready(function(){
         search(1);
     })
 
-    $(".btn-regist").click(function(){
+    $(".btn-regists").click(function(){
         location.href = "/admin/regist";
     })
 
