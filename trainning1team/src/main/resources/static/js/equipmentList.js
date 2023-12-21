@@ -27,7 +27,8 @@ $(document).ready(function(){
     })
 
     $(".btn-download").click(function(){
-        location.href = "/download?filePath=/upload/boardmember_upload_format.xlsx";
+        // location.href = "/download?filePath=/upload/boardmember_upload_format.xlsx";
+        location.href = "/admin/download";
     })
 
     $(".btn-reg").click(function(){
@@ -39,7 +40,7 @@ $(document).ready(function(){
             formData.append("uploadFile", $("#file")[0].files[0]);
 
             $.ajax({
-                url: "/boardMember/registProcFromExcel",
+                url: "/admin/registEquipmentExcel",
                 type: "post",
                 data: formData,
                 dataType: "json",
@@ -48,12 +49,8 @@ $(document).ready(function(){
                 success: function (data) {
                     console.log("response = " + JSON.stringify(data));
 
-                    if (data.resultCode === "0000") {
-                        alert("등록되었습니다.(성공:" + data.result.successCnt + ", 실패:" + data.result.failCnt + ")");
-                        location.reload();
-                    } else {
-                        alert(data.resultMessage);
-                    }
+                    alert("등록되었습니다.(성공:" + data.result.successCnt + ", 실패:" + data.result.failCnt + ")");
+                    location.reload();
                 },
                 error: function (request, status, error) {
                     console.log("code : " + request.status + ", message : " + request.responseText + ", error : " + error);

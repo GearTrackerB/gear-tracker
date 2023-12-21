@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
 
     private String loginId;
-    private String loginPw;
+        private String loginPw;
 }

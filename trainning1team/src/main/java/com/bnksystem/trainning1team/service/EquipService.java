@@ -95,4 +95,8 @@ public class EquipService {
         //데이터 쌓아주기(출고 예정으로)
         adminMapper.insertEntryExitRecordToStatusOne(registRequest);
     }
+
+    public List<HashMap<String, Object>> getEquipmentExcelList() {
+        return adminMapper.selectEquipmentList();
+    }
 }

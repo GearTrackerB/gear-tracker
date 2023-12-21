@@ -60,19 +60,19 @@
             <div class="form-group col-md">
               <label class="form_tite essential" for="eqNm">제품명</label>
               <div class="input-group mb-3">
-                <input ref="eqNm" type="text" class="form-control" id="eqNm" value="${info.eqNm}" placeholder="사번을 입력해주세요." maxlength="15"/>
+                <input ref="eqNm" type="text" class="form-control" id="eqNm" value="${info.eqNm}" placeholder="사번을 입력해주세요." maxlength="10"/>
               </div>
             </div>
             <div class="form-group col-md">
               <label for="eqModel">모델명</label>
               <div class="input-group mb-3">
-                <input ref="eqModel" type="text" class="form-control" id="eqModel" value="${info.eqModel}" placeholder="성명을 입력해주세요." maxlength="5"/>
+                <input ref="eqModel" type="text" class="form-control" id="eqModel" value="${info.eqModel}" placeholder="모델명을 입력해주세요." maxlength="45"/>
               </div>
             </div>
             <div class="form-group col-md">
               <label for="empNo">배정자</label>
               <div class="input-group mb-3">
-                <input ref="empNo" type="text" class="form-control" id="empNo" value="${info.empNo}" maxlength="20" readonly/>
+                <input ref="empNo" type="text" class="form-control" id="empNo" value="${info.empNo}" maxlength="10" readonly/>
               </div>
             </div>
             <div class="form-group col-md">
@@ -90,7 +90,10 @@
             </div>
             <%-- 목록 페이지로 이동 버튼 끝 --%>
             <%-- 수정, 삭제 버튼 시작 --%>
+              <label>QR코드</label>
+              <pre><code id="result"></code></pre>
             <div class="float-right">
+              <button type="button" class="btn btn-submit btn-secondary" id="btnGenerate">QR생성</button>
               <button type="button" class="btn btn-submit btn-secondary" id="btnRegist">수정</button>
               <button type="button" class="btn btn-submit btn-secondary" id="btnDelete">삭제</button>
             </div>

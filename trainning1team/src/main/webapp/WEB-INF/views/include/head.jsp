@@ -23,4 +23,8 @@
   <script src="/static/js/jquery-3.6.4.min.js"></script>
   <script src="/static/js/jquery-ui.js"></script>
   <script src="/static/js/common.js"></script>
+  <%-- QR 생성 --%>
+<%--  <script type="text/javascript" src="qrcode.js"></script>--%>
+  <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+  <script type="text/javascript" src="https://unpkg.com/file-saver@latest"></script>
 </head>

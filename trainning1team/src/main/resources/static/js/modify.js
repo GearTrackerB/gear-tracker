@@ -52,6 +52,21 @@ $(document).ready(function(){
         }
     })
 
+    $("#btnGenerate").click(function(){
+
+        const codeWriter = new ZXing.BrowserQRCodeSvgWriter();
+        let svgElement;
+
+        const input = $("#serialNo").val()
+        svgElement = codeWriter.writeToDom('#result', input, 300, 300)
+
+        const data = $('#result').get(0);
+        const svgData = (new XMLSerializer()).serializeToString(data)
+        const blob = new Blob([svgData])
+
+        saveAs(blob, $("#serialNo").val()+'.svg')
+    })
+
     $("#btnDelete").click(function(){
         if (confirm("삭제된 데이터는 복구되지 않습니다.\n그래도 정말로 삭제하시겠습니까?")) {
             let segments = window.location.pathname.split('/');

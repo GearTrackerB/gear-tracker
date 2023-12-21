@@ -25,12 +25,9 @@ $(document).ready(function(){
                 success: function(data) {
                     console.log("reponse = " + JSON.stringify(data));
 
-                    if (data.resultCode === "0000") {
-                        alert("등록되었습니다.");
-                        location.href = "/boardMember/list";
-                    } else {
-                        alert(data.resultMessage);
-                    }
+                    alert("등록되었습니다.");
+                    location.href = "/admin/main-page";
+
                 },
                 error: function (request, status, error) {
                     console.log("code : " + request.status + ", message : " + request.responseText + ", error : " + error);
@@ -61,6 +58,12 @@ function validate(){
     if ($.trim($("#eqNm").val()).length <= 0) {
         alert("제품명을 입력해야합니다.");
         $("#eqNm").focus();
+        return false;
+    }
+
+    if ($.trim($("#empNo").val()).length <= 0) {
+        alert("배정자를 선택해주세요.");
+        $("#empNo").focus();
         return false;
     }
 
