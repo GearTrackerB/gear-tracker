@@ -140,7 +140,7 @@ public class EquipController {
                     "serialNo", "eqType", "eqNm", "eqModel", "eqMaker", "empNo"
             };
             List<LinkedMap<String, Object>> datas = ExcelUtils.getInstance(ExcelType.XLSX).parse(headers, uploadFile.getInputStream(), 1);
-
+            // 헤더, 파일, 인덱스 시작번호
             int successCnt = 0;
             int failCnt = 0;
 
@@ -152,7 +152,7 @@ public class EquipController {
 
                 int success = 0;
 
-                //success = service.createBoardMemberInfo(parameters);
+                success = equipService.registExcel(parameters);
 
                 if (success > 0) {
                     successCnt++;

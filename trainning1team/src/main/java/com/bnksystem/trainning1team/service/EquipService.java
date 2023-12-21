@@ -11,6 +11,8 @@ import com.bnksystem.trainning1team.mapper.QRMapper;
 import com.bnksystem.trainning1team.type.EquipmentStatusType;
 import com.bnksystem.trainning1team.type.EquipmentType;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class EquipService {
     private final AdminMapper adminMapper;
     private final MemberMapper memberMapper;
     private final QRMapper qrMapper;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     public List<EquipResponse> getTotalEquipList() {
         return equipMapper.getTotalEquipList();
@@ -98,5 +101,27 @@ public class EquipService {
 
     public List<HashMap<String, Object>> getEquipmentExcelList() {
         return adminMapper.selectEquipmentList();
+    }
+
+    public int registExcel(HashMap<String, Object> parameters) {
+
+        RegistRequest registRequest = new RegistRequest();
+        //"serialNo", "eqType", "eqNm", "eqModel", "eqMaker", "empNo"
+        registRequest.setSerialNo((String) parameters.get("serialNo"));
+        registRequest.setEqType((String) parameters.get("eqType"));
+        registRequest.setEqNm((String) parameters.get("eqNm"));
+        registRequest.setEqModel((String) parameters.get("eqModel"));
+        registRequest.setEqMaker((String) parameters.get("eqMaker"));
+        registRequest.setEmpNo((String) parameters.get("empNo"));
+
+        try{
+            registEquipment(registRequest);
+        }catch (Exception e){
+            logger.debug(e.toString());
+            e.printStackTrace();
+            return 0;
+        }
+
+        return 1;
     }
 }

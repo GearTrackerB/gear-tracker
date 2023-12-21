@@ -46,7 +46,7 @@
                                     <button type="button" class="btn btn-submit ml-2 btn-secondary btn-reg w80">업로드</button>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn ml-2 btn-secondary btn-download w80">양식받기</button>
+                                    <button type="button" class="btn ml-2 btn-secondary btn-download w80">관리 출력</button>
                                 </td>
                             </tr>
                             </tbody>

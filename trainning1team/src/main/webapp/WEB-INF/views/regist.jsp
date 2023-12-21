@@ -50,7 +50,7 @@
 
                     <div class="form-row">
                         <div class="form-group col-md">
-                            <label class="form_tite " for="eqModel" >모델명</label>
+                            <label class="form_tite essential" for="eqModel" >모델명</label>
                             <div class="input-group mb-3">
                                 <input ref="eqModel" type="text" class="form-control" id="eqModel" placeholder="모델명을 입력해주세요." maxlength="45"/>
                             </div>

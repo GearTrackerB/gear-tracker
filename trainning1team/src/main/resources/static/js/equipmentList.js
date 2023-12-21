@@ -47,9 +47,9 @@ $(document).ready(function(){
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    console.log("response = " + JSON.stringify(data));
+                    console.log("hello = " + JSON.stringify(data));
 
-                    alert("등록되었습니다.(성공:" + data.result.successCnt + ", 실패:" + data.result.failCnt + ")");
+                    alert("등록되었습니다.(성공:" + data.data.successCnt + ", 실패:" + data.data.failCnt + ")");
                     location.reload();
                 },
                 error: function (request, status, error) {
