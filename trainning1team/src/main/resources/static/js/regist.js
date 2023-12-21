@@ -16,6 +16,7 @@ $(document).ready(function(){
                 "empNo" : $("#empNo").val(),
                 "eqMaker" : $("#eqMaker").val()
             }
+
             $.ajax({
                 url: "/admin/regist/equipment",
                 type: "post",
@@ -61,9 +62,9 @@ function validate(){
         return false;
     }
 
-    if ($.trim($("#empModel").val()).length <= 0) {
+    if ($.trim($("#eqModel").val()).length <= 0) {
         alert("모델명을 입력해주세요.");
-        $("#empNo").focus();
+        $("#eqModel").focus();
         return false;
     }
 

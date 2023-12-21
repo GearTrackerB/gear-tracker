@@ -26,7 +26,11 @@ public class AdminEquipmentDtoResponse {
         this.serialNo = data.getSerialNo();
         this.eqType = EquipmentType.getStatusName(data.getTypeId());
         this.eqNm = data.getEqNm();
-        this.eqModel = data.getEqModel();
+        if(data.getEqModel() == null){
+            this.eqModel = "-";
+        }else{
+            this.eqModel = data.getEqModel();
+        }
         this.eqStatus = EquipmentStatusType.getStatusName(data.getStatusId());
         if(data.getEmpNo() == null){
             this.empNo = "-";
