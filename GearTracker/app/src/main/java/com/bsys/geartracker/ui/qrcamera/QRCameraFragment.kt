@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -48,6 +49,7 @@ class QRCameraFragment: Fragment() {
     lateinit var code_scanner: CodeScanner
 
     private var qrType: Int = EQUIP_SEND
+    private var serialNo: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +77,11 @@ class QRCameraFragment: Fragment() {
 
         // 스테이터스바 설정
         setStatusNavigationBarColor(requireActivity(), R.color.black)
+
+        // 백버튼 시 종료
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finish()
+        }
 
 
     }
@@ -148,7 +155,7 @@ class QRCameraFragment: Fragment() {
             }
 
             if(it == 200) {
-                Toast.makeText(requireActivity(), "$typeMsg 요청 성공", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "$serialNo $typeMsg 요청 성공", Toast.LENGTH_SHORT).show()
                 resetResponseCode()
             } else if(it == 400) {
                 Toast.makeText(requireActivity(), "$typeMsg 요청 실패", Toast.LENGTH_SHORT).show()
@@ -238,7 +245,7 @@ class QRCameraFragment: Fragment() {
             //  QR 코드 확인되면 실행
             decodeCallback = DecodeCallback {
                 activity?.runOnUiThread {
-                    Toast.makeText(requireActivity(), it.text, Toast.LENGTH_SHORT).show()
+                    serialNo = it.text
                 }
 
                 request_qr(qrType, loginViewModel.empNo.value ?: "사번 null", it.text)

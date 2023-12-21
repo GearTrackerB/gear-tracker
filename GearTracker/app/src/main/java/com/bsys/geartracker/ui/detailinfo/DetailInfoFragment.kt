@@ -39,8 +39,6 @@ class DetailInfoFragment: Fragment() {
         serialNo = arguments?.getString("serialNo") ?: "none"
         Log.d("arguments", "arguments ${arguments.toString()}")
 
-        Toast.makeText(requireActivity(), "$serialNo" , Toast.LENGTH_SHORT).show()
-
         viewModel.get_equip_detail(serialNo)
 
         init_observer()

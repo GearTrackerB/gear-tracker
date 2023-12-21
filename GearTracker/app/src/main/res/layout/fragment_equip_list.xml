@@ -22,9 +22,9 @@
 
                 <ImageView
                     android:id="@+id/iv_toolbar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_credit_card_24"
+                    android:src="@drawable/img_bnk_logo"
                     android:layout_marginLeft="20dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -38,6 +38,7 @@
                     android:gravity="center"
                     android:text="Title Recommand"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -72,7 +73,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="필터를 할까 말까"
+                    android:text="필   터    위   치"
                     android:textColor="@color/black"/>
 
             </LinearLayout>

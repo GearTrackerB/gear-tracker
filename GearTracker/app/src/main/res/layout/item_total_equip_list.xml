@@ -30,7 +30,8 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="고유번호"
-                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
                     android:textColor="#212121"
                     android:gravity="center" />
 
@@ -40,6 +41,8 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:hint="시리얼번호"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:background="@drawable/bg_item_border"
                     android:textColor="#000000"
                     android:textSize="16sp"
@@ -58,7 +61,8 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="장비이름"
-                    android:textSize="16sp"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
                     android:textColor="#212121"
                     android:gravity="center" />
 
@@ -85,7 +89,8 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="배정자"
-                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
                     android:textColor="#212121"
                     android:gravity="center" />
 
@@ -95,6 +100,8 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:hint="장비배정자"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     android:background="@drawable/bg_login_top"
                     android:textColor="#000000"
                     android:textSize="16sp"
@@ -113,7 +120,8 @@
                     android:layout_height="40dp"
                     android:layout_weight="1"
                     android:text="장비상태"
-                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
                     android:textColor="#212121"
                     android:gravity="center" />
 

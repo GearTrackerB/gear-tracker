@@ -72,7 +72,7 @@ class LogInFragment: Fragment() {
             if(it == "-1") { // 로그인 실패
                 show_toast("로그인 실패")
             } else if(it != "0") { // 초기값 아니면 로그인 성공 후 이동
-                show_toast("로그인 성공, 사번 ${viewModel.empNo.value}")
+                show_toast("로그인 성공")
                 findNavController().navigate(R.id.action_logInFragment_to_QRCameraFragment)
             }
         }
