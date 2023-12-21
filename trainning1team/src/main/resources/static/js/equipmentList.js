@@ -26,6 +26,20 @@ $(document).ready(function(){
         location.href = "/admin/regist";
     })
 
+    $(".btn-start").click(function(){
+        $.ajax({
+            url: "/admin/inspection",
+            type: "get",
+            data: {},
+            success: function (data) {
+                alert("재물 조사가 시작되었습니다.")
+            },
+            error: function (data) {
+                console.log("에러 발생");
+            }
+        })
+    })
+
     $(".btn-download").click(function(){
         // location.href = "/download?filePath=/upload/boardmember_upload_format.xlsx";
         location.href = "/admin/download";
