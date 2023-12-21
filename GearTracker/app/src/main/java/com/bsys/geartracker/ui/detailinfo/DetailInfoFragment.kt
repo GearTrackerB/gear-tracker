@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bsys.geartracker.ApplicationClass
+import com.bsys.geartracker.data.model.response.EquipDetailResponse
 import com.bsys.geartracker.databinding.FragmentDetailInfoBinding
 import com.bsys.geartracker.databinding.FragmentEquipListBinding
 import com.bsys.geartracker.ui.equiplist.EquipInfoViewModel
@@ -54,9 +55,13 @@ class DetailInfoFragment: Fragment() {
 
     private fun setUI() {
         binding.apply {
-            tvEquipNM.text = viewModel.equipInfo.value?.eqNM
-            tvModelNM.text = viewModel.equipInfo.value?.eqModel
-            tvSerial.text = viewModel.equipInfo.value?.serialNO
+            val equip : EquipDetailResponse = viewModel.equipInfo.value ?: return
+            Log.d("equipdetail", "equipdetail success ${equip.toString()}")
+            tvSerialInfo.text = equip.serialNO
+            tvEqNmInfo.text = equip.eqNM
+            tvEqModelInfo.text = equip.eqModel
+            tvEqMakerInfo.text = equip.eqMaker
+            tvStatusNmInfo.text = equip.statusNM
         }
     }
 }
