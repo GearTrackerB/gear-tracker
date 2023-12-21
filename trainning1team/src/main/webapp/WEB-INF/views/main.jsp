@@ -14,7 +14,8 @@
         <div class="nav-group">
             <h2 class="nav-left">장비 관리</h2>
             <div class="nav-right">
-                <button class="btn btn-submit btn-regist btn-secondary">등록</button>
+                <button class="btn btn-submit btn-start btn-secondary">재물조사</button>
+                <button class="btn btn-submit btn-regists btn-secondary">등록</button>
             </div>
         </div>
 

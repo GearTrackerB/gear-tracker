@@ -5,6 +5,7 @@ import com.bnksystem.trainning1team.dto.Equip.*;
 import com.bnksystem.trainning1team.dto.Member.MemberEmpNoResponse;
 import com.bnksystem.trainning1team.dto.Response;
 import com.bnksystem.trainning1team.service.EquipService;
+import com.bnksystem.trainning1team.service.InspectionService;
 import com.bnksystem.trainning1team.service.MemberService;
 import com.bnksystem.trainning1team.util.ExcelType;
 import com.bnksystem.trainning1team.util.ExcelUtils;
@@ -27,6 +28,7 @@ public class EquipController {
 
     private final EquipService equipService;
     private final MemberService memberService;
+    private final InspectionService inspectionService;
 
     // todo param 결정
     @GetMapping("/manager/equipment/{index}/{size}")
@@ -189,5 +191,13 @@ public class EquipController {
         ExcelUtils.getInstance(ExcelType.XLSX).getExcel(header, contentSize, content, fileName, processList, response);
         //한글 헤더리스트, 컨텐츠 사이즈(컬럼 사이즈), 컨텐츠(영어 헤더), 파일 이름, 데이터(리스트 해시맵), response
         return "main";
+    }
+
+    @GetMapping("/admin/inspection")
+    @ResponseBody
+    public Response<?> setInspection(){
+        inspectionService.updateInspection();
+
+        return new Response<>(200, "SUCESS");
     }
 }
