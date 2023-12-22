@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bnksystem.trainning1team.mapper.EquipMapper">
+
+    <!-- 장비 출납 현황 조회 / index 이후의 eq.id 이후 size 만큼 / 장비별 최신 출납 기록 반환 -->
+    <select id="selectRentalEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.RentalStatusResponse">
+        SELECT eq.id AS id, eq.serial_no AS serialNo, eq.eq_nm AS equipmentName, es.status_nm AS statusName, mb.emp_no AS employeeNo, er.reg_at AS regAt
+        FROM tb_entry_exit_record er
+        INNER JOIN tb_eq_status es ON er.status_id = es.id
+        INNER JOIN tb_equipments eq ON eq.id = er.eq_id
+        INNER JOIN tb_members mb ON er.member_id = mb.id
+        WHERE (eq.serial_no, er.reg_at) IN (
+        SELECT eq.serial_no, MAX(er.reg_at) AS max_reg_at
+        FROM tb_entry_exit_record er
+        INNER JOIN tb_eq_status es ON er.status_id = es.id
+        INNER JOIN tb_equipments eq ON eq.id = er.eq_id
+        INNER JOIN tb_members mb ON er.member_id = mb.id
+        GROUP BY eq.serial_no
+        )
+        ORDER BY eq.id asc, er.reg_at DESC
+        LIMIT #{index}, #{size}
+    </select>
+
+    <!-- 재물 조사 현황 조회 / index 이후의 eq.id 이후 size 만큼 / 이번 분기 대상 장비 리스트 반환 -->
+    <select id="selectInventoryEquipList" resultType="com.bnksystem.trainning1team.dto.Equip.RentalStatusResponse">
+        SELECT
+        eq.id AS id,
+        eq.serial_no AS serialNo,
+        eq.eq_nm AS equipmentName,
+        ip.complete_yn AS statusName,
+        eer.latest_reg_at AS latest_reg_at,
+        CASE
+        WHEN eer.latest_status_id = 2 THEN eer.latest_emp_no
+        ELSE '관리자'
+        END AS employeeNo
+        FROM
+        tb_inspection ip
+        INNER JOIN tb_equipments eq ON eq.id = ip.eq_id
+        LEFT JOIN (
+        SELECT
+        eer1.eq_id,
+        eer1.reg_at AS latest_reg_at,
+        eer1.status_id AS latest_status_id,
+        CASE
+        WHEN eer1.status_id = 2 THEN m1.emp_no
+        ELSE '관리자'
+        END AS latest_emp_no
+        FROM
+        tb_entry_exit_record eer1
+        JOIN (
+        SELECT eq_id, MAX(reg_at) AS max_reg_at
+        FROM tb_entry_exit_record
+        GROUP BY eq_id
+        ) eer2 ON eer1.eq_id = eer2.eq_id AND eer1.reg_at = eer2.max_reg_at
+        LEFT JOIN tb_members m1 ON eer1.member_id = m1.id
+        ) eer ON eq.id = eer.eq_id
+        GROUP BY
+        id, serialNo, equipmentName, statusName, latest_reg_at, employeeNo
+        LIMIT #{index}, #{size}
+    </select>
+
+    <!-- 장비 정보 상세 조회 / serialNo으로 검색 후 / 장비 정보 반환 -->
+    <select id="selectEquipDetail" resultType="com.bnksystem.trainning1team.dto.Equip.EquipDetailResponse">
+        SELECT
+        e.serial_no AS serialNO,
+        e.eq_nm AS eqNM,
+        t.type_nm AS typeNM,
+        e.eq_model AS eqModel,
+        e.eq_maker AS eqMaker,
+        e.detail As detail,
+        e.manual_img_url AS manualImgUrl,
+        s.status_nm AS statusNM
+        FROM tb_equipments e
+        INNER JOIN tb_eq_types t ON e.type_id = t.id
+        INNER JOIN tb_eq_status s ON e.status_id = s.id
+        WHERE e.serial_no = #{serialNo};
+    </select>
+</mapper>

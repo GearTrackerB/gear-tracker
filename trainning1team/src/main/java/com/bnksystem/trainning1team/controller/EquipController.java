@@ -1,6 +1,10 @@
 package com.bnksystem.trainning1team.controller;
 
 
+
+import com.bnksystem.trainning1team.dto.Equip.EquipDetailResponse;
+import com.bnksystem.trainning1team.dto.Equip.EquipsListResponse;
+import com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDtoResponse;
 import com.bnksystem.trainning1team.dto.Equip.*;
 import com.bnksystem.trainning1team.dto.Member.MemberEmpNoResponse;
 import com.bnksystem.trainning1team.dto.Response;
@@ -14,11 +18,9 @@ import org.apache.commons.collections4.map.LinkedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,12 +32,35 @@ public class EquipController {
     private final MemberService memberService;
     private final InspectionService inspectionService;
 
-    // todo param 결정
-    @GetMapping("/manager/equipment/{index}/{size}")
-    public Response<List<EquipResponse>> getTotalEquipList(@PathVariable Long index, int size) {
-        List<EquipResponse> list = equipService.getTotalEquipList();
-        return new Response(200, "조회 성공", list);
+    // 장비출납현황조회(마지막 index 이후, size 만큼, 마지막 index와 현황 리스트를 반환)
+    @GetMapping("/manager/equipment")
+    @ResponseBody
+    public Response<EquipsListResponse> getRentalEquipList(
+            @RequestParam(defaultValue = "0") int index,
+            @RequestParam(defaultValue = "10") int size) {
+        EquipsListResponse equipListResponse = equipService.getRentalEquipList(index, size);
+        return new Response<>(200, "장비 출납 현황 조회 성공", equipListResponse);
     }
+
+    // 장비상세조회(serial로 해당 장비의 정보가 담긴 객체 반환)
+    @GetMapping("/manager/equipment/detail")
+    @ResponseBody
+    public Response<EquipDetailResponse> getEquipDetail(
+            @RequestParam(defaultValue = "none") String serialNo) {
+        EquipDetailResponse equipDetail = equipService.getEquipDetail(serialNo);
+        return new Response<>(200, "장비 상세 조회 성공", equipDetail);
+    }
+
+    // 재물조사현황조회
+    @GetMapping("/manager/inventory")
+    @ResponseBody
+    public Response<EquipsListResponse> getInventoryEquipList(
+            @RequestParam(defaultValue = "0") int index,
+            @RequestParam(defaultValue = "10") int size) {
+        EquipsListResponse equipsListResponse = equipService.getInventoryEquipList(index, size);
+        return new Response<>(200, "재물 조사 현황 조회 성공", equipsListResponse);
+    }
+
 
     /*
     * main 페이지로 이동.
