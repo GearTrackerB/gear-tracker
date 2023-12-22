@@ -1,8 +1,8 @@
 package com.bsys.geartracker.utils
 
 // 서버 연결 주소
-//const val BASE_URL = "http://43.200.7.145:8080/"
-const val BASE_URL = "http://192.168.0.95:8080/"
+const val BASE_URL = "http://14.63.221.64:48083/"
+//const val BASE_URL = "http://192.168.0.95:8080/"
 //const val BASE_URL = "http://192.168.0.138:8080/"
 
 
