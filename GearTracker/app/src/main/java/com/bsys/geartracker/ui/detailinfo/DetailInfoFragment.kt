@@ -6,17 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.data.model.response.EquipDetailResponse
 import com.bsys.geartracker.databinding.FragmentDetailInfoBinding
-import com.bsys.geartracker.databinding.FragmentEquipListBinding
 import com.bsys.geartracker.ui.equiplist.EquipInfoViewModel
-import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
-import com.bsys.geartracker.utils.FROM_DETAIL_FRAGMENT
+
 
 class DetailInfoFragment: Fragment() {
 
