@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.bsys.geartracker.data.model.response.EquipDetailResponse
 import com.bsys.geartracker.databinding.FragmentDetailInfoBinding
 import com.bsys.geartracker.ui.equiplist.EquipInfoViewModel
@@ -20,7 +21,7 @@ class DetailInfoFragment: Fragment() {
 
     private lateinit var serialNo: String
 
-    private val viewModel: EquipInfoViewModel by activityViewModels()
+    private val viewModel: EquipInfoViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -42,6 +43,7 @@ class DetailInfoFragment: Fragment() {
 
         init_observer()
     }
+
 
     private fun init_observer() {
         viewModel.equipInfo.observe(viewLifecycleOwner) {

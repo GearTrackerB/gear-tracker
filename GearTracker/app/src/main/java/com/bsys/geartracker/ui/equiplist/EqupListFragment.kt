@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,7 @@ class EqupListFragment: Fragment() {
     private var _binding: FragmentEquipListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: EquipInfoViewModel by activityViewModels()
+    private val viewModel: EquipInfoViewModel by viewModels()
 
     private val totalInfoAdapter: TotalInfoAdapter by lazy {TotalInfoAdapter()}
 
@@ -43,10 +44,13 @@ class EqupListFragment: Fragment() {
 
         init_mode()
         init_button()
-        init_recyclerView()
-
         init_observe()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        init_recyclerView()
     }
 
     override fun onDestroyView() {
@@ -94,11 +98,13 @@ class EqupListFragment: Fragment() {
 
     // 리스트 뷰 설정
     private fun init_recyclerView() {
+        Log.d("equiplist", "리사이클러뷰 이닛이 호출되었습니다.")
         binding.rcTotalEquipList.apply {
             adapter = totalInfoAdapter.apply {
                 // 리스트 각 아이템 클릭 시 이벤트 설정
                 setEquipClickListener(object: TotalInfoAdapter.EquipClickListener {
                     override fun onClick(view: View, position: Int, equip: RentalStatusResponse) {
+
                         // 장비 serial 번호 설정
                         val bundle: Bundle = bundleOf("serialNo" to equip.serialNo)
 
@@ -131,8 +137,11 @@ class EqupListFragment: Fragment() {
         }
 
         // 초기 데이터 호출
-        if(mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list()
-        else viewModel.get_equip_inventory_list()
+        if(mode == EQUIP_TOTAL_INFO) {
+            viewModel.get_total_equip_list()
+        } else {
+            viewModel.get_equip_inventory_list()
+        }
     }
 
     // 데이터 observer 세팅
@@ -140,7 +149,7 @@ class EqupListFragment: Fragment() {
         // 서버로부터 장비출고현황리스트 받아오면 리스트 데이터 갱신
         viewModel.equipList.observe(viewLifecycleOwner) {
             // 기존 리스트 + 새로 얻은 리스트
-            if(it != null) {
+            if(it.size != 0) {
                 val newList = totalInfoAdapter.currentList.toMutableList().apply {
                     addAll(it)
                 }
