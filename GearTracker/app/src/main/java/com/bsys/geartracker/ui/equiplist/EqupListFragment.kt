@@ -29,7 +29,6 @@ class EqupListFragment: Fragment() {
 
     private var mode: Int = 0
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,16 +40,15 @@ class EqupListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("equiplist", "equiplist onViewCreated")
 
         init_mode()
-        init_button()
         init_observe()
-
+        init_recyclerView()
     }
 
     override fun onResume() {
         super.onResume()
-        init_recyclerView()
     }
 
     override fun onDestroyView() {
@@ -85,14 +83,6 @@ class EqupListFragment: Fragment() {
     private fun make_ui_inventory() {
         binding.apply {
             tvTitle.text = "재물조사현황"
-        }
-    }
-
-    // 버튼 설정
-    private fun init_button() {
-        // 클릭 시 장비출납현황 리스트를 서버에 요청
-        binding.tvTitle.setOnClickListener {
-            viewModel.get_total_equip_list()
         }
     }
 
@@ -158,4 +148,6 @@ class EqupListFragment: Fragment() {
         }
 
     }
+
+
 }

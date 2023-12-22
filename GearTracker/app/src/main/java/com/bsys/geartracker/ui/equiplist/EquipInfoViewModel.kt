@@ -40,7 +40,10 @@ class EquipInfoViewModel: ViewModel() {
             if(result.isSuccess) { // 서버 통신 성공 시 마지막 idx, 장비 리스트 입력
                 val data = result.getOrNull()
                 lastEquipIdx = data?.lastIdx ?: -1L
-                _equipList.value = data?.equipList
+                if(lastEquipIdx != -1L)  {
+                    Log.d("equiplist", "data  -1L 아님 $data")
+                    _equipList.value = data?.equipList
+                }
                 Log.d("equiplist", "data $data")
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
@@ -57,7 +60,7 @@ class EquipInfoViewModel: ViewModel() {
             if(result.isSuccess) { // 서버 통신 성공
                 val data = result.getOrNull()
                 lastEquipIdx = data?.lastIdx ?: -1L
-                _equipList.value = data?.equipList
+                if(lastEquipIdx != -1L)  _equipList.value = data?.equipList
                 Log.d("equiplist", "data $data")
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
