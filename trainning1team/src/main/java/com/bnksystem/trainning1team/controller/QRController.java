@@ -5,10 +5,8 @@ import com.bnksystem.trainning1team.dto.Response;
 import com.bnksystem.trainning1team.service.QRService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,10 +20,16 @@ public class QRController {
     * */
     @PutMapping("/manager/equipment/checkout")
     @ResponseBody
-    public Response<?> checkout(@RequestBody QRRequest qrRequest){
-        qrService.checkout(qrRequest);
+    public Response<?> checkout(@RequestPart QRRequest qrRequest,
+                                @RequestPart("eqImage") MultipartFile eqImage){
+        int res = qrService.checkout(qrRequest, eqImage);
 
-        return new Response(200, "출고 완료");
+        if(res == 1){
+            return new Response(200, "출고 완료");
+        }else{
+            return new Response(499, "이미지 업로드 실패");
+        }
+
     }
 
     /*
@@ -34,10 +38,15 @@ public class QRController {
     * */
     @PutMapping("/manager/equipment/checkin")
     @ResponseBody
-    public Response<?> checkin(@RequestBody QRRequest qrRequest){
-        qrService.checkin(qrRequest);
+    public Response<?> checkin(@RequestPart QRRequest qrRequest,
+                               @RequestPart("eqImage") MultipartFile eqImage){
+        int res = qrService.checkin(qrRequest, eqImage);
 
-        return new Response(200, "반납 완료");
+        if(res == 1){
+            return new Response(200, "반납 완료");
+        }else{
+            return new Response(499, "이미지 업로드 실패");
+        }
     }
 
     /*
@@ -46,9 +55,14 @@ public class QRController {
     * */
     @PostMapping("/manager/equipment")
     @ResponseBody
-    public Response<?> inspect(@RequestBody QRRequest qrRequest){
-        qrService.inspect(qrRequest);
+    public Response<?> inspect(@RequestPart QRRequest qrRequest,
+                               @RequestPart("eqImage") MultipartFile eqImage){
+        int res = qrService.inspect(qrRequest, eqImage);
 
-        return new Response(200, "재고 조사 완료");
+        if(res == 1){
+            return new Response(200, "재고 조사 완료");
+        }else{
+            return new Response(499, "이미지 업로드 실패");
+        }
     }
 }

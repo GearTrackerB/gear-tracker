@@ -19,4 +19,6 @@ public interface QRMapper {
     void updateInspectionComplete(EquipmentStatus status);
 
     void insertInspectRecord(InspectorRecordDto status);
+
+    void insertEntryExitRecordQRAdmin(RecordDto recordDto);
 }

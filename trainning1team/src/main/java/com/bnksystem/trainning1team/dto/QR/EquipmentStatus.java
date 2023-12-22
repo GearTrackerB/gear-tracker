@@ -27,11 +27,11 @@ public class EquipmentStatus {
         }
     }
 
-    public RecordDto toRecordDto() {
+    public RecordDto toRecordDto(String url) {
         if (statusId == EquipmentStatusType.반납예정.getStatusCode()){
-            return new RecordDto(eqId, EquipmentStatusType.반납.getStatusCode(), memberId);
+            return new RecordDto(eqId, EquipmentStatusType.반납.getStatusCode(), memberId, url);
         }else{
-            return new RecordDto(eqId, EquipmentStatusType.출고.getStatusCode(), memberId);
+            return new RecordDto(eqId, EquipmentStatusType.출고.getStatusCode(), memberId, url);
         }
     }
 

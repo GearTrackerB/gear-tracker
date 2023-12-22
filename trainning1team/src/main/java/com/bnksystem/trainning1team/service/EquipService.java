@@ -125,7 +125,7 @@ public class EquipService {
         EquipmentStatus status = qrMapper.selectEquipmentStatus(serialNo);
         RecordDto recordDto = new RecordDto(status.getEqId(), modifyRequest.getStatusId(),status.getMemberId());
 
-        qrMapper.insertEntryExitRecordQR(recordDto);
+        qrMapper.insertEntryExitRecordQRAdmin(recordDto);
     }
 
     public void deleteEquipment(String serialNo) {
