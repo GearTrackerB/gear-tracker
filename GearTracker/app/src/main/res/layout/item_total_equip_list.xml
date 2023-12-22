@@ -41,6 +41,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:hint="시리얼번호"
+                    android:maxLength="15"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:background="@drawable/bg_item_border"
@@ -72,6 +73,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:hint="장비명"
+                    android:maxLength="15"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:gravity="center" />
@@ -100,6 +102,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:hint="장비배정자"
+                    android:maxLength="15"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:background="@drawable/bg_login_top"
@@ -131,6 +134,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="3"
                     android:hint="출고상태"
+                    android:maxLength="15"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:gravity="center" />

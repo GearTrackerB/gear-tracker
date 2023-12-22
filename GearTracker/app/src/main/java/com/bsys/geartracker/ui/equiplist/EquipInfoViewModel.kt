@@ -32,6 +32,7 @@ class EquipInfoViewModel: ViewModel() {
     val equipInfo: LiveData<EquipDetailResponse>
         get() = _equipInfo
 
+
     // 서버에 장비출고현황 요청
     fun get_total_equip_list() {
         viewModelScope.launch {

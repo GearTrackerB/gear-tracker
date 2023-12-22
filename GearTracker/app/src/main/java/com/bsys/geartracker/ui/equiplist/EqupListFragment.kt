@@ -1,34 +1,33 @@
 package com.bsys.geartracker.ui.equiplist
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bsys.geartracker.R
 import com.bsys.geartracker.adapter.TotalInfoAdapter
-import com.bsys.geartracker.data.model.dto.Equipment
 import com.bsys.geartracker.data.model.response.RentalStatusResponse
 import com.bsys.geartracker.databinding.FragmentEquipListBinding
 import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
+
 
 class EqupListFragment: Fragment() {
     private var _binding: FragmentEquipListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: EquipInfoViewModel by viewModels()
+    private val viewModel: EquipInfoViewModel by activityViewModels()
 
     private val totalInfoAdapter: TotalInfoAdapter by lazy {TotalInfoAdapter()}
 
     private var mode: Int = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +44,7 @@ class EqupListFragment: Fragment() {
         init_mode()
         init_button()
         init_recyclerView()
+
         init_observe()
 
     }
@@ -99,10 +99,10 @@ class EqupListFragment: Fragment() {
                 // 리스트 각 아이템 클릭 시 이벤트 설정
                 setEquipClickListener(object: TotalInfoAdapter.EquipClickListener {
                     override fun onClick(view: View, position: Int, equip: RentalStatusResponse) {
-                        // 장비 현황 조회에 어떤 모드로 들어갈 지 설정
+                        // 장비 serial 번호 설정
                         val bundle: Bundle = bundleOf("serialNo" to equip.serialNo)
 
-                        // 장비 출납 현황 조회로 이동
+                        // 장비 상세 조회로 이동
                         findNavController().navigate(R.id.action_totalInfoFragment_to_detailInfoFragment, bundle)                    }
                 })
             }
@@ -147,5 +147,6 @@ class EqupListFragment: Fragment() {
                 totalInfoAdapter.submitList(newList)
             }
         }
+
     }
 }

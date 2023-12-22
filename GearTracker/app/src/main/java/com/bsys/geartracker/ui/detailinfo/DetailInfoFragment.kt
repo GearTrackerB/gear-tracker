@@ -1,5 +1,6 @@
 package com.bsys.geartracker.ui.detailinfo
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.data.model.response.EquipDetailResponse
@@ -14,6 +16,7 @@ import com.bsys.geartracker.databinding.FragmentDetailInfoBinding
 import com.bsys.geartracker.databinding.FragmentEquipListBinding
 import com.bsys.geartracker.ui.equiplist.EquipInfoViewModel
 import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
+import com.bsys.geartracker.utils.FROM_DETAIL_FRAGMENT
 
 class DetailInfoFragment: Fragment() {
 
@@ -22,7 +25,7 @@ class DetailInfoFragment: Fragment() {
 
     private lateinit var serialNo: String
 
-    private val viewModel: EquipInfoViewModel by viewModels()
+    private val viewModel: EquipInfoViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -61,7 +64,11 @@ class DetailInfoFragment: Fragment() {
             tvEqNmInfo.text = equip.eqNM
             tvEqModelInfo.text = equip.eqModel
             tvEqMakerInfo.text = equip.eqMaker
-            tvStatusNmInfo.text = equip.statusNM
+            tvStatusNmInfo.apply {
+                text = equip.statusNM
+                if(equip.statusNM == "출고예정") setTextColor(Color.RED)
+                else if(equip.statusNM == "반납예정") setTextColor(Color.BLUE)
+            }
         }
     }
 }

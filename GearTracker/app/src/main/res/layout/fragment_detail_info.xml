@@ -1,236 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:background="@color/white"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@drawable/bg_login_top"
-        app:contentInsetStart="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/c_title"
-            android:layout_width="match_parent"
-            android:layout_height="48dp">
-
-            <ImageView
-                android:id="@+id/iv_toolbar"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/img_bnk_logo"
-                android:layout_marginLeft="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:gravity="center"
-                android:text="장비 정보 상세 조회"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
-
-    <ScrollView
-        android:id="@+id/sc_detail_info"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tb_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_login_top"
+            app:contentInsetStart="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/c_detail"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/c_title"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+
+                <ImageView
+                    android:id="@+id/iv_toolbar"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_bnk_logo"
+                    android:layout_marginLeft="20dp"
+                    android:maxLength="15"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:text="장비 정보 상세 조회"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <!-- 상세 정보 스크롤뷰 -->
+        <ScrollView
+            android:id="@+id/sc_detail_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent">
+
 
             <LinearLayout
-                android:id="@+id/c_line1"
+                android:id="@+id/c_detail"
+                android:background="@drawable/bg_item_border"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="12dp"
-                android:layout_marginBottom="12dp">
-
-                <TextView
-                    android:id="@+id/tv_serial"
-                    android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+                <LinearLayout
+                    android:id="@+id/c_line1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="고유 번호"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_serial"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="고유번호"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tv_serial_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="24dp"
+                        android:background="@drawable/bg_item_border"
+                        android:layout_weight="2"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <!-- 다른 섹션들에 대한 LinearLayout 추가 -->
+                <LinearLayout
+                    android:id="@+id/c_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_eq_nm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="장비명"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tv_eq_nm_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="24dp"
+                        android:layout_weight="2"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c_line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_eq_model"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="모델명"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/tv_eq_model_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="24dp"
+                        android:layout_weight="2"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c_line4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_eq_maker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="제조사"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/tv_eq_maker_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="24dp"
+                        android:layout_weight="2"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/c_line5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_status_nm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="출납상태"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/tv_status_nm_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="24dp"
+                        android:background="@drawable/bg_login_top"
+                        android:layout_weight="2"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <!-- 증빙 이미지 -->
+                <ImageView
+                    android:id="@+id/iv_evidence"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/tv_serial_info"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textSize="24dp"
-                    android:background="@drawable/bg_login_top"
-                    android:layout_weight="2"
-                    android:gravity="center" />
+                    android:padding="32dp"
+                    android:src="@drawable/img_notebook"
+                    android:layout_marginTop="16dp"/>
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c_line2"
-                android:layout_marginLeft="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_eq_nm"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="장비명"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:id="@+id/tv_eq_nm_info"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textSize="24dp"
-                    android:background="@drawable/bg_login_top"
-                    android:layout_weight="2"
-                    android:gravity="center"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c_line3"
-                android:layout_marginLeft="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_eq_model"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="모델명"
-                    android:textStyle="bold"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:layout_weight="1"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/tv_eq_model_info"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textSize="24dp"
-                    android:background="@drawable/bg_login_top"
-                    android:layout_weight="2"
-                    android:gravity="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c_line4"
-                android:layout_marginLeft="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_eq_maker"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="제조사"
-                    android:textStyle="bold"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:layout_weight="1"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/tv_eq_maker_info"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textSize="24dp"
-                    android:background="@drawable/bg_login_top"
-                    android:layout_weight="2"
-                    android:gravity="center" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/c_line5"
-                android:layout_marginLeft="12dp"
-                android:layout_marginBottom="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_status_nm"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="출납상태"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/tv_status_nm_info"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#000000"
-                    android:textSize="24dp"
-                    android:background="@drawable/bg_login_top"
-                    android:layout_weight="2"
-                    android:gravity="center" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/iv_evidence"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:padding="12dp"
-                android:src="@drawable/img_notebook"/>
-
-
-        </LinearLayout>
-
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
