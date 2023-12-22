@@ -18,6 +18,7 @@
         INNER JOIN tb_eq_status es ON er.status_id = es.id
         INNER JOIN tb_equipments eq ON eq.id = er.eq_id
         INNER JOIN tb_members mb ON er.member_id = mb.id
+        WHERE eq.use_yn = 'Y'
         GROUP BY eq.serial_no
         )
         ORDER BY eq.id asc, er.reg_at DESC
@@ -64,18 +65,27 @@
 
     <!-- 장비 정보 상세 조회 / serialNo으로 검색 후 / 장비 정보 반환 -->
     <select id="selectEquipDetail" resultType="com.bnksystem.trainning1team.dto.Equip.EquipDetailResponse">
-        SELECT
-        e.serial_no AS serialNO,
-        e.eq_nm AS eqNM,
-        t.type_nm AS typeNM,
-        e.eq_model AS eqModel,
-        e.eq_maker AS eqMaker,
-        e.detail As detail,
-        e.manual_img_url AS manualImgUrl,
-        s.status_nm AS statusNM
-        FROM tb_equipments e
-        INNER JOIN tb_eq_types t ON e.type_id = t.id
-        INNER JOIN tb_eq_status s ON e.status_id = s.id
-        WHERE e.serial_no = #{serialNo};
+        SELECT  eq.serial_no AS serialNO,
+                eq.eq_nm AS eqNM,
+                t.type_nm AS typeNM,
+                eq.eq_model AS eqModel,
+                eq.eq_maker AS eqMaker,
+                er.eq_img_url AS manualImgUrl,
+                es.status_nm AS statusNM
+        FROM tb_entry_exit_record er
+                 INNER JOIN tb_eq_status es ON er.status_id = es.id
+                 INNER JOIN tb_equipments eq ON eq.id = er.eq_id
+                 INNER JOIN tb_members mb ON er.member_id = mb.id
+                 INNER JOIN tb_eq_types t ON eq.type_id = t.id
+        WHERE (eq.serial_no, er.reg_at) IN (
+            SELECT eq.serial_no, MAX(er.reg_at) AS max_reg_at
+            FROM tb_entry_exit_record er
+                     INNER JOIN tb_eq_status es ON er.status_id = es.id
+                     INNER JOIN tb_equipments eq ON eq.id = er.eq_id
+                     INNER JOIN tb_members mb ON er.member_id = mb.id
+            WHERE eq.use_yn = 'Y' and eq.serial_no = #{serialNo}
+            GROUP BY eq.serial_no
+        )
+        ORDER BY eq.id asc, er.reg_at DESC
     </select>
 </mapper>

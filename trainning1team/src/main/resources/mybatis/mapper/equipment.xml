@@ -28,8 +28,14 @@
     </update>
 
     <insert id="insertEntryExitRecordQR">
+        INSERT INTO tb_entry_exit_record (eq_id, status_id, member_id, eq_img_url)
+        VALUE (#{eqId}, #{statusId}, #{memberId}, #{imageUrl})
+    </insert>
+
+    <!-- 관리자 상태 변경   -->
+    <insert id="insertEntryExitRecordQRAdmin">
         INSERT INTO tb_entry_exit_record (eq_id, status_id, member_id)
-        VALUE (#{eqId}, #{statusId}, #{memberId})
+            VALUE (#{eqId}, #{statusId}, #{memberId})
     </insert>
 
     <!-- 재고 조사 테이블에서 점검 상태를 'Y'로 변경  -->
@@ -41,9 +47,8 @@
 
     <!--  재고 조사 기록  -->
     <insert id="insertInspectRecord">
-        INSERT INTO tb_inspection_record (eq_id, inspector_id, inspected_at)
-        VALUE (#{eqId}, #{inspectorId}, #{inspectedAt})
+        INSERT INTO tb_inspection_record (eq_id, inspector_id, inspected_at, eq_img_url)
+        VALUE (#{eqId}, #{inspectorId}, #{inspectedAt}, #{imageUrl})
     </insert>
-    
 
 </mapper>
