@@ -26,6 +26,91 @@
 	        WHERE i.eq_id = e.id
 	        ORDER BY i.reg_at DESC
 	        LIMIT 1 ) as reg_at
-        FROM tb_equipments e;
+        FROM tb_equipments e
+        WHERE use_yn = 'Y';
+    </select>
+
+    <select id="selectEquipMentInfo" resultType="com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDto">
+        SELECT e.serial_no, e.type_id, e.eq_nm, e.eq_maker, e.status_id, e.eq_model, (
+            SELECT m.emp_no
+            FROM tb_entry_exit_record r
+                     JOIN tb_members m
+                          on r.member_id = m.id
+            WHERE r.eq_id = e.id
+            ORDER BY r.reg_at DESC
+            LIMIT 1) as emp_no,(
+	        SELECT i.reg_at
+	        FROM tb_inspection_record i
+	        WHERE i.eq_id = e.id
+	        ORDER BY i.reg_at DESC
+	        LIMIT 1 ) as reg_at
+        FROM tb_equipments e
+        WHERE e.serial_no = #{serialNo};
+    </select>
+
+    <update id="updateEquipment">
+        UPDATE tb_equipments
+        SET
+            serial_no = #{serialNo},
+            type_id = #{typeId},
+            eq_nm = #{eqNm},
+            eq_model = #{eqModel},
+            status_id = #{statusId},
+            upd_id = 1,
+            upd_at = CURRENT_TIMESTAMP
+        WHERE serial_no = #{originSerialNo}
+    </update>
+
+    <update id="deleteEquipment">
+        UPDATE tb_equipments
+        SET
+            use_yn = 'N',
+            upd_id = 1,
+            upd_at = CURRENT_TIMESTAMP
+        WHERE serial_no = #{serialNo}
+    </update>
+
+    <insert id="insertEquipment" useGeneratedKeys="true" keyProperty="eqId">
+        INSERT INTO tb_equipments
+            (serial_no, eq_nm, type_id, eq_model,
+             eq_maker, status_id, use_yn, reg_id)
+        VALUE (#{serialNo}, #{eqNm}, #{typeId}, #{eqModel},
+                #{eqMaker}, #{statusId}, 'Y', 1)
+    </insert>
+
+    <insert id="insertEntryExitRecordToStatusOne">
+        INSERT INTO tb_entry_exit_record
+            (eq_id, status_id, member_id, reg_at)
+        VALUE (#{eqId}, #{statusId}, #{empId}, CURRENT_TIMESTAMP)
+    </insert>
+
+    <select id="selectEquipmentList" resultType="java.util.HashMap">
+        SELECT e.serial_no, e.eq_nm, e.eq_model,
+               (
+                   SELECT m.emp_no
+                   FROM tb_entry_exit_record r
+                            JOIN tb_members m
+                                 on r.member_id = m.id
+                   WHERE r.eq_id = e.id
+                   ORDER BY r.reg_at DESC
+                   LIMIT 1) as emp_no,
+        	(
+	        	SELECT i.reg_at
+		        FROM tb_inspection_record i
+		        WHERE i.eq_id = e.id
+	    	    ORDER BY i.reg_at DESC
+	        	LIMIT 1 ) as reg_at,
+	        (
+	        	SELECT t.type_nm
+	        	FROM tb_eq_types t
+	        	WHERE t.id = e.type_id
+	        ) as eq_type,
+	        (
+	        	SELECT s.status_nm
+	        	FROM tb_eq_status s
+	        	WHERE s.id = e.status_id
+	        ) as eq_status
+        FROM tb_equipments e
+        WHERE use_yn = 'Y'
     </select>
 </mapper>

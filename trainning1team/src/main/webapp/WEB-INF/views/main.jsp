@@ -14,7 +14,8 @@
         <div class="nav-group">
             <h2 class="nav-left">장비 관리</h2>
             <div class="nav-right">
-                <button class="btn btn-submit btn-regist btn-secondary">등록</button>
+                <button class="btn btn-submit btn-start btn-secondary">재물조사</button>
+                <button class="btn btn-submit btn-regists btn-secondary">등록</button>
             </div>
         </div>
 
@@ -46,7 +47,7 @@
                                     <button type="button" class="btn btn-submit ml-2 btn-secondary btn-reg w80">업로드</button>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn ml-2 btn-secondary btn-download w80">양식받기</button>
+                                    <button type="button" class="btn ml-2 btn-secondary btn-download w80">관리 출력</button>
                                 </td>
                             </tr>
                             </tbody>

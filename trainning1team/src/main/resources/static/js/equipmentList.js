@@ -22,12 +22,27 @@ $(document).ready(function(){
         search(1);
     })
 
-    $(".btn-regist").click(function(){
-        location.href = "/boardMember/regist";
+    $(".btn-regists").click(function(){
+        location.href = "/admin/regist";
+    })
+
+    $(".btn-start").click(function(){
+        $.ajax({
+            url: "/admin/inspection",
+            type: "get",
+            data: {},
+            success: function (data) {
+                alert("재물 조사가 시작되었습니다.")
+            },
+            error: function (data) {
+                console.log("에러 발생");
+            }
+        })
     })
 
     $(".btn-download").click(function(){
-        location.href = "/download?filePath=/upload/boardmember_upload_format.xlsx";
+        // location.href = "/download?filePath=/upload/boardmember_upload_format.xlsx";
+        location.href = "/admin/download";
     })
 
     $(".btn-reg").click(function(){
@@ -39,21 +54,17 @@ $(document).ready(function(){
             formData.append("uploadFile", $("#file")[0].files[0]);
 
             $.ajax({
-                url: "/boardMember/registProcFromExcel",
+                url: "/admin/registEquipmentExcel",
                 type: "post",
                 data: formData,
                 dataType: "json",
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    console.log("response = " + JSON.stringify(data));
+                    console.log("hello = " + JSON.stringify(data));
 
-                    if (data.resultCode === "0000") {
-                        alert("등록되었습니다.(성공:" + data.result.successCnt + ", 실패:" + data.result.failCnt + ")");
-                        location.reload();
-                    } else {
-                        alert(data.resultMessage);
-                    }
+                    alert("등록되었습니다.(성공:" + data.data.successCnt + ", 실패:" + data.data.failCnt + ")");
+                    location.reload();
                 },
                 error: function (request, status, error) {
                     console.log("code : " + request.status + ", message : " + request.responseText + ", error : " + error);
@@ -75,7 +86,7 @@ $(document).ready(function(){
 })
 
 function goView(id) {
-    location.href = "/boardMember/modify/" + id;
+    location.href = "/admin/modify/" + id;
 }
 
 function search(page) {
@@ -113,10 +124,6 @@ function search(page) {
                         strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.eqStatus + '</td>';
                         strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.empNo + '</td>';
                         strHtml += '    <td class="dataRow" data-value="'+ item.serialNo +'">' + item.regAt + '</td>';
-                        // if (sessAuthCd === "ROL001" || sessAuthCd === "ROL002") {
-                        //     strHtml += '    <td><input type="text" id="order_no' + item.ID + '" value="' + item.ORDER_NO + '" class="form-control tac" maxlength="2" /></td>';
-                        //     strHtml += '    <td><button type="button" class="btn btn-modify-col btn-modify btn-secondary" data-key="' + item.serialNo + '">수정</button></td>';
-                        // }
                         strHtml += '</tr>';
                     }
                 } else {

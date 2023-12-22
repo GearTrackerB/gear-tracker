@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface QRMapper {
 
-    EquipmentStatus selectEquipmentStatus(QRRequest qrRequest);
+    EquipmentStatus selectEquipmentStatus(String serialNo);
 
     void updateEquipmentStatus(ChangeEquipmentStatusDto changeEquipmentStatusDto);
 

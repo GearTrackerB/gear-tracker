@@ -1,12 +1,12 @@
 package com.bnksystem.trainning1team.dto.Member;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
-
-    private String loginId;
-        private String loginPw;
+public class MemberEmpNoResponse {
+    private String empNo;
 }
