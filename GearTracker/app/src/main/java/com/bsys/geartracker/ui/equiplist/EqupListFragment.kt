@@ -19,6 +19,7 @@ import com.bsys.geartracker.data.model.dto.Equipment
 import com.bsys.geartracker.data.model.response.RentalStatusResponse
 import com.bsys.geartracker.databinding.FragmentEquipListBinding
 import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
+import com.bsys.geartracker.utils.FROM_DETAIL_INFO
 
 class EqupListFragment: Fragment() {
     private var _binding: FragmentEquipListBinding? = null
@@ -30,12 +31,22 @@ class EqupListFragment: Fragment() {
 
     private var mode: Int = 0
 
+    private var isFromDetail: Boolean = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("lifecycleEquip", "onCreate list ${viewModel.equipList.value}")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEquipListBinding.inflate(inflater, container, false)
+        Log.d("lifecycleEquip", "onCreateView " +
+                "adapter ${totalInfoAdapter.currentList}" +
+                "viewmodellist ${viewModel.equipList.value}")
         return binding.root
     }
 
@@ -47,6 +58,8 @@ class EqupListFragment: Fragment() {
         init_recyclerView()
         init_observe()
 
+        Log.d("lifecycleEquip", "onViewCreated list ${viewModel.equipList.value}")
+
     }
 
     override fun onDestroyView() {
@@ -57,9 +70,11 @@ class EqupListFragment: Fragment() {
     // 출납현황, 재물조사 중 모드에 따른 설정
     private fun init_mode() {
         // Mode Flag 변경
-        mode = arguments?.getInt("info_type") ?: EQUIP_TOTAL_INFO
+        mode = arguments?.getInt("info_type") ?: FROM_DETAIL_INFO
         // UI 변경
         set_ui_for_mode(mode)
+        Log.d("lifecycleEquip", "onViewCreated initMode $mode")
+
     }
 
     private fun set_ui_for_mode(mode: Int) {
@@ -99,6 +114,9 @@ class EqupListFragment: Fragment() {
                 // 리스트 각 아이템 클릭 시 이벤트 설정
                 setEquipClickListener(object: TotalInfoAdapter.EquipClickListener {
                     override fun onClick(view: View, position: Int, equip: RentalStatusResponse) {
+                        // Detail로 이동 true
+                        isFromDetail = true
+
                         // 장비 현황 조회에 어떤 모드로 들어갈 지 설정
                         val bundle: Bundle = bundleOf("serialNo" to equip.serialNo)
 
@@ -130,17 +148,24 @@ class EqupListFragment: Fragment() {
             })
         }
 
-        // 초기 데이터 호출
-        if(mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list()
-        else viewModel.get_equip_inventory_list()
+        // Dtail에서 Back 아니면 초기 데이터 호출
+        if(!isFromDetail) {
+            Log.d("lifecycleEquip", "equipList  get_total_equip_list 호출 $isFromDetail")
+            if (mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list()
+            else viewModel.get_equip_inventory_list()
+            isFromDetail = false
+        }
     }
 
     // 데이터 observer 세팅
     private fun init_observe() {
         // 서버로부터 장비출고현황리스트 받아오면 리스트 데이터 갱신
         viewModel.equipList.observe(viewLifecycleOwner) {
+            Log.d("lifecycleEquip", "equipList observer 호출 $it")
+
+            // Detail에서 돌아왔으면 호출되지 않음
             // 기존 리스트 + 새로 얻은 리스트
-            if(it != null) {
+            if(!isFromDetail && it != null) {
                 val newList = totalInfoAdapter.currentList.toMutableList().apply {
                     addAll(it)
                 }
