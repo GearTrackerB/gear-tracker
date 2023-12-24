@@ -1,12 +1,10 @@
 package com.bsys.geartracker.ui.equiplist
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bsys.geartracker.R
 import com.bsys.geartracker.adapter.TotalInfoAdapter
-import com.bsys.geartracker.data.model.dto.Equipment
 import com.bsys.geartracker.data.model.response.RentalStatusResponse
 import com.bsys.geartracker.databinding.FragmentEquipListBinding
 import com.bsys.geartracker.utils.EQUIP_TOTAL_INFO
@@ -103,7 +100,7 @@ class EqupListFragment: Fragment() {
     private fun init_button() {
         // 클릭 시 장비출납현황 리스트를 서버에 요청
         binding.tvTitle.setOnClickListener {
-            viewModel.get_total_equip_list()
+            viewModel.get_total_equip_list(totalInfoAdapter.currentList.size.toLong())
         }
     }
 
@@ -140,8 +137,7 @@ class EqupListFragment: Fragment() {
                     // 마지막으로 보이는 아이템 = 마지막 인덱스
                     if (lastVisibleItemPosition == itemTotalCount) {
                         Log.d("SCROLL", "last Position...");
-                        // 초기 데이터 호출
-                        if(mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list()
+                        if(mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list(totalInfoAdapter.currentList.size.toLong())
                         else viewModel.get_equip_inventory_list()
                     }
                 }
@@ -151,9 +147,8 @@ class EqupListFragment: Fragment() {
         // Dtail에서 Back 아니면 초기 데이터 호출
         if(!isFromDetail) {
             Log.d("lifecycleEquip", "equipList  get_total_equip_list 호출 $isFromDetail")
-            if (mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list()
+            if (mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list(totalInfoAdapter.currentList.size.toLong())
             else viewModel.get_equip_inventory_list()
-            isFromDetail = false
         }
     }
 
@@ -170,6 +165,8 @@ class EqupListFragment: Fragment() {
                     addAll(it)
                 }
                 totalInfoAdapter.submitList(newList)
+            } else {
+                isFromDetail = false
             }
         }
     }

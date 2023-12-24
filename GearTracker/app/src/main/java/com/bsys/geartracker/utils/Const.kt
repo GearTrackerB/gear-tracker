@@ -18,4 +18,4 @@ const val EQUIP_INVETORY_INFO = 6
 const val FROM_DETAIL_INFO = 7
 
 // 장비 조회 아이템 Size
-const val LIST_SIZE = 4
+const val LIST_SIZE = 100
