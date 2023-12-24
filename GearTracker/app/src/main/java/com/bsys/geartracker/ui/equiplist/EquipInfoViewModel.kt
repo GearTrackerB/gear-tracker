@@ -27,7 +27,7 @@ class EquipInfoViewModel: ViewModel() {
     val equipInfo: LiveData<EquipDetailResponse>
         get() = _equipInfo
 
-    // 서버에 장비출고현황 요청
+    // 서버에 장비출고현황 요청 // 현재 adapter list size 기반 - 오프셋 페이징
     fun get_total_equip_list(start: Long) {
         viewModelScope.launch {
             Log.d("equiplist", "장비출고현황호출 시작 idx $lastEquipIdx")
@@ -44,7 +44,7 @@ class EquipInfoViewModel: ViewModel() {
         }
     }
 
-    // 서버에 재물조사현황 요청
+    // 서버에 재물조사현황 요청 // 마지막 equip id 기반 - 커서 페이징
     fun get_equip_inventory_list() {
         viewModelScope.launch {
             Log.d("equiplist", "재물조사현황호출")

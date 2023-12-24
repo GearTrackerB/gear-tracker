@@ -14,15 +14,12 @@ import androidx.activity.addCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.children
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bsys.geartracker.R
 import com.bsys.geartracker.databinding.FragmentQrCameraBinding
-import com.bsys.geartracker.ui.equiplist.EquipInfoViewModel
 import com.bsys.geartracker.ui.login.LogInViewModel
 import com.bsys.geartracker.utils.EQUIP_DETAIL
 import com.bsys.geartracker.utils.EQUIP_INVENTORY
@@ -44,7 +41,6 @@ class QRCameraFragment: Fragment() {
 
     private val viewModel: QRViewModel by viewModels()
     private val loginViewModel: LogInViewModel by activityViewModels()
-    private val equipViewModel: EquipInfoViewModel by viewModels()
 
     lateinit var code_scanner: CodeScanner
 
@@ -93,7 +89,7 @@ class QRCameraFragment: Fragment() {
         var txt = ""
         when(qrType-1) {
             0 -> {qrType = EQUIP_SEND; txt = "출고 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
-            1 -> {qrType = EQUIP_TAKE; txt =     "반납 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
+            1 -> {qrType = EQUIP_TAKE; txt = "반납 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
             2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
             3 -> {qrType = EQUIP_DETAIL; txt = "장비 정보 조회 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
         }
