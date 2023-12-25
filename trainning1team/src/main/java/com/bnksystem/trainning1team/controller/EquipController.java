@@ -205,7 +205,7 @@ public class EquipController {
     public String excelReqFaultList(HttpServletResponse response) throws Exception {
 
         String[] header = new String[]{"식별코드", "제품 종류", "제품명", "모델명", "상태", "배정자", "최근 재물조사 일"};
-        Integer[] contentSize = new Integer[]{6000, 4000, 4000, 4000, 4000, 4000, 4000};
+        Integer[] contentSize = new Integer[]{6000, 4000, 4000, 4000, 4000, 4000, 8000};
 
         //String[] content = new String[] {"serialNo", "eqType", "eqNm", "eqModel", "eqStatus", "empNo", "regAt"};
         String[] content = new String[] {"serial_no", "eq_type", "eq_nm", "eq_model", "eq_status", "emp_no", "reg_at"};
