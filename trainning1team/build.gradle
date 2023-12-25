@@ -54,6 +54,10 @@ dependencies {
 
 	implementation group: 'org.apache.poi', name: 'poi', version: '5.2.3'
     implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.3'
+
+	// QR Code
+	implementation group: 'com.google.zxing', name: 'javase', version: '3.5.0'
+	implementation group: 'com.google.zxing', name: 'core', version: '3.5.0'
 }
 
 tasks.named('test') {

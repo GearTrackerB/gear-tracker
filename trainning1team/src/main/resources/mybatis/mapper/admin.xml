@@ -73,9 +73,9 @@
     <insert id="insertEquipment" useGeneratedKeys="true" keyProperty="eqId">
         INSERT INTO tb_equipments
             (serial_no, eq_nm, type_id, eq_model,
-             eq_maker, status_id, use_yn, reg_id)
+             eq_maker, status_id, use_yn, reg_id, qr_image)
         VALUE (#{serialNo}, #{eqNm}, #{typeId}, #{eqModel},
-                #{eqMaker}, #{statusId}, 'Y', 1)
+                #{eqMaker}, #{statusId}, 'Y', 1, #{qrImageUrl})
     </insert>
 
     <insert id="insertEntryExitRecordToStatusOne">

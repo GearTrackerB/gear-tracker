@@ -11,6 +11,7 @@ public enum ErrorCode {
     CHECKOUT_FAIL(400, "출고예정이 아닙니다."),
     CHECKIN_FAIL(400, "반납예정이 아닙니다."),
     ALREADY_INSPECTED(400, "이미 재고 조사를 했습니다"),
+    REGIST_FAIL(400, "장비 등록 실패했습니다."),
     BAD_REQUEST(400, "잘못된 요청입니다.");
 
     private final int status;

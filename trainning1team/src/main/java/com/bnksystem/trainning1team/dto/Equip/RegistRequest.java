@@ -20,5 +20,6 @@ public class RegistRequest {
     private String empNo;
     private int empId;
     private String regAt;
+    private String qrImageUrl;
 
 }
