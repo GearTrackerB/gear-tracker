@@ -96,7 +96,7 @@
                    ORDER BY r.reg_at DESC
                    LIMIT 1) as emp_no,
         	(
-	        	SELECT i.reg_at
+	        	SELECT DATE_FORMAT(i.reg_at, '%Y-%m-%d %h:%i')
 		        FROM tb_inspection_record i
 		        WHERE i.eq_id = e.id
 	    	    ORDER BY i.reg_at DESC
