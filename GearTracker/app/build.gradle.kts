@@ -66,4 +66,8 @@ dependencies {
     // QR Code Scanner
     implementation ("com.github.yuriy-budiyev:code-scanner:2.3.2")
     implementation ("com.ramotion.circlemenu:circle-menu:0.3.2")
+
+    // file 변환
+    implementation ("com.squareup.okio:okio:3.0.0-alpha.9")
+
 }

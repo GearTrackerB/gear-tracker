@@ -1,24 +1,34 @@
 package com.bsys.geartracker.ui.qrcamera
 
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.os.Environment
+import android.provider.MediaStore
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bsys.geartracker.R
+import com.bsys.geartracker.data.model.dto.QRRequest
 import com.bsys.geartracker.databinding.FragmentQrCameraBinding
 import com.bsys.geartracker.ui.login.LogInViewModel
 import com.bsys.geartracker.utils.EQUIP_DETAIL
@@ -32,7 +42,16 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
+import com.google.gson.Gson
 import com.ramotion.circlemenu.CircleMenuView
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class QRCameraFragment: Fragment() {
@@ -78,7 +97,6 @@ class QRCameraFragment: Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             requireActivity().finish()
         }
-
 
     }
 
@@ -246,7 +264,12 @@ class QRCameraFragment: Fragment() {
                     serialNo = it.text
                 }
 
-                request_qr(qrType, loginViewModel.empNo.value ?: "사번 null", it.text)
+                // todo 정상 serial인지 확인
+                // QR 확인되면 사진 찍기
+                if(qrType != EQUIP_DETAIL) take_picture()
+                else {
+                    move_to_detail_info_fragment(serialNo)
+                }
             }
 
             code_scanner.errorCallback = ErrorCallback {
@@ -265,15 +288,21 @@ class QRCameraFragment: Fragment() {
         }
     }
 
-    // QR 촬영 후 출고, 반납, 재물조사, 장비 확인 요청
-    private fun request_qr(qrType: Int, empNo: String, serialNo: String) {
-        when(qrType) {
-            EQUIP_SEND -> viewModel.equip_send_request(serialNo, empNo)
-            EQUIP_TAKE -> viewModel.equip_take_request(serialNo, empNo)
-            EQUIP_INVENTORY -> viewModel.equip_inventory_check_request(serialNo, empNo)
-            EQUIP_DETAIL -> move_to_detail_info_fragment(serialNo)
+    // QR 스캔을 일시적으로 중지하는 함수
+    private fun pauseScanning() {
+        if (::code_scanner.isInitialized) {
+            code_scanner.releaseResources()
         }
     }
+
+    // QR 스캔을 다시 시작하는 함수
+    private fun resumeScanning() {
+        if (::code_scanner.isInitialized) {
+            code_scanner.startPreview()
+        }
+    }
+
+
 
     private fun move_to_detail_info_fragment(serialNo: String) {
         val bundle: Bundle = bundleOf("serialNo" to serialNo)
@@ -290,6 +319,160 @@ class QRCameraFragment: Fragment() {
         val window: Window? = activity.window
         window?.statusBarColor = ContextCompat.getColor(activity, colorResId)
         window?.navigationBarColor = Color.parseColor("#000000")  // 변경하려는 색상
+    }
+
+    // QR 코드 확인 후 사진 찍기 및 다이얼로그 표시
+    private fun showConfirmationDialog(qrType: Int, empNo: String, serialNo: String, imageFile: File) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_image_preview, null)
+        val imageView = dialogView.findViewById<ImageView>(R.id.imageView)
+        imageView.setImageURI(Uri.fromFile(imageFile))
+
+        val requestType: String
+        when(qrType) {
+            EQUIP_SEND -> requestType = "출고 요청"
+            EQUIP_TAKE -> requestType = "반납 요청"
+            EQUIP_INVENTORY -> requestType = "재물 조사 요청"
+            else -> requestType = "출고, 반납, 재물 조사 요청 아님"
+        }
+
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("QR 요청 확인")
+            .setMessage("Serial No :   $serialNo\nQR Type :   $requestType")
+            .setView(dialogView)
+            .setPositiveButton("확인") { _, _ ->
+                // 확인 버튼 클릭 시 서버 통신 요청
+                request_qr(qrType, empNo, serialNo, imageFile)
+            }
+            .setNegativeButton("취소") { _, _ ->
+                // 취소 버튼 클릭 시 아무 동작 없음
+            }
+            .create()
+
+        pauseScanning()
+        dialog.show()
+    }
+
+    private fun showConfirmationDialog2(qrType: Int, empNo: String, serialNo: String, imageFile: File) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_image_preview, null)
+        val imageView = dialogView.findViewById<ImageView>(R.id.imageView)
+        imageView.setImageURI(Uri.fromFile(imageFile))
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("QR 코드 확인")
+            .setMessage("Serial No: $serialNo\nQR Type: $qrType")
+            .setView(dialogView)
+
+        val alertDialog = dialog.create()
+
+        // 확인 버튼
+        val positiveButton = Button(requireContext())
+        positiveButton.text = "확인"
+        positiveButton.setOnClickListener {
+            // 확인 버튼 클릭 시 서버 통신 요청
+            request_qr(qrType, empNo, serialNo, imageFile)
+            alertDialog.dismiss()
+        }
+
+        // 취소 버튼
+        val negativeButton = Button(requireContext())
+        negativeButton.text = "취소"
+        negativeButton.setOnClickListener {
+            // 취소 버튼 클릭 시 아무 동작 없음
+            alertDialog.dismiss()
+        }
+
+        // 버튼을 LinearLayout에 추가
+        val layout = LinearLayout(requireContext())
+        layout.orientation = LinearLayout.HORIZONTAL
+        layout.addView(negativeButton)
+        layout.addView(positiveButton)
+
+        // 다이얼로그에 LinearLayout 추가
+        alertDialog.setView(layout, 50, 0, 50, 0) // left, top, right, bottom margins
+
+        alertDialog.show()
+    }
+
+    // 카메라로 찍은 사진을 처리하기 위한 상수 및 변수 추가
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private var currentPhotoPath: String = ""
+
+    // 카메라 촬영 기능
+    private fun take_picture() {
+
+        // 카메라 촬영을 위한 Intent 생성
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        // Intent가 실행 가능한지 체크
+        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+            // 사진을 저장할 임시 파일 생성
+            val photoFile: File? = try {
+                createImageFile()
+            } catch (ex: IOException) {
+                null
+            }
+
+            // 임시 파일이 생성되었으면 Intent에 파일 Uri 추가
+            photoFile?.also {
+                val photoURI: Uri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "com.bsys.geartracker.fileprovider",
+                    it
+                )
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                // 카메라 전면 모드로 설정
+                takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 3)
+
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+    }
+
+    // 임시 파일 생성
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val imageFile = File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            currentPhotoPath = absolutePath
+        }
+
+
+        return imageFile
+    }
+
+    // 카메라 촬영 후 결과 처리
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            // 이미지 파일을 가지고 원하는 작업 수행
+            val imageFile = File(currentPhotoPath)
+            // 여기서 imageFile을 사용해서 원하는 동작 수행
+            showConfirmationDialog(qrType, loginViewModel.empNo.value ?: "사번 없음",
+                serialNo, imageFile)
+        }
+    }
+
+    // QR 촬영 후 출고, 반납, 재물조사, 장비 확인 요청
+    private fun request_qr(qrType: Int, empNo: String, serialNo: String, imageFile: File) {
+        val qrRequest: QRRequest = QRRequest(serialNo, empNo)
+        val qrRequestJson = Gson().toJson(qrRequest)
+        val qrRequestBody = RequestBody.create(MediaType.parse("application/json"), qrRequestJson)
+
+        // 이미지 파일 Multipart로 변환
+        val imageRequestBody = RequestBody.create(MediaType.parse("image/jpeg"), imageFile)
+        val imagePart = MultipartBody.Part.createFormData("eqImage", imageFile.name, imageRequestBody)
+
+        when (qrType) {
+            EQUIP_SEND -> viewModel.equip_send_request(qrRequestBody, imagePart)
+            EQUIP_TAKE -> viewModel.equip_take_request(qrRequestBody, imagePart)
+            EQUIP_INVENTORY -> viewModel.equip_inventory_check_request(qrRequestBody, imagePart)
+        }
     }
 
 }

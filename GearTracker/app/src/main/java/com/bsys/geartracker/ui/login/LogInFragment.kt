@@ -13,6 +13,7 @@ import com.bsys.geartracker.ApplicationClass
 import com.bsys.geartracker.R
 import com.bsys.geartracker.data.model.dto.User
 import com.bsys.geartracker.databinding.FragmentLogInBinding
+import com.bsys.geartracker.utils.EQUIP_SEND
 
 class LogInFragment: Fragment() {
     private var _binding: FragmentLogInBinding? = null
@@ -73,6 +74,7 @@ class LogInFragment: Fragment() {
                 show_toast("로그인 실패")
             } else if(it != "0") { // 초기값 아니면 로그인 성공 후 이동
                 show_toast("로그인 성공")
+                viewModel.setNowMode(EQUIP_SEND)
                 findNavController().navigate(R.id.action_logInFragment_to_QRCameraFragment)
             }
         }
