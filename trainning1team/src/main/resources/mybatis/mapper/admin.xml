@@ -31,7 +31,7 @@
     </select>
 
     <select id="selectEquipMentInfo" resultType="com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDto">
-        SELECT e.serial_no, e.type_id, e.eq_nm, e.eq_maker, e.status_id, e.eq_model, (
+        SELECT e.qr_image, e.serial_no, e.type_id, e.eq_nm, e.eq_maker, e.status_id, e.eq_model, (
             SELECT m.emp_no
             FROM tb_entry_exit_record r
                      JOIN tb_members m
@@ -57,7 +57,8 @@
             eq_model = #{eqModel},
             status_id = #{statusId},
             upd_id = 1,
-            upd_at = CURRENT_TIMESTAMP
+            upd_at = CURRENT_TIMESTAMP,
+            qr_image = #{qrImageUrl}
         WHERE serial_no = #{originSerialNo}
     </update>
 
@@ -73,9 +74,9 @@
     <insert id="insertEquipment" useGeneratedKeys="true" keyProperty="eqId">
         INSERT INTO tb_equipments
             (serial_no, eq_nm, type_id, eq_model,
-             eq_maker, status_id, use_yn, reg_id)
+             eq_maker, status_id, use_yn, reg_id, qr_image)
         VALUE (#{serialNo}, #{eqNm}, #{typeId}, #{eqModel},
-                #{eqMaker}, #{statusId}, 'Y', 1)
+                #{eqMaker}, #{statusId}, 'Y', 1, #{qrImageUrl})
     </insert>
 
     <insert id="insertEntryExitRecordToStatusOne">

@@ -1,6 +1,11 @@
 package com.bnksystem.trainning1team.service;
 
 import com.bnksystem.trainning1team.util.DateUtils;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -53,4 +58,30 @@ public class FileService {
         }
     }
 
+    public String makeQrCode(String serialNo) throws WriterException {
+
+        int width = 200;
+        int height = 200;
+
+        String fileUUID = String.valueOf(UUID.randomUUID());
+
+        String baseUploadPath = uploadBasePath + "/qr/" + DateUtils.getCurrentDate() +"/"+ fileUUID + ".png";
+        String baseUploadUrl = uploadBaseUrl + "/qr/" + DateUtils.getCurrentDate()+"/"+ fileUUID + ".png";
+
+        File file = new File(baseUploadPath);
+
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        BitMatrix encode = new MultiFormatWriter().encode(serialNo, BarcodeFormat.QR_CODE, width, height);
+
+        try{
+            MatrixToImageWriter.writeToPath(encode, "png", file.toPath());
+            return baseUploadUrl;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

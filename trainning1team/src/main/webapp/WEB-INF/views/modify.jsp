@@ -90,10 +90,14 @@
             </div>
             <%-- 목록 페이지로 이동 버튼 끝 --%>
             <%-- 수정, 삭제 버튼 시작 --%>
+              <%
+                String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+              %>
               <label>QR코드</label>
-              <pre><code id="result"></code></pre>
+              <img src="<%= url %>${info.qrImage}">
             <div class="float-right">
-              <button type="button" class="btn btn-submit btn-secondary" id="btnGenerate">QR생성</button>
+              <a href="<%= url %>${info.qrImage}" download><button type="button" class="btn btn-submit btn-secondary">QR코드 저장</button></a>
+
               <button type="button" class="btn btn-submit btn-secondary" id="btnRegist">수정</button>
               <button type="button" class="btn btn-submit btn-secondary" id="btnDelete">삭제</button>
             </div>

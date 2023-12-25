@@ -18,5 +18,6 @@ public class ModifyRequest {
     private int statusId;
     private String empNo;
     private String regAt;
+    private String qrImageUrl;
 
 }

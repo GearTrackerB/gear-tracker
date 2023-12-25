@@ -18,6 +18,7 @@ import com.bnksystem.trainning1team.mapper.MemberMapper;
 import com.bnksystem.trainning1team.mapper.QRMapper;
 import com.bnksystem.trainning1team.type.EquipmentStatusType;
 import com.bnksystem.trainning1team.type.EquipmentType;
+import com.google.zxing.WriterException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class EquipService {
     private final AdminMapper adminMapper;
     private final MemberMapper memberMapper;
     private final QRMapper qrMapper;
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final FileService fileService;
 
     // 장비 출납 현황 리스트 반환
     public EquipsListResponse getRentalEquipList(int index, int size) {
@@ -118,6 +119,15 @@ public class EquipService {
                 );
         modifyRequest.setTypeId(EquipmentType.valueOf(modifyRequest.getEqType()).getStatusCode());
 
+        //QR 생성
+        String QrImageUrl = "";
+        try{
+            QrImageUrl = fileService.makeQrCode(modifyRequest.getSerialNo());
+        }catch (Exception e){
+            throw new CustomException(ErrorCode.UPDATE_FAIL);
+        }
+        modifyRequest.setQrImageUrl(QrImageUrl);
+
         //상태 변경
         adminMapper.updateEquipment(modifyRequest);
 
@@ -139,6 +149,13 @@ public class EquipService {
         registRequest.setStatusId(EquipmentStatusType.출고예정.getStatusCode());
         registRequest.setTypeId(EquipmentType.valueOf(registRequest.getEqType()).getStatusCode());
 
+        String QrImageUrl = "";
+        try{
+            QrImageUrl = fileService.makeQrCode(registRequest.getSerialNo());
+        }catch (Exception e){
+            throw new CustomException(ErrorCode.REGIST_FAIL);
+        }
+        registRequest.setQrImageUrl(QrImageUrl);
         adminMapper.insertEquipment(registRequest);
 
         System.out.println("장비 ID 확인 " + registRequest.getEqId());
@@ -166,7 +183,6 @@ public class EquipService {
         try{
             registEquipment(registRequest);
         }catch (Exception e){
-            logger.debug(e.toString());
             e.printStackTrace();
             return 0;
         }

@@ -15,6 +15,7 @@ public class AdminEquipmentDto {
     private int statusId;//상태
     private String empNo;//배정자
     private LocalDateTime regAt;//최근 재물 조사 일
+    private String qrImage;//QR이미지주소
 
     @Override
     public String toString() {

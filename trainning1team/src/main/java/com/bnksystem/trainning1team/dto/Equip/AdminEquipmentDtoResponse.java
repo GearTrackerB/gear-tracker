@@ -20,6 +20,7 @@ public class AdminEquipmentDtoResponse {
     private String eqStatus;//상태
     private String empNo;//배정자
     private String regAt;//최근 재물 조사 일
+    private String qrImage;
 
 
     public AdminEquipmentDtoResponse(AdminEquipmentDto data) {
@@ -40,7 +41,12 @@ public class AdminEquipmentDtoResponse {
         if(data.getRegAt() == null){
             this.regAt = "-";
         }else{
-            this.regAt = data.getRegAt().format(DateTimeFormatter.ISO_DATE);
+            this.regAt = data.getRegAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        }
+        if(data.getQrImage() != null){
+            this.setQrImage(data.getQrImage());
+        }else{
+            this.setQrImage("");
         }
     }
 }
