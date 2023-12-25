@@ -31,7 +31,7 @@
     </select>
 
     <select id="selectEquipMentInfo" resultType="com.bnksystem.trainning1team.dto.Equip.AdminEquipmentDto">
-        SELECT e.serial_no, e.type_id, e.eq_nm, e.eq_maker, e.status_id, e.eq_model, (
+        SELECT e.qr_image, e.serial_no, e.type_id, e.eq_nm, e.eq_maker, e.status_id, e.eq_model, (
             SELECT m.emp_no
             FROM tb_entry_exit_record r
                      JOIN tb_members m
