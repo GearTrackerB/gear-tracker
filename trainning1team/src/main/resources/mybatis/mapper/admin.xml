@@ -57,7 +57,8 @@
             eq_model = #{eqModel},
             status_id = #{statusId},
             upd_id = 1,
-            upd_at = CURRENT_TIMESTAMP
+            upd_at = CURRENT_TIMESTAMP,
+            qr_image = #{qrImageUrl}
         WHERE serial_no = #{originSerialNo}
     </update>
 

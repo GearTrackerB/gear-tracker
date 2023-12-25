@@ -119,6 +119,15 @@ public class EquipService {
                 );
         modifyRequest.setTypeId(EquipmentType.valueOf(modifyRequest.getEqType()).getStatusCode());
 
+        //QR 생성
+        String QrImageUrl = "";
+        try{
+            QrImageUrl = fileService.makeQrCode(modifyRequest.getSerialNo());
+        }catch (Exception e){
+            throw new CustomException(ErrorCode.UPDATE_FAIL);
+        }
+        modifyRequest.setQrImageUrl(QrImageUrl);
+
         //상태 변경
         adminMapper.updateEquipment(modifyRequest);
 
