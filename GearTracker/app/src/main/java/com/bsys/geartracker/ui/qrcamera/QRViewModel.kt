@@ -1,5 +1,6 @@
 package com.bsys.geartracker.ui.qrcamera
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +9,12 @@ import androidx.lifecycle.viewModelScope
 import com.bsys.geartracker.data.model.dto.QRRequest
 import com.bsys.geartracker.data.model.dto.User
 import com.bsys.geartracker.data.repository.QRRequestRepository
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+
 
 class QRViewModel: ViewModel() {
 
@@ -23,11 +29,10 @@ class QRViewModel: ViewModel() {
 
 
     // 출고 처리
-    fun equip_send_request(serialNo: String, empNo: String) {
+    fun equip_send_request(qrRequestBody: RequestBody, imagePart: MultipartBody.Part) {
         viewModelScope.launch {
-            val request: QRRequest = QRRequest(serialNo, empNo)
-            Log.d("equip_send_request", request.toString())
-            val result = qrRequestReadable.equip_send_request(request)
+            Log.d("equip_send_request", "qrRequestBody, imagePart")
+            val result = qrRequestReadable.equip_send_request(qrRequestBody, imagePart)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패
@@ -39,10 +44,9 @@ class QRViewModel: ViewModel() {
     }
 
     // 반납 처리
-    fun equip_take_request(serialNo: String, empNo: String) {
+    fun equip_take_request(qrRequestBody: RequestBody, imagePart: MultipartBody.Part) {
         viewModelScope.launch {
-            val request: QRRequest = QRRequest(serialNo, empNo)
-            val result = qrRequestReadable.equip_take_request(request)
+            val result = qrRequestReadable.equip_take_request(qrRequestBody, imagePart)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패
@@ -54,10 +58,9 @@ class QRViewModel: ViewModel() {
     }
 
     // 재물 조사 처리
-    fun equip_inventory_check_request(serialNo: String, empNo: String) {
+    fun equip_inventory_check_request(qrRequestBody: RequestBody, imagePart: MultipartBody.Part) {
         viewModelScope.launch {
-            val request: QRRequest = QRRequest(serialNo, empNo)
-            val result = qrRequestReadable.equip_inventory_request(request)
+            val result = qrRequestReadable.equip_inventory_request(qrRequestBody, imagePart)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패
@@ -67,5 +70,6 @@ class QRViewModel: ViewModel() {
             }
         }
     }
+
 
 }
