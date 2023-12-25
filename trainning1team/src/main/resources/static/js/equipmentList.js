@@ -48,8 +48,18 @@ $(document).ready(function(){
     $(".btn-reg").click(function(){
         if ($.trim($("#file").val()).length <= 0) {
             alert("대상 파일을 선택하여야만 합니다.");
-        } else {
 
+        }else if(
+            $("#file")[0].files[0].name.substring(
+                $("#file")[0].files[0].name.lastIndexOf('.')+1)
+             !== 'xlsx'){
+            alert($("#file")[0].files[0].name.substring(
+                $("#file")[0].files[0].name.lastIndexOf('.')+1)+"형식은 지원하지 않습니다. 엑셀 파일을 올려주세요.")
+        }
+        else{
+
+
+            console.log($("#file")[0].files[0].type );
             let formData = new FormData($("#addFromFileFrm")[0]);
             formData.append("uploadFile", $("#file")[0].files[0]);
 
