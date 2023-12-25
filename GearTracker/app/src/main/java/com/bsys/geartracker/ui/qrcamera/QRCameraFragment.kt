@@ -152,13 +152,11 @@ class QRCameraFragment: Fragment() {
 
             if(it == 200) {
                 Toast.makeText(requireActivity(), "$serialNo $typeMsg 요청 성공", Toast.LENGTH_SHORT).show()
-                binding.tvResult.text = "$serialNo $typeMsg 요청 성공"
-                code_scanner.startPreview()
+                binding.tvResult.text = "장비 $serialNo $typeMsg 요청 성공"
                 resetResponseCode()
             } else if(it == 400) {
                 Toast.makeText(requireActivity(), "$typeMsg 요청 실패", Toast.LENGTH_SHORT).show()
-                binding.tvResult.text = "$typeMsg 요청 실패"
-                code_scanner.startPreview()
+                binding.tvResult.text = "장비 $serialNo $typeMsg 요청 실패"
                 resetResponseCode()
             }
         }
