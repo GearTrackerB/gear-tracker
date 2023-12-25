@@ -26,7 +26,7 @@
                         <div class="form-group col-md-6">
                             <label for="serialNo" class="essential">식별코드</label>
                             <div class="input-group mb-3">
-                                <input ref="serialNo" type="text" class="form-control" id="serialNo" placeholder="식별코드를 입력해주세요." maxlength="20"/>
+                                <input ref="serialNo" type="text" class="form-control" id="serialNo" placeholder="식별코드를 입력해주세요." maxlength="10"/>
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -43,7 +43,7 @@
                         <div class="form-group col-md-3">
                             <label for="eqNm" class="essential">제품명</label>
                             <div class="input-group mb-3">
-                                <input ref="position_level" type="text" class="form-control" id="eqNm" placeholder="제품명을 입력해주세요." maxlength="45"/>
+                                <input ref="position_level" type="text" class="form-control" id="eqNm" placeholder="제품명을 입력해주세요." maxlength="10"/>
                             </div>
                         </div>
                     </div>
@@ -52,13 +52,13 @@
                         <div class="form-group col-md">
                             <label class="form_tite essential" for="eqModel" >모델명</label>
                             <div class="input-group mb-3">
-                                <input ref="eqModel" type="text" class="form-control" id="eqModel" placeholder="모델명을 입력해주세요." maxlength="45"/>
+                                <input ref="eqModel" type="text" class="form-control" id="eqModel" placeholder="모델명을 입력해주세요." maxlength="10"/>
                             </div>
                         </div>
                         <div class="form-group col-md">
                             <label class="form_tite " for="eqMaker" >제조사</label>
                             <div class="input-group mb-3">
-                                <input ref="eqMaker" type="text" class="form-control" id="eqMaker" placeholder="제조사를 입력해주세요." maxlength="20"/>
+                                <input ref="eqMaker" type="text" class="form-control" id="eqMaker" placeholder="제조사를 입력해주세요." maxlength="10"/>
                             </div>
                         </div>
                         <div class="form-group col-md">

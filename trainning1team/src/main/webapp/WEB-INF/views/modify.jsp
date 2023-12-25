@@ -29,7 +29,7 @@
             <div class="form-group col-md-6">
               <label for="serialNo" class="essential">식별코드</label>
               <div class="input-group mb-4">
-                <input ref="serialNo" type="text" class="form-control" id="serialNo" value="${info.serialNo}"/>
+                <input ref="serialNo" type="text" class="form-control" id="serialNo" value="${info.serialNo}" maxlength="10"/>
               </div>
             </div>
             <div class="form-group col-md-3">
@@ -66,19 +66,19 @@
             <div class="form-group col-md">
               <label for="eqModel">모델명</label>
               <div class="input-group mb-3">
-                <input ref="eqModel" type="text" class="form-control" id="eqModel" value="${info.eqModel}" placeholder="모델명을 입력해주세요." maxlength="45"/>
+                <input ref="eqModel" type="text" class="form-control" id="eqModel" value="${info.eqModel}" placeholder="모델명을 입력해주세요." maxlength="10"/>
               </div>
             </div>
             <div class="form-group col-md">
               <label for="empNo">배정자</label>
               <div class="input-group mb-3">
-                <input ref="empNo" type="text" class="form-control" id="empNo" value="${info.empNo}" maxlength="10" readonly/>
+                <input ref="empNo" type="text" class="form-control" id="empNo" value="${info.empNo}" readonly/>
               </div>
             </div>
             <div class="form-group col-md">
               <label for="regAt">최근 재고 조사 일</label>
               <div class="input-group mb-3">
-                <input ref="regAt" type="text" class="form-control" id="regAt" value="${info.regAt}" maxlength="10" readonly/>
+                <input ref="regAt" type="text" class="form-control" id="regAt" value="${info.regAt}" readonly/>
               </div>
             </div>
           </div>
