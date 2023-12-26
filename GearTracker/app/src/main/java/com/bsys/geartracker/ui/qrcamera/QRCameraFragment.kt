@@ -264,11 +264,18 @@ class QRCameraFragment: Fragment() {
                     serialNo = it.text
                 }
 
-                // todo 정상 serial인지 확인
-                // QR 확인되면 사진 찍기
-                if(qrType != EQUIP_DETAIL) take_picture()
-                else {
-                    move_to_detail_info_fragment(serialNo)
+                // 정규표현식 패턴
+                val serialPattern = Regex("[A-Z]{3}-\\d+")
+
+                // 시리얼 번호 검증
+                if (serialNo.matches(serialPattern)) {
+                    // 영어 대문자 3개와 하이픈 다음에 숫자가 있는 패턴과 일치하는 경우
+                    // 여기서 원하는 작업 수행
+                    if (qrType != EQUIP_DETAIL) {
+                        take_picture()
+                    } else {
+                        move_to_detail_info_fragment(serialNo)
+                    }
                 }
             }
 
