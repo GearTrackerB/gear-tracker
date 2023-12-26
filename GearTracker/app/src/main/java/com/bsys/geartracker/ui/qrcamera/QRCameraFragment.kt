@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -260,21 +261,23 @@ class QRCameraFragment: Fragment() {
 
             //  QR 코드 확인되면 실행
             decodeCallback = DecodeCallback {
-                activity?.runOnUiThread {
-                    serialNo = it.text
-                }
+                serialNo = it.text
 
+                Log.d("qrfragment", "qr 촬영 성공 serial : $serialNo  type : $qrType")
                 // 정규표현식 패턴
                 val serialPattern = Regex("[A-Z]{3}-\\d+")
 
                 // 시리얼 번호 검증
                 if (serialNo.matches(serialPattern)) {
+                    Log.d("qrfragment", "qr 정상 serial : $serialNo")
                     // 영어 대문자 3개와 하이픈 다음에 숫자가 있는 패턴과 일치하는 경우
                     // 여기서 원하는 작업 수행
                     if (qrType != EQUIP_DETAIL) {
                         take_picture()
+                        Log.d("qrfragment", "사진찍기 qrtype : $qrType")
                     } else {
                         move_to_detail_info_fragment(serialNo)
+                        Log.d("qrfragment", "detail로 이동 qrtype : $qrType")
                     }
                 }
             }
