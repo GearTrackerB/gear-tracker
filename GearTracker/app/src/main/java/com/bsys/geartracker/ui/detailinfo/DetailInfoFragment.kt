@@ -9,9 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.bsys.geartracker.R
 import com.bsys.geartracker.data.model.response.EquipDetailResponse
 import com.bsys.geartracker.databinding.FragmentDetailInfoBinding
 import com.bsys.geartracker.ui.equiplist.EquipInfoViewModel
+import com.bsys.geartracker.utils.BASE_URL
+import com.bumptech.glide.Glide
 
 
 class DetailInfoFragment: Fragment() {
@@ -65,6 +68,16 @@ class DetailInfoFragment: Fragment() {
                 text = equip.statusNM
                 if(equip.statusNM == "출고예정") setTextColor(Color.RED)
                 else if(equip.statusNM == "반납예정") setTextColor(Color.BLUE)
+            }
+            Log.d("equipdetail", "null과 일치? ${equip.manualImgUrl == null}")
+
+            if(equip.manualImgUrl != null && equip.manualImgUrl != "null") {
+                val url = BASE_URL + equip.manualImgUrl
+                Log.d("equipdetail", "equipdetail 서버 이미지 ${url}")
+                Glide.with(requireActivity()).load(url).into(ivEvidence)
+            } else {
+                Log.d("equipdetail", "equipdetail 기본 이미지 ${equip.manualImgUrl}")
+                ivEvidence.setImageResource(R.drawable.img_state_changed)
             }
         }
     }

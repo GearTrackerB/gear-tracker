@@ -38,7 +38,7 @@
                     android:layout_height="48dp"
                     android:layout_margin="4dp"
                     android:gravity="center"
-                    android:text="장비 정보 상세 조회"
+                    android:text="IT 장비 정보 상세 조회"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -238,11 +238,9 @@
                 <ImageView
                     android:id="@+id/iv_evidence"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:padding="32dp"
-                    android:src="@drawable/img_notebook"
-                    android:layout_marginTop="16dp"/>
+                    android:layout_height="320dp"
+                    android:padding="16dp"
+                    android:layout_marginTop="24dp"/>
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
