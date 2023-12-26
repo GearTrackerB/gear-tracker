@@ -84,22 +84,14 @@ class EqupListFragment: Fragment() {
     // 출고현황조회 세팅 - Title, 항목, 색상
     private fun make_ui_total() {
         binding.apply {
-            tvTitle.text = "장비출납현황"
+            tvTitle.text = "IT 장비 출납 현황"
         }
     }
 
     // 재물조사조회 세팅 - Title, 항목, 색상
     private fun make_ui_inventory() {
         binding.apply {
-            tvTitle.text = "재물조사현황"
-        }
-    }
-
-    // 버튼 설정
-    private fun init_button() {
-        // 클릭 시 장비출납현황 리스트를 서버에 요청
-        binding.tvTitle.setOnClickListener {
-            viewModel.get_total_equip_list(totalInfoAdapter.currentList.size.toLong())
+            tvTitle.text = "IT 장비 재물 조사 현황"
         }
     }
 
