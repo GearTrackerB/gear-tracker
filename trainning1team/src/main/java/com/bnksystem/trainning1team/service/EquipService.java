@@ -132,7 +132,7 @@ public class EquipService {
         adminMapper.updateEquipment(modifyRequest);
 
         //장비 출납 기록부에 변경사항 반영
-        EquipmentStatus status = qrMapper.selectEquipmentStatus(serialNo);
+        EquipmentStatus status = qrMapper.selectEquipmentStatus(modifyRequest.getSerialNo());
         RecordDto recordDto = new RecordDto(status.getEqId(), modifyRequest.getStatusId(),status.getMemberId());
 
         qrMapper.insertEntryExitRecordQRAdmin(recordDto);
