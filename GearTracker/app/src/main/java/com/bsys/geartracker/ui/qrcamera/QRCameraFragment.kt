@@ -66,6 +66,7 @@ class QRCameraFragment: Fragment() {
 
     private var qrType: Int = EQUIP_SEND
     private var serialNo: String = ""
+    private var alreadyRequst: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -173,10 +174,14 @@ class QRCameraFragment: Fragment() {
                 Toast.makeText(requireActivity(), "$serialNo $typeMsg 요청 성공", Toast.LENGTH_SHORT).show()
                 binding.tvResult.text = "장비 $serialNo $typeMsg 요청 성공"
                 resetResponseCode()
+                code_scanner.startPreview()
+                alreadyRequst = false
             } else if(it == 400) {
                 Toast.makeText(requireActivity(), "$typeMsg 요청 실패", Toast.LENGTH_SHORT).show()
                 binding.tvResult.text = "장비 $serialNo $typeMsg 요청 실패"
                 resetResponseCode()
+                code_scanner.startPreview()
+                alreadyRequst = false
             }
         }
     }
@@ -261,11 +266,17 @@ class QRCameraFragment: Fragment() {
 
             //  QR 코드 확인되면 실행
             decodeCallback = DecodeCallback {
+
+                if(alreadyRequst) return@DecodeCallback
+
                 serialNo = it.text
 
                 Log.d("qrfragment", "qr 촬영 성공 serial : $serialNo  type : $qrType")
                 // 정규표현식 패턴
                 val serialPattern = Regex("[A-Z]{3}-\\d+")
+
+                // 진행 중이면 다시 진행하지 않게
+                alreadyRequst = true
 
                 // 시리얼 번호 검증
                 if (serialNo.matches(serialPattern)) {
@@ -276,6 +287,8 @@ class QRCameraFragment: Fragment() {
                         take_picture()
                         Log.d("qrfragment", "사진찍기 qrtype : $qrType")
                     } else {
+                        // 다시 인식하게
+                        alreadyRequst = false
                         move_to_detail_info_fragment(serialNo)
                         Log.d("qrfragment", "detail로 이동 qrtype : $qrType")
                     }
@@ -284,7 +297,7 @@ class QRCameraFragment: Fragment() {
 
             code_scanner.errorCallback = ErrorCallback {
                 activity?.runOnUiThread {
-                    Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "QR 인식 오류", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -353,11 +366,16 @@ class QRCameraFragment: Fragment() {
             .setPositiveButton("확인") { _, _ ->
                 // 확인 버튼 클릭 시 서버 통신 요청
                 request_qr(qrType, empNo, serialNo, imageFile)
+                Log.d("qrfragment", "요청 컨펌 확인 alreadyRequst $alreadyRequst")
             }
             .setNegativeButton("취소") { _, _ ->
                 // 취소 버튼 클릭 시 아무 동작 없음
+                code_scanner.startPreview()
+                alreadyRequst = false
+                Log.d("qrfragment", "요청 컨펌 취소 alreadyRequst $alreadyRequst")
             }
             .create()
+
 
         pauseScanning()
         dialog.show()
@@ -460,11 +478,15 @@ class QRCameraFragment: Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            Log.d("qrfragment", "카메라 촬영 성공 alreadyRequst $alreadyRequst")
             // 이미지 파일을 가지고 원하는 작업 수행
             val imageFile = File(currentPhotoPath)
             // 여기서 imageFile을 사용해서 원하는 동작 수행
             showConfirmationDialog(qrType, loginViewModel.empNo.value ?: "사번 없음",
                 serialNo, imageFile)
+        } else {
+            alreadyRequst = false
+            Log.d("qrfragment", "카메라 취소 alreadyRequst $alreadyRequst")
         }
     }
 
