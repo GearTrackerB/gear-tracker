@@ -4,7 +4,7 @@
 <br>
 <div>
     <nav>
-        <img src="/static/img/logo.png" />
+        <img src="/static/img/logo.png" style="margin-left: 15px;"/>
         <hr>
     </nav>
 </div>

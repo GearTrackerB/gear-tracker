@@ -43,7 +43,7 @@ $(document).ready(function(){
                     console.log("response = " + JSON.stringify(data));
 
                     alert("수정되었습니다.");
-                    location.reload();
+                    window.location.href = '/admin/modify/'+$("#serialNo").val();
                 },
                 error: function (request, status, error) {
                     console.log("code : " + request.status + ", message : " + request.responseText + ", error : " + error);
