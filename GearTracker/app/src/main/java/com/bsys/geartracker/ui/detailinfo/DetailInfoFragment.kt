@@ -68,6 +68,13 @@ class DetailInfoFragment: Fragment() {
                 text = equip.statusNM
                 if(equip.statusNM == "출고예정") setTextColor(Color.RED)
                 else if(equip.statusNM == "반납예정") setTextColor(Color.BLUE)
+
+                when(equip.statusNM) {
+                    "출고예정" -> {tvStatusNmInfo.text = "배정예정"}
+                    "반납예정" -> {tvStatusNmInfo.text = "회수예정"}
+                    "출고" -> {tvStatusNmInfo.text = "배정완료"}
+                    "반납" -> {tvStatusNmInfo.text = "회수완료"}
+                }
             }
             Log.d("equipdetail", "null과 일치? ${equip.manualImgUrl == null}")
 

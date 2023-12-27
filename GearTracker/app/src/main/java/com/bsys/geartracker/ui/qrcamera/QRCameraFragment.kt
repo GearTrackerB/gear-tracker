@@ -108,8 +108,8 @@ class QRCameraFragment: Fragment() {
         qrType = loginViewModel.nowMode.value ?: EQUIP_SEND
         var txt = ""
         when(qrType-1) {
-            0 -> {qrType = EQUIP_SEND; txt = "출고 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
-            1 -> {qrType = EQUIP_TAKE; txt = "반납 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
+            0 -> {qrType = EQUIP_SEND; txt = "배정 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
+            1 -> {qrType = EQUIP_TAKE; txt = "수거 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
             2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
             3 -> {qrType = EQUIP_DETAIL; txt = "장비 정보 조회 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
         }
@@ -141,9 +141,9 @@ class QRCameraFragment: Fragment() {
 
                     var txt: String = ""
                     when(buttonIndex) {
-                        0 -> {qrType = EQUIP_SEND; txt = "출고 모드"; change_mode_text(txt)
+                        0 -> {qrType = EQUIP_SEND; txt = "배정 모드"; change_mode_text(txt)
                                 loginViewModel.setNowMode(qrType)}
-                        1 -> {qrType = EQUIP_TAKE; txt = "반납 모드"; change_mode_text(txt)
+                        1 -> {qrType = EQUIP_TAKE; txt = "수거 모드"; change_mode_text(txt)
                             loginViewModel.setNowMode(qrType)}
                         2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt)
                             loginViewModel.setNowMode(qrType)}
@@ -164,10 +164,10 @@ class QRCameraFragment: Fragment() {
         viewModel.qrResult.observe(viewLifecycleOwner) {
             lateinit var typeMsg: String
             when(qrType) {
-                EQUIP_SEND -> typeMsg = "출고"
-                EQUIP_TAKE -> typeMsg = "반납"
+                EQUIP_SEND -> typeMsg = "배정"
+                EQUIP_TAKE -> typeMsg = "수거"
                 EQUIP_INVENTORY -> typeMsg = "재물 조사"
-                else -> typeMsg = "출고, 반납, 재물 조사 아님"
+                else -> typeMsg = "배정, 수거, 재물 조사 아님"
             }
 
             if(it == 200) {
@@ -344,24 +344,24 @@ class QRCameraFragment: Fragment() {
         window?.navigationBarColor = Color.parseColor("#000000")  // 변경하려는 색상
     }
 
-    // QR 코드 확인 후 사진 찍기 및 다이얼로그 표시
+
+    // 사진 및 요청 확인 다이얼로그
     private fun showConfirmationDialog(qrType: Int, empNo: String, serialNo: String, imageFile: File) {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_image_preview, null)
         val imageView = dialogView.findViewById<ImageView>(R.id.imageView)
         imageView.setImageURI(Uri.fromFile(imageFile))
 
         val requestType: String
-        when(qrType) {
-            EQUIP_SEND -> requestType = "출고 요청"
-            EQUIP_TAKE -> requestType = "반납 요청"
+        when (qrType) {
+            EQUIP_SEND -> requestType = "배정 요청"
+            EQUIP_TAKE -> requestType = "수거 요청"
             EQUIP_INVENTORY -> requestType = "재물 조사 요청"
-            else -> requestType = "출고, 반납, 재물 조사 요청 아님"
+            else -> requestType = "배정, 수거, 재물 조사 요청 아님"
         }
 
-
-        val dialog = AlertDialog.Builder(requireContext())
+        val dialog = AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom)
             .setTitle("QR 요청 확인")
-            .setMessage("Serial No :   $serialNo\nQR Type :   $requestType")
+            .setMessage("고유 번호 :   $serialNo\n요청 종류 :   $requestType")
             .setView(dialogView)
             .setPositiveButton("확인") { _, _ ->
                 // 확인 버튼 클릭 시 서버 통신 요청
@@ -376,50 +376,19 @@ class QRCameraFragment: Fragment() {
             }
             .create()
 
+        // 취소, 확인 버튼 스타일 적용
+        dialog.setOnShowListener {
+            val positiveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+            val negativeButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_NEGATIVE)
 
+            positiveButton.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
+            negativeButton.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
+        }
+
+        // pauseScanning()와 dialog.show()를 분리
         pauseScanning()
         dialog.show()
-    }
 
-    private fun showConfirmationDialog2(qrType: Int, empNo: String, serialNo: String, imageFile: File) {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_image_preview, null)
-        val imageView = dialogView.findViewById<ImageView>(R.id.imageView)
-        imageView.setImageURI(Uri.fromFile(imageFile))
-
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("QR 코드 확인")
-            .setMessage("Serial No: $serialNo\nQR Type: $qrType")
-            .setView(dialogView)
-
-        val alertDialog = dialog.create()
-
-        // 확인 버튼
-        val positiveButton = Button(requireContext())
-        positiveButton.text = "확인"
-        positiveButton.setOnClickListener {
-            // 확인 버튼 클릭 시 서버 통신 요청
-            request_qr(qrType, empNo, serialNo, imageFile)
-            alertDialog.dismiss()
-        }
-
-        // 취소 버튼
-        val negativeButton = Button(requireContext())
-        negativeButton.text = "취소"
-        negativeButton.setOnClickListener {
-            // 취소 버튼 클릭 시 아무 동작 없음
-            alertDialog.dismiss()
-        }
-
-        // 버튼을 LinearLayout에 추가
-        val layout = LinearLayout(requireContext())
-        layout.orientation = LinearLayout.HORIZONTAL
-        layout.addView(negativeButton)
-        layout.addView(positiveButton)
-
-        // 다이얼로그에 LinearLayout 추가
-        alertDialog.setView(layout, 50, 0, 50, 0) // left, top, right, bottom margins
-
-        alertDialog.show()
     }
 
     // 카메라로 찍은 사진을 처리하기 위한 상수 및 변수 추가

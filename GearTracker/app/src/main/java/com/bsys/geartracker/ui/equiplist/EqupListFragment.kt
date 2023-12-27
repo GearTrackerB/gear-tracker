@@ -84,7 +84,7 @@ class EqupListFragment: Fragment() {
     // 출고현황조회 세팅 - Title, 항목, 색상
     private fun make_ui_total() {
         binding.apply {
-            tvTitle.text = "IT 장비 출납 현황"
+            tvTitle.text = "IT 장비 배정 현황"
         }
     }
 

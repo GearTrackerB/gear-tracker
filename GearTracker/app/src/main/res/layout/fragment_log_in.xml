@@ -2,7 +2,8 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_toolbar"
@@ -41,9 +42,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/iv_login_box"
         android:text="Gear Tracker"
+        android:textColor="@color/black"
         android:textSize="36dp"
         android:textStyle="bold"
-        android:layout_marginBottom="56dp"/>
+        android:layout_marginBottom="32dp"/>
 
     <ImageView
         android:id="@+id/iv_login_box"
@@ -72,7 +74,8 @@
         android:layout_height="48dp"
         android:maxLines="1"
         android:maxLength="15"
-        app:layout_constraintBottom_toBottomOf="@id/tv_id"
+        app:layout_constraintTop_toTopOf="@id/iv_login_box"
+        app:layout_constraintBottom_toTopOf="@id/et_pw"
         app:layout_constraintStart_toEndOf="@id/tv_id"
         app:layout_constraintEnd_toEndOf="@id/iv_login_box"/>
 
@@ -91,8 +94,9 @@
         android:layout_width="150dp"
         android:layout_height="48dp"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="@id/tv_pw"
-        app:layout_constraintStart_toStartOf="@id/et_id" />
+        app:layout_constraintTop_toBottomOf="@id/et_id"
+        app:layout_constraintStart_toStartOf="@id/et_id"
+        app:layout_constraintBottom_toTopOf="@id/btn_test"/>
 
     <Button
         android:id="@+id/btn_test"
