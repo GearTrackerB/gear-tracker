@@ -109,7 +109,7 @@ class QRCameraFragment: Fragment() {
         var txt = ""
         when(qrType-1) {
             0 -> {qrType = EQUIP_SEND; txt = "배정 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
-            1 -> {qrType = EQUIP_TAKE; txt = "수거 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
+            1 -> {qrType = EQUIP_TAKE; txt = "회수 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
             2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
             3 -> {qrType = EQUIP_DETAIL; txt = "장비 정보 조회 모드"; change_mode_text(txt); loginViewModel.setNowMode(qrType)}
         }
@@ -143,7 +143,7 @@ class QRCameraFragment: Fragment() {
                     when(buttonIndex) {
                         0 -> {qrType = EQUIP_SEND; txt = "배정 모드"; change_mode_text(txt)
                                 loginViewModel.setNowMode(qrType)}
-                        1 -> {qrType = EQUIP_TAKE; txt = "수거 모드"; change_mode_text(txt)
+                        1 -> {qrType = EQUIP_TAKE; txt = "회수 모드"; change_mode_text(txt)
                             loginViewModel.setNowMode(qrType)}
                         2 -> {qrType = EQUIP_INVENTORY; txt = "재물 조사 모드"; change_mode_text(txt)
                             loginViewModel.setNowMode(qrType)}
@@ -165,9 +165,9 @@ class QRCameraFragment: Fragment() {
             lateinit var typeMsg: String
             when(qrType) {
                 EQUIP_SEND -> typeMsg = "배정"
-                EQUIP_TAKE -> typeMsg = "수거"
+                EQUIP_TAKE -> typeMsg = "회수"
                 EQUIP_INVENTORY -> typeMsg = "재물 조사"
-                else -> typeMsg = "배정, 수거, 재물 조사 아님"
+                else -> typeMsg = "배정, 회수, 재물 조사 아님"
             }
 
             if(it == 200) {
@@ -354,9 +354,9 @@ class QRCameraFragment: Fragment() {
         val requestType: String
         when (qrType) {
             EQUIP_SEND -> requestType = "배정 요청"
-            EQUIP_TAKE -> requestType = "수거 요청"
+            EQUIP_TAKE -> requestType = "회수 요청"
             EQUIP_INVENTORY -> requestType = "재물 조사 요청"
-            else -> requestType = "배정, 수거, 재물 조사 요청 아님"
+            else -> requestType = "배정, 회수, 재물 조사 요청 아님"
         }
 
         val dialog = AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom)
