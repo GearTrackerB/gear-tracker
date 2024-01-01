@@ -25,15 +25,15 @@ class TotalInfoAdapter: ListAdapter<RentalStatusResponse, TotalInfoAdapter.Equip
                 tvEquipName.text = equip.equipmentName
                 tvEquipEmploy.text = equip.employeeNo
                 when(equip.statusName) {
-                    "출고예정" -> {tvEquipStatus.text = "배정예정"}
-                    "반납예정" -> {tvEquipStatus.text = "회수예정"}
-                    "출고" -> {tvEquipStatus.text = "배정완료"}
-                    "반납" -> {tvEquipStatus.text = "회수완료"}
+                    "배정예정" -> {tvEquipStatus.text = "배정예정"}
+                    "회수예정" -> {tvEquipStatus.text = "회수예정"}
+                    "배정" -> {tvEquipStatus.text = "배정완료"}
+                    "회수" -> {tvEquipStatus.text = "회수완료"}
                     else -> tvEquipStatus.text = equip.statusName
                 }
-                if(equip.statusName == "출고예정" || equip.statusName == "N")
+                if(equip.statusName == "배정예정" || equip.statusName == "N")
                         tvEquipStatus.setTextColor(Color.RED)
-                else if(equip.statusName == "반납예정" )
+                else if(equip.statusName == "회수예정" )
                         tvEquipStatus.setTextColor(Color.BLUE)
 
             }

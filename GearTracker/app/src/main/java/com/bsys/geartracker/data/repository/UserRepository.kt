@@ -6,6 +6,7 @@ import com.bsys.geartracker.data.model.response.UserResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+// Interface 생략
 class UserRepository {
 
     private val userRemoteDatasource: UserRemoteDatasource by lazy {

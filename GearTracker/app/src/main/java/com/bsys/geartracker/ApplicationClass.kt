@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class ApplicationClass: Application(){
-
+    // Retrofit, API 싱클톤 생성
     companion object {
         private val retrofit: Retrofit by lazy {
             Retrofit.Builder()

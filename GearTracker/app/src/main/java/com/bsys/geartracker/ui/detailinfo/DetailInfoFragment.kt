@@ -39,9 +39,10 @@ class DetailInfoFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 장비 상세 정보 요청을 위한 시리얼 넘버
         serialNo = arguments?.getString("serialNo") ?: "none"
-        Log.d("arguments", "arguments ${arguments.toString()}")
 
+        // 서버에서 시리얼 넘버 가져오기
         viewModel.get_equip_detail(serialNo)
 
         init_observer()
@@ -59,31 +60,29 @@ class DetailInfoFragment: Fragment() {
     private fun setUI() {
         binding.apply {
             val equip : EquipDetailResponse = viewModel.equipInfo.value ?: return
-            Log.d("equipdetail", "equipdetail success ${equip.toString()}")
             tvSerialInfo.text = equip.serialNO
             tvEqNmInfo.text = equip.eqNM
             tvEqModelInfo.text = equip.eqModel
             tvEqMakerInfo.text = equip.eqMaker
             tvStatusNmInfo.apply {
                 text = equip.statusNM
-                if(equip.statusNM == "출고예정") setTextColor(Color.RED)
-                else if(equip.statusNM == "반납예정") setTextColor(Color.BLUE)
+                if(equip.statusNM == "배정예정") setTextColor(Color.RED)
+                else if(equip.statusNM == "회수예정") setTextColor(Color.BLUE)
 
                 when(equip.statusNM) {
-                    "출고예정" -> {tvStatusNmInfo.text = "배정예정"}
-                    "반납예정" -> {tvStatusNmInfo.text = "회수예정"}
-                    "출고" -> {tvStatusNmInfo.text = "배정완료"}
-                    "반납" -> {tvStatusNmInfo.text = "회수완료"}
+                    "배정예정" -> {tvStatusNmInfo.text = "배정예정"}
+                    "회수예정" -> {tvStatusNmInfo.text = "회수예정"}
+                    "배정" -> {tvStatusNmInfo.text = "배정완료"}
+                    "회수" -> {tvStatusNmInfo.text = "회수완료"}
                 }
             }
-            Log.d("equipdetail", "null과 일치? ${equip.manualImgUrl == null}")
 
+            // 이미지 없으면 기본 이미지 사용
             if(equip.manualImgUrl != null && equip.manualImgUrl != "null") {
+                // 서버주소 + 이미지 URL로 실제 주소 생성
                 val url = BASE_URL + equip.manualImgUrl
-                Log.d("equipdetail", "equipdetail 서버 이미지 ${url}")
                 Glide.with(requireActivity()).load(url).into(ivEvidence)
             } else {
-                Log.d("equipdetail", "equipdetail 기본 이미지 ${equip.manualImgUrl}")
                 ivEvidence.setImageResource(R.drawable.img_state_changed)
             }
         }

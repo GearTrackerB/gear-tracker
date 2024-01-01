@@ -15,10 +15,8 @@ class QRRemoteDatasource {
         return try {
             val response = ApplicationClass.qrService.equip_send_request(qrRequestBody, imagePart)
             if(response.isSuccessful) {
-                Log.d("equip_send_request", "equip_send_request 성공 ${response.code()}")
                 Result.success(Unit)
             } else {
-                Log.d("equip_send_request", "equip_send_request network fail ${response.code()} ${response.body()} ${response.message()}")
                 Result.failure(Exception("network fail"))
             }
         } catch(e: Exception) {
@@ -31,7 +29,6 @@ class QRRemoteDatasource {
         return try {
             val response = ApplicationClass.qrService.equip_take_request(qrRequestBody, imagePart)
             if(response.isSuccessful) {
-                Log.d("qrrequest", "equip_take_request 성공 ${response.code()}")
                 Result.success(Unit)
             } else {
                 Result.failure(Exception("network fail"))
@@ -46,7 +43,6 @@ class QRRemoteDatasource {
         return try {
             val response = ApplicationClass.qrService.equip_invetory_request(qrRequestBody,imagePart)
             if(response.isSuccessful) {
-                Log.d("qrrequest", "equip_invetory_request 성공 ${response.code()}")
                 Result.success(Unit)
             } else {
                 Result.failure(Exception("network fail"))

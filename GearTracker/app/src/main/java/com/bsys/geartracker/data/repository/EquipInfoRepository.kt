@@ -7,6 +7,7 @@ import com.bsys.geartracker.data.model.response.TotalEquipResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+// Interface 생략
 class EquipInfoRepository {
     private val equipInfoRemoteDatasource: EquipInfoRemoteDatasource by lazy {
         EquipInfoRemoteDatasource()

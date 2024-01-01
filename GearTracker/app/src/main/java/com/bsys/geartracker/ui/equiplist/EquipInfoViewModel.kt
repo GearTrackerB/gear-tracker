@@ -30,19 +30,15 @@ class EquipInfoViewModel: ViewModel() {
     // 서버에 장비출고현황 요청 // 현재 adapter list size 기반 - 오프셋 페이징
     fun get_total_equip_list(start: Long) {
         viewModelScope.launch {
-            Log.d("equiplist", "장비출고현황호출 시작 idx $lastEquipIdx")
             val result = equipInfoRepository.get_total_info_list(start, LIST_SIZE)
             if(result.isSuccess) { // 서버 통신 성공 시 마지막 idx, 장비 리스트 입력
                 val data = result.getOrNull()
                 lastEquipIdx = data?.lastIdx ?: -1L
                 if(lastEquipIdx != -1L)  {
-                    Log.d("equiplist", "data  -1L 아님 $data")
                     _equipList.value = data?.equipList
                 }
-                Log.d("equiplist", "data $data")
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
-                Log.d("equiplist", "error ${error}")
             }
         }
     }
@@ -50,16 +46,13 @@ class EquipInfoViewModel: ViewModel() {
     // 서버에 재물조사현황 요청 // 마지막 equip id 기반 - 커서 페이징
     fun get_equip_inventory_list() {
         viewModelScope.launch {
-            Log.d("equiplist", "재물조사현황호출")
             val result = equipInfoRepository.get_inventory_info_list(lastEquipIdx, LIST_SIZE)
             if(result.isSuccess) { // 서버 통신 성공
                 val data = result.getOrNull()
                 lastEquipIdx = data?.lastIdx ?: -1L
                 if(lastEquipIdx != -1L)  _equipList.value = data?.equipList
-                Log.d("equiplist", "data $data")
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
-                Log.d("equiplist", "error ${error}")
             }
         }
     }
@@ -71,10 +64,8 @@ class EquipInfoViewModel: ViewModel() {
             if(result.isSuccess) { // 서버 통신 성공
                 val data = result.getOrNull()
                 _equipInfo.value = data!!
-                Log.d("equipdetail", "equipdetail success $data")
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
-                Log.d("equipdetail", "equipdetail error ${error}")
 
             }
         }

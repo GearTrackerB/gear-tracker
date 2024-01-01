@@ -28,13 +28,14 @@ class EqupListFragment: Fragment() {
 
     private val totalInfoAdapter: TotalInfoAdapter by lazy {TotalInfoAdapter()}
 
+    // 프래그 먼트가 장비배정현황 or 재물조사
     private var mode: Int = 0
 
+    // Detail에서 Back으로 돌아 왔는지 Flag
     private var isFromDetail: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("lifecycleEquip", "onCreate list ${viewModel.equipList.value}")
     }
 
     override fun onCreateView(
@@ -43,15 +44,11 @@ class EqupListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEquipListBinding.inflate(inflater, container, false)
-        Log.d("lifecycleEquip", "onCreateView " +
-                "adapter ${totalInfoAdapter.currentList}" +
-                "viewmodellist ${viewModel.equipList.value}")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("equiplist", "equiplist onViewCreated")
 
         init_mode()
         init_observe()
@@ -69,7 +66,6 @@ class EqupListFragment: Fragment() {
         mode = arguments?.getInt("info_type") ?: FROM_DETAIL_INFO
         // UI 변경
         set_ui_for_mode(mode)
-        Log.d("lifecycleEquip", "onViewCreated initMode $mode")
 
     }
 
@@ -97,7 +93,6 @@ class EqupListFragment: Fragment() {
 
     // 리스트 뷰 설정
     private fun init_recyclerView() {
-        Log.d("equiplist", "리사이클러뷰 이닛이 호출되었습니다.")
         binding.rcTotalEquipList.apply {
             adapter = totalInfoAdapter.apply {
                 // 리스트 각 아이템 클릭 시 이벤트 설정
@@ -129,7 +124,6 @@ class EqupListFragment: Fragment() {
                     val itemTotalCount = recyclerView.adapter!!.itemCount - 1
                     // 마지막으로 보이는 아이템 = 마지막 인덱스
                     if (lastVisibleItemPosition == itemTotalCount) {
-                        Log.d("SCROLL", "last Position...");
                         if(mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list(totalInfoAdapter.currentList.size.toLong())
                         else viewModel.get_equip_inventory_list()
                     }
@@ -140,7 +134,6 @@ class EqupListFragment: Fragment() {
 
         // Dtail에서 Back 아니면 초기 데이터 호출
         if(!isFromDetail) {
-            Log.d("lifecycleEquip", "equipList  get_total_equip_list 호출 $isFromDetail")
             if (mode == EQUIP_TOTAL_INFO) viewModel.get_total_equip_list(totalInfoAdapter.currentList.size.toLong())
             else viewModel.get_equip_inventory_list()
         }
@@ -150,7 +143,6 @@ class EqupListFragment: Fragment() {
     private fun init_observe() {
         // 서버로부터 장비출고현황리스트 받아오면 리스트 데이터 갱신
         viewModel.equipList.observe(viewLifecycleOwner) {
-            Log.d("lifecycleEquip", "equipList observer 호출 $it")
 
             // Detail에서 돌아왔으면 호출되지 않음
             // 기존 리스트 + 새로 얻은 리스트
@@ -160,6 +152,7 @@ class EqupListFragment: Fragment() {
                 }
                 totalInfoAdapter.submitList(newList)
             } else {
+                // Detail에서 Back으로 왔는지
                 isFromDetail = false
             }
         }

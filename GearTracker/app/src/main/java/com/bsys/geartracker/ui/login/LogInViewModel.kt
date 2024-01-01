@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 class LogInViewModel: ViewModel() {
     private val userRepository: UserRepository by lazy { UserRepository() }
 
+    // 로딩 체크 용 / 추가 예정
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
@@ -34,14 +35,12 @@ class LogInViewModel: ViewModel() {
             change_loading_state()
 
             val result = userRepository.log_in(user)
-            Log.d("loginviewmodel", user.toString())
             if(result.isSuccess) { // 로그인 성공 시, 사원 번호 저장
                 val data = result.getOrNull()
                 _empNo.value = data?.empNo
             } else { // 로그인 실패
                 val error = result.exceptionOrNull()
                 _empNo.value = "-1" // 실패시 empNo -1
-                Log.d("loginviewmodel", error.toString())
             }
 
             change_loading_state()
@@ -53,6 +52,7 @@ class LogInViewModel: ViewModel() {
         _isLoading.value = !_isLoading.value!!
     }
 
+    // API 연결 테스트
     fun test() {
         viewModelScope.launch {
             userRepository.test()

@@ -31,13 +31,11 @@ class QRViewModel: ViewModel() {
     // 출고 처리
     fun equip_send_request(qrRequestBody: RequestBody, imagePart: MultipartBody.Part) {
         viewModelScope.launch {
-            Log.d("equip_send_request", "qrRequestBody, imagePart")
             val result = qrRequestReadable.equip_send_request(qrRequestBody, imagePart)
             if(result.isSuccess) { // 서버 통신 성공
                 _qrResult.value = 200
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
-                Log.d("equip_send_request", "error ${error}")
                  _qrResult.value = 400
             }
         }
@@ -51,7 +49,6 @@ class QRViewModel: ViewModel() {
                 _qrResult.value = 200
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
-                Log.d("equip_take_request", "error ${error}")
                 _qrResult.value = 400
             }
         }
@@ -65,7 +62,6 @@ class QRViewModel: ViewModel() {
                 _qrResult.value = 200
             } else { // 서버 통신 실패
                 val error = result.exceptionOrNull()
-                Log.d("equip_inventory_request", "error ${error}")
                 _qrResult.value = 400
             }
         }

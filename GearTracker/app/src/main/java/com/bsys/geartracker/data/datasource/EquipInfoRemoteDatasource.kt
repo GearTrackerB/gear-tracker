@@ -6,6 +6,7 @@ import com.bsys.geartracker.data.model.dto.Equipment
 import com.bsys.geartracker.data.model.response.EquipDetailResponse
 import com.bsys.geartracker.data.model.response.TotalEquipResponse
 
+// Interface 생략
 class EquipInfoRemoteDatasource {
 
     // 장비출고현황 조회 API 호출
@@ -15,7 +16,6 @@ class EquipInfoRemoteDatasource {
             if(response.isSuccessful) {
                 val data = response.body()!!.data
                 if(data != null) {
-                    Log.d("equiplist", "equiplist 가져오기 성공 값 : ${response.body()}, 코드 : ${response.code()}")
                     Result.success(data)
                 } else {
                     Result.failure(Exception("equiplist data null"))
@@ -35,7 +35,6 @@ class EquipInfoRemoteDatasource {
             if(response.isSuccessful) {
                 val data = response.body()!!.data
                 if(data != null) {
-                    Log.d("inventorylist", "inventory list 가져오기 성공 ${response.code()} ${response.headers()}")
                     Result.success(data)
                 } else {
                     Result.failure(Exception("data null"))
@@ -55,7 +54,6 @@ class EquipInfoRemoteDatasource {
             if(response.isSuccessful) {
                 val data = response.body()!!.data
                 if(data != null) {
-                    Log.d("equipdetail", "equip detail 가져오기 성공 ${response.body()}")
                     Result.success(data)
                 } else {
                     Result.failure(Exception("data null"))

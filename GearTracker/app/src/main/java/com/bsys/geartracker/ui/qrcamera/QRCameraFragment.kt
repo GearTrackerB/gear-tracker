@@ -64,8 +64,11 @@ class QRCameraFragment: Fragment() {
 
     lateinit var code_scanner: CodeScanner
 
+    // 현재 요청 모드 / 버튼으로 선택
     private var qrType: Int = EQUIP_SEND
+    // 장비 Serial
     private var serialNo: String = ""
+    // 이미 다른 작업이 진행 중이면 카메라가 인식하지 않도록 하기 위한 Flag
     private var alreadyRequst: Boolean = false
 
     override fun onCreateView(
@@ -105,6 +108,8 @@ class QRCameraFragment: Fragment() {
     override fun onStart() {
         super.onStart()
         resetResponseCode()
+
+        // QR 모드에 따른 설정
         qrType = loginViewModel.nowMode.value ?: EQUIP_SEND
         var txt = ""
         when(qrType-1) {
@@ -135,6 +140,7 @@ class QRCameraFragment: Fragment() {
 
     private fun init_circle_menu() {
         binding.apply{
+            // 원형 메뉴 선택 별 동작 설정
             circleMenu.setEventListener(object : CircleMenuView.EventListener() {
                 override fun onButtonClickAnimationStart(view: CircleMenuView, buttonIndex: Int) {
                     super.onButtonClickAnimationStart(view, buttonIndex)
@@ -161,6 +167,7 @@ class QRCameraFragment: Fragment() {
     }
 
     private fun init_observer() {
+        // QR 코드 요청 결과에 따른 처리
         viewModel.qrResult.observe(viewLifecycleOwner) {
             lateinit var typeMsg: String
             when(qrType) {
@@ -169,14 +176,14 @@ class QRCameraFragment: Fragment() {
                 EQUIP_INVENTORY -> typeMsg = "재물 조사"
                 else -> typeMsg = "배정, 회수, 재물 조사 아님"
             }
-
+            // 통신 성공 시
             if(it == 200) {
                 Toast.makeText(requireActivity(), "$serialNo $typeMsg 요청 성공", Toast.LENGTH_SHORT).show()
                 binding.tvResult.text = "장비 $serialNo $typeMsg 요청 성공"
                 resetResponseCode()
                 code_scanner.startPreview()
                 alreadyRequst = false
-            } else if(it == 400) {
+            } else if(it == 400) { // 실패 시
                 Toast.makeText(requireActivity(), "$typeMsg 요청 실패", Toast.LENGTH_SHORT).show()
                 binding.tvResult.text = "장비 $serialNo $typeMsg 요청 실패"
                 resetResponseCode()
@@ -267,12 +274,12 @@ class QRCameraFragment: Fragment() {
             //  QR 코드 확인되면 실행
             decodeCallback = DecodeCallback {
 
+                // 이미 다른 요청 작업 중이면 종료
                 if(alreadyRequst) return@DecodeCallback
 
                 serialNo = it.text
 
-                Log.d("qrfragment", "qr 촬영 성공 serial : $serialNo  type : $qrType")
-                // 정규표현식 패턴
+                // 정규표현식 패턴 // 해당 유형에 맞지 않는 QR이면 진행 안하도록
                 val serialPattern = Regex("[A-Z]{3}-\\d+")
 
                 // 진행 중이면 다시 진행하지 않게
@@ -280,17 +287,14 @@ class QRCameraFragment: Fragment() {
 
                 // 시리얼 번호 검증
                 if (serialNo.matches(serialPattern)) {
-                    Log.d("qrfragment", "qr 정상 serial : $serialNo")
                     // 영어 대문자 3개와 하이픈 다음에 숫자가 있는 패턴과 일치하는 경우
                     // 여기서 원하는 작업 수행
                     if (qrType != EQUIP_DETAIL) {
                         take_picture()
-                        Log.d("qrfragment", "사진찍기 qrtype : $qrType")
                     } else {
                         // 다시 인식하게
                         alreadyRequst = false
                         move_to_detail_info_fragment(serialNo)
-                        Log.d("qrfragment", "detail로 이동 qrtype : $qrType")
                     }
                 }
             }
@@ -359,6 +363,7 @@ class QRCameraFragment: Fragment() {
             else -> requestType = "배정, 회수, 재물 조사 요청 아님"
         }
 
+
         val dialog = AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom)
             .setTitle("QR 요청 확인")
             .setMessage("고유 번호 :   $serialNo\n요청 종류 :   $requestType")
@@ -366,13 +371,11 @@ class QRCameraFragment: Fragment() {
             .setPositiveButton("확인") { _, _ ->
                 // 확인 버튼 클릭 시 서버 통신 요청
                 request_qr(qrType, empNo, serialNo, imageFile)
-                Log.d("qrfragment", "요청 컨펌 확인 alreadyRequst $alreadyRequst")
             }
             .setNegativeButton("취소") { _, _ ->
                 // 취소 버튼 클릭 시 아무 동작 없음
                 code_scanner.startPreview()
                 alreadyRequst = false
-                Log.d("qrfragment", "요청 컨펌 취소 alreadyRequst $alreadyRequst")
             }
             .create()
 
@@ -447,7 +450,6 @@ class QRCameraFragment: Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            Log.d("qrfragment", "카메라 촬영 성공 alreadyRequst $alreadyRequst")
             // 이미지 파일을 가지고 원하는 작업 수행
             val imageFile = File(currentPhotoPath)
             // 여기서 imageFile을 사용해서 원하는 동작 수행
@@ -455,7 +457,6 @@ class QRCameraFragment: Fragment() {
                 serialNo, imageFile)
         } else {
             alreadyRequst = false
-            Log.d("qrfragment", "카메라 취소 alreadyRequst $alreadyRequst")
         }
     }
 

@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
+// Interface 생략
 class QRRequestRepository {
     private val qrRemoteDatasource: QRRemoteDatasource by lazy {
         QRRemoteDatasource()
